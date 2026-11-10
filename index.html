@@ -260,6 +260,8 @@
                         <option value="Tempat & Benda">Tempat & Benda</option>
                         <option value="Acara & Upacara">Acara & Upacara</option>
                         <option value="Sifat & Kondisi">Sifat & Kondisi</option>
+                        <option value="Bencana & Darurat">Bencana & Darurat</option>
+                        <option value="Partikel & Keterangan">Partikel & Keterangan</option>
                     </select>
                 </div>
 
@@ -399,6 +401,8 @@
                             <option value="Tempat & Benda">Tempat & Benda</option>
                             <option value="Acara & Upacara">Acara & Upacara</option>
                             <option value="Sifat & Kondisi">Sifat & Kondisi</option>
+                            <option value="Bencana & Darurat">Bencana & Darurat</option>
+                            <option value="Partikel & Keterangan">Partikel & Keterangan</option>
                         </select>
                     </div>
 
@@ -546,6 +550,8 @@
                         <option value="Sifat & Kondisi">Sifat & Kondisi</option>
                         <option value="MASTERED">Sudah Hafal</option>
                         <option value="UNMASTERED">Belum Hafal</option>
+                        <option value="Bencana & Darurat">Bencana & Darurat</option>
+                        <option value="Partikel & Keterangan">Partikel & Keterangan</option>
                     </select>
 
                     <button onclick="resetToDefaultData()" title="Kembalikan data awal catatan" class="bg-slate-100 hover:bg-slate-200 text-slate-600 px-3 py-2.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5 shrink-0">
@@ -562,62 +568,6 @@
         </section>
 
     </main>
-
-    <!-- MODAL FORM: ADD / EDIT VOCABULARY -->
-    <div id="modal-add-vocab" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
-        <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-100 space-y-5 animate-in fade-in zoom-in duration-200">
-            <div class="flex justify-between items-center border-b pb-3">
-                <h3 id="modal-vocab-title" class="text-lg font-bold text-slate-800 flex items-center gap-2">
-                    <i class="fa-solid fa-square-plus text-indigo-600">
-                    </i> Tambah Kosakata Baru
-                </h3>
-                <button onclick="closeAddModal()" class="text-slate-400 hover:text-slate-600 transition">
-                    <i class="fa-solid fa-xmark text-lg">
-                    </i>
-                </button>
-            </div>
-
-            <form id="vocab-form" onsubmit="saveVocabItem(event)" class="space-y-4">
-                <input type="hidden" id="form-item-id">
-
-                <div>
-                    <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Kanji / Hiragana <span class="text-rose-500">*</span></label>
-                    <input type="text" id="form-kanji" required placeholder="Contoh: 毎日 atau 規則" class="w-full bg-slate-50 border border-slate-300 text-slate-800 text-sm font-jp font-bold rounded-xl p-3 focus:ring-2 focus:ring-indigo-500 outline-none">
-                </div>
-
-                <div>
-                    <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Romaji (Cara Baca) <span class="text-rose-500">*</span></label>
-                    <input type="text" id="form-romaji" required placeholder="Contoh: mainichi" class="w-full bg-slate-50 border border-slate-300 text-slate-800 text-sm font-mono rounded-xl p-3 focus:ring-2 focus:ring-indigo-500 outline-none">
-                </div>
-
-                <div>
-                    <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Arti Bahasa Indonesia <span class="text-rose-500">*</span></label>
-                    <input type="text" id="form-meaning" required placeholder="Contoh: Setiap hari" class="w-full bg-slate-50 border border-slate-300 text-slate-800 text-sm rounded-xl p-3 focus:ring-2 focus:ring-indigo-500 outline-none">
-                </div>
-
-                <div>
-                    <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Kategori <span class="text-rose-500">*</span></label>
-                    <select id="form-category" required class="w-full bg-slate-50 border border-slate-300 text-slate-800 text-sm rounded-xl p-3 focus:ring-2 focus:ring-indigo-500 outline-none">
-                        <option value="Waktu">Waktu (毎~)</option>
-                        <option value="Peraturan">Peraturan & Tanda</option>
-                        <option value="Kata Kerja">Kata Kerja</option>
-                        <option value="Tempat & Benda">Tempat & Benda</option>
-                        <option value="Acara & Upacara">Acara & Upacara</option>
-                        <option value="Sifat & Kondisi">Sifat & Kondisi</option>
-                    </select>
-                </div>
-
-                <div class="flex gap-3 pt-2">
-                    <button type="button" onclick="closeAddModal()" class="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold py-3 rounded-xl transition text-sm">
-                        Batal
-                    </button>
-                    <button type="submit" class="flex-1 bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-3 rounded-xl transition text-sm shadow-md">
-                        Simpan Data
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
 
     <!-- JAVASCRIPT APPLICATION LOGIC -->
     <script>
