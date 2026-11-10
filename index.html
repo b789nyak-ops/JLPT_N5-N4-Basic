@@ -1439,8 +1439,7 @@
             } else {
                 vocabList = [...INITIAL_VOCAB_DATA];
                 saveVocabData();
-                vocabList.forEach(item =\> { if (! item.nextReview) { item.nextReview = newDate().toISOString(); } });
-}
+            }
         }
 
         function saveVocabData() {
@@ -1685,7 +1684,6 @@
             const original = vocabList.find(i => i.id === currentItem.id);
             if (original) {
                 original.mastered = masteredStatus;
-                original.nextReview = newDate().tolSOString();
                 saveVocabData();
                 showCard();
                 playSoundEffect(masteredStatus ? 'correct' : 'wrong');
