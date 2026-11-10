@@ -1,0 +1,1494 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JLPT N5-N4 & JFT-Basic</title>
+    <meta property="og:image" content="4d7b62de-77d1-4b74-b0ed-8c5304e63203.jpeg">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Canvas Confetti for quiz rewards -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        jp: ['Noto Sans JP', 'sans-serif'],
+                    },
+                    colors: {
+                        sakura: {
+                            50: '#fff5f7',
+                            100: '#ffe3eb',
+                            500: '#f43f5e',
+                            600: '#e11d48',
+                        },
+                        indigoJp: {
+                            500: '#4338ca',
+                            600: '#3730a3',
+                            900: '#1e1b4b',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Card Flip CSS Animation */
+        .perspective-1000 {
+            perspective: 1000px;
+        }
+        .transform-style-3d {
+            transform-style: preserve-3d;
+        }
+        .backface-hidden {
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+        }
+        .rotate-y-180 {
+            transform: rotateY(180deg);
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 9999px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col">
+
+    <!-- HEADER / NAVIGATION BAR -->
+    <header class="bg-indigoJp-900 text-white sticky top-0 z-40 shadow-lg border-b border-indigo-800">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+            <!-- Brand -->
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('dashboard')">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-sakura-500 to-rose-400 flex items-center justify-center text-white text-xl shadow-md font-jp font-bold">
+                    日
+                </div>
+                <div>
+                    <h1 class="font-bold text-lg leading-tight tracking-wide flex items-center gap-2">
+                        日本語 Master <span class="bg-rose-500/30 text-rose-200 text-xs px-2 py-0.5 rounded-full font-normal border border-rose-400/30">N4 / JFT</span>
+                    </h1>
+                    <p class="text-xs text-indigo-200">Media Hafalan Kosakata Jepang</p>
+                </div>
+            </div>
+
+            <!-- Desktop Nav Buttons -->
+            <nav class="hidden md:flex items-center space-x-1 bg-indigo-950/60 p-1.5 rounded-xl border border-indigo-700/50">
+                <button id="nav-dashboard" onclick="switchTab('dashboard')" class="nav-btn px-4 py-2 rounded-lg text-sm font-medium transition flex items-center gap-2 bg-indigo-600 text-white shadow-sm">
+                    <i class="fa-solid fa-chart-pie">
+                    </i> Beranda
+                </button>
+                <button id="nav-flashcard" onclick="switchTab('flashcard')" class="nav-btn px-4 py-2 rounded-lg text-sm font-medium transition flex items-center gap-2 text-indigo-200 hover:text-white hover:bg-indigo-800/60">
+                    <i class="fa-solid fa-clone">
+                    </i> Flashcard
+                </button>
+                <button id="nav-quiz" onclick="switchTab('quiz')" class="nav-btn px-4 py-2 rounded-lg text-sm font-medium transition flex items-center gap-2 text-indigo-200 hover:text-white hover:bg-indigo-800/60">
+                    <i class="fa-solid fa-pen-to-square">
+                    </i> Kuis & Ketik
+                </button>
+                <button id="nav-vocab" onclick="switchTab('vocab')" class="nav-btn px-4 py-2 rounded-lg text-sm font-medium transition flex items-center gap-2 text-indigo-200 hover:text-white hover:bg-indigo-800/60">
+                    <i class="fa-solid fa-book-bookmark">
+                    </i> Bank Kata
+                </button>
+            </nav>
+
+            <!-- Quick Action Button -->
+            <button onclick="openAddModal()" class="bg-sakura-600 hover:bg-sakura-500 text-white px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition flex items-center gap-2 shadow-sm">
+                <i class="fa-solid fa-plus">
+                </i> <span class="hidden sm:inline">Tambah Kata</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- MOBILE BOTTOM NAVBAR -->
+    <div class="md:hidden fixed bottom-0 left-0 right-0 bg-indigoJp-900 border-t border-indigo-800 z-40 px-3 py-2 flex justify-around items-center">
+        <button id="mnav-dashboard" onclick="switchTab('dashboard')" class="mnav-btn flex flex-col items-center text-xs text-rose-400 font-medium">
+            <i class="fa-solid fa-chart-pie text-base mb-1">
+            </i> Beranda
+        </button>
+        <button id="mnav-flashcard" onclick="switchTab('flashcard')" class="mnav-btn flex flex-col items-center text-xs text-indigo-300 hover:text-white font-medium">
+            <i class="fa-solid fa-clone text-base mb-1">
+            </i> Flashcard
+        </button>
+        <button id="mnav-quiz" onclick="switchTab('quiz')" class="mnav-btn flex flex-col items-center text-xs text-indigo-300 hover:text-white font-medium">
+            <i class="fa-solid fa-pen-to-square text-base mb-1">
+            </i> Kuis
+        </button>
+        <button id="mnav-vocab" onclick="switchTab('vocab')" class="mnav-btn flex flex-col items-center text-xs text-indigo-300 hover:text-white font-medium">
+            <i class="fa-solid fa-book-bookmark text-base mb-1">
+            </i> Bank Kata
+        </button>
+    </div>
+
+    <!-- MAIN CONTENT AREA -->
+    <main class="max-w-6xl mx-auto px-4 py-6 flex-1 w-full mb-16 md:mb-0">
+        
+        <!-- SECTION 1: DASHBOARD -->
+        <section id="tab-dashboard" class="tab-content space-y-6">
+            <!-- Hero Welcome Card -->
+            <div class="bg-gradient-to-br from-indigo-900 via-indigo-800 to-slate-900 text-white rounded-3xl p-6 sm:p-8 shadow-xl relative overflow-hidden border border-indigo-700/40">
+                <div class="absolute -right-10 -bottom-10 opacity-10 font-jp text-[160px] font-black pointer-events-none select-none">
+                    日本語
+                </div>
+                <div class="relative z-10 max-w-2xl">
+                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-rose-500/20 text-rose-300 border border-rose-400/30 text-xs font-semibold mb-3">
+                        <i class="fa-solid fa-fire text-rose-400">
+                        </i> Catatan Hafalan Siap Dipelajari
+                    </span>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight mb-2">Selamat Belajar & Berlatih!</h2>
+                    <p class="text-indigo-200 text-sm sm:text-base mb-6 leading-relaxed">
+                        Kosakata Akan Diperbarui Secara Beratahap. Pilih mode hafalan flashcard atau uji pemahaman lewat kuis ketik. Selamat Belajar!
+                    </p>
+
+                    <div class="flex flex-wrap gap-3">
+                        <button onclick="switchTab('flashcard')" class="bg-white text-indigo-900 hover:bg-slate-100 font-bold px-5 py-2.5 rounded-xl text-sm transition flex items-center gap-2 shadow-md">
+                            <i class="fa-solid fa-play text-indigo-600">
+                            </i> Mulai Flashcard
+                        </button>
+                        <button onclick="switchTab('quiz')" class="bg-indigo-600 hover:bg-indigo-500 text-white font-bold px-5 py-2.5 rounded-xl text-sm transition flex items-center gap-2 border border-indigo-500">
+                            <i class="fa-solid fa-bolt text-amber-300">
+                            </i> Uji Kuis Ketik
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Retention & Statistics Grid -->
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-xl shrink-0">
+                        <i class="fa-solid fa-list-check">
+                        </i>
+                    </div>
+                    <div>
+                        <p class="text-xs text-slate-500 font-medium">Total Kosakata</p>
+                        <h3 id="stat-total" class="text-2xl font-extrabold text-slate-800">0</h3>
+                    </div>
+                </div>
+
+                <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-xl shrink-0">
+                        <i class="fa-solid fa-circle-check">
+                        </i>
+                    </div>
+                    <div>
+                        <p class="text-xs text-slate-500 font-medium">Sudah Hafal</p>
+                        <h3 id="stat-mastered" class="text-2xl font-extrabold text-emerald-600">0</h3>
+                    </div>
+                </div>
+
+                <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-xl shrink-0">
+                        <i class="fa-solid fa-hourglass-half">
+                        </i>
+                    </div>
+                    <div>
+                        <p class="text-xs text-slate-500 font-medium">Perlu Review</p>
+                        <h3 id="stat-review" class="text-2xl font-extrabold text-amber-600">0</h3>
+                    </div>
+                </div>
+
+                <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center text-xl shrink-0">
+                        <i class="fa-solid fa-chart-line">
+                        </i>
+                    </div>
+                    <div>
+                        <p class="text-xs text-slate-500 font-medium">Tingkat Hafalan</p>
+                        <h3 id="stat-percentage" class="text-2xl font-extrabold text-slate-800">0%</h3>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mastery Progress Bar -->
+            <div class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm space-y-3">
+                <div class="flex justify-between items-center text-sm font-semibold">
+                    <span class="text-slate-700 flex items-center gap-2">
+                        <i class="fa-solid fa-bullseye text-rose-500">
+                        </i> Kemajuan Hafalan Keseluruhan
+                    </span>
+                    <span id="progress-text" class="text-slate-500 font-mono">0 / 0 Kata</span>
+                </div>
+                <div class="w-full bg-slate-100 h-4 rounded-full overflow-hidden p-0.5 border border-slate-200">
+                    <div id="mastery-bar" class="bg-gradient-to-r from-indigo-500 to-rose-500 h-full rounded-full transition-all duration-500 w-0">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Category Breakdown Grid -->
+            <div>
+                <h3 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-layer-group text-indigo-600">
+                    </i> Kategori Kosakata Catatan
+                </h3>
+                <div id="category-cards-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                    <!-- Dynamic Category Cards generated by JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: FLASHCARD MODE -->
+        <section id="tab-flashcard" class="tab-content hidden space-y-6">
+            <!-- Flashcard Controls & Filters -->
+            <div class="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div class="flex items-center gap-3 w-full sm:w-auto">
+                    <label class="text-xs font-bold text-slate-500 uppercase tracking-wider shrink-0">Kategori:</label>
+                    <select id="flashcard-category-filter" onchange="filterFlashcards()" class="w-full sm:w-48 bg-slate-50 border border-slate-300 text-slate-700 text-sm rounded-xl p-2.5 focus:ring-2 focus:ring-indigo-500 outline-none font-medium">
+                        <option value="ALL">Semua Kategori</option>
+                        <option value="UNMASTERED">Belum Hafal Saja</option>
+                        <option value="Waktu">Waktu (毎~)</option>
+                        <option value="Peraturan">Peraturan & Tanda</option>
+                        <option value="Kata Kerja">Kata Kerja</option>
+                        <option value="Tempat & Benda">Tempat & Benda</option>
+                        <option value="Acara & Upacara">Acara & Upacara</option>
+                        <option value="Sifat & Kondisi">Sifat & Kondisi</option>
+                    </select>
+                </div>
+
+                <div class="flex items-center gap-2 text-sm font-semibold text-slate-600">
+                    <span id="fc-counter" class="bg-indigo-50 text-indigo-700 px-3 py-1 rounded-full font-mono border border-indigo-100">
+                        1 / 0
+                    </span>
+                    <button onclick="shuffleFlashcards()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1.5 rounded-xl transition text-xs font-bold flex items-center gap-1.5">
+                        <i class="fa-solid fa-shuffle">
+                        </i> Acak Kartu
+                    </button>
+                </div>
+            </div>
+
+            <!-- Interactive 3D Flip Flashcard Container -->
+            <div class="flex justify-center items-center py-4">
+                <div class="w-full max-w-lg aspect-[4/3] sm:aspect-[16/10] perspective-1000">
+                    <div id="flashcard-card" onclick="flipCard()" class="w-full h-full relative transform-style-3d transition-transform duration-500 cursor-pointer shadow-xl rounded-3xl border border-slate-200 bg-white">
+                        
+                        <!-- FRONT OF CARD -->
+                        <div class="absolute inset-0 backface-hidden rounded-3xl p-6 flex flex-col justify-between items-center text-center bg-gradient-to-b from-white via-slate-50 to-indigo-50/30 border-2 border-indigo-100">
+                            <div class="w-full flex justify-between items-center">
+                                <span id="fc-front-category" class="bg-slate-200/80 text-slate-700 text-xs px-3 py-1 rounded-full font-semibold">
+                                    -
+                                </span>
+                                <button onclick="event.stopPropagation(); speakCurrentWord();" title="Dengarkan pengucapan Audio" class="w-9 h-9 rounded-full bg-indigo-100 text-indigo-600 hover:bg-indigo-600 hover:text-white transition flex items-center justify-center">
+                                    <i class="fa-solid fa-volume-high">
+                                    </i>
+                                </button>
+                            </div>
+
+                            <div class="my-auto space-y-3">
+                                <h3 id="fc-front-kanji" class="font-jp text-5xl sm:text-6xl font-black text-slate-800 tracking-wide">
+                                    -
+                                </h3>
+                                <p class="text-xs text-indigo-500 font-medium flex items-center justify-center gap-1">
+                                    <i class="fa-solid fa-hand-pointer">
+                                    </i> Klik atau Sentuh Kartu untuk Melihat Arti
+                                </p>
+                            </div>
+
+                            <div class="w-full text-right">
+                                <span id="fc-front-status" class="text-xs font-semibold px-2.5 py-1 rounded-md">
+                                    -
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- BACK OF CARD -->
+                        <div class="absolute inset-0 backface-hidden rotate-y-180 rounded-3xl p-6 flex flex-col justify-between items-center text-center bg-gradient-to-b from-indigo-900 to-slate-900 text-white border-2 border-indigo-700">
+                            <div class="w-full flex justify-between items-center">
+                                <span id="fc-back-category" class="bg-indigo-800/80 text-indigo-200 text-xs px-3 py-1 rounded-full font-semibold border border-indigo-700">
+                                    -
+                                </span>
+                                <button onclick="event.stopPropagation(); speakCurrentWord();" title="Dengarkan Audio" class="w-9 h-9 rounded-full bg-rose-500/20 text-rose-300 hover:bg-rose-500 hover:text-white transition flex items-center justify-center border border-rose-400/30">
+                                    <i class="fa-solid fa-volume-high">
+                                    </i>
+                                </button>
+                            </div>
+
+                            <div class="my-auto space-y-3 px-2">
+                                <div id="fc-back-kanji" class="font-jp text-3xl font-bold text-rose-300">
+                                    -
+                                </div>
+                                <div id="fc-back-romaji" class="text-xl sm:text-2xl font-bold font-mono tracking-wider text-amber-300">
+                                    -
+                                </div>
+                                <div id="fc-back-meaning" class="text-base sm:text-xl font-semibold text-slate-100 bg-white/10 py-2 px-4 rounded-xl backdrop-blur-sm border border-white/10">
+                                    -
+                                </div>
+                            </div>
+
+                            <div class="text-xs text-indigo-300 font-medium">
+                                Ketuk kartu untuk membalik kembali
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation & Self Assessment Buttons -->
+            <div class="max-w-lg mx-auto space-y-4">
+                <!-- Mastery Toggles -->
+                <div class="grid grid-cols-2 gap-3">
+                    <button onclick="markCurrentCard(false)" class="bg-rose-50 hover:bg-rose-100 border border-rose-200 text-rose-700 font-bold py-3 px-4 rounded-2xl transition flex items-center justify-center gap-2 shadow-sm">
+                        <i class="fa-solid fa-xmark text-rose-500 text-lg">
+                        </i> Belum Hafal
+                    </button>
+                    <button onclick="markCurrentCard(true)" class="bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 text-emerald-700 font-bold py-3 px-4 rounded-2xl transition flex items-center justify-center gap-2 shadow-sm">
+                        <i class="fa-solid fa-check text-emerald-500 text-lg">
+                        </i> Sudah Hafal!
+                    </button>
+                </div>
+
+                <!-- Prev / Next Controls -->
+                <div class="flex justify-between items-center">
+                    <button onclick="prevCard()" class="bg-white hover:bg-slate-100 text-slate-700 font-bold py-2.5 px-5 rounded-xl border border-slate-200 transition flex items-center gap-2 text-sm shadow-sm">
+                        <i class="fa-solid fa-arrow-left">
+                        </i> Kartu Sebelum
+                    </button>
+                    <button onclick="nextCard()" class="bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-2.5 px-5 rounded-xl transition flex items-center gap-2 text-sm shadow-md">
+                        Kartu Lanjut <i class="fa-solid fa-arrow-right">
+                        </i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: QUIZ & TYPING PRACTICE MODE -->
+        <section id="tab-quiz" class="tab-content hidden space-y-6">
+            <!-- Quiz Configuration Bar -->
+            <div id="quiz-config-card" class="bg-white p-6 rounded-3xl border border-slate-200/80 shadow-sm space-y-5">
+                <h3 class="text-lg font-bold text-slate-800 flex items-center gap-2">
+                    <i class="fa-solid fa-sliders text-indigo-600">
+                    </i> Pengaturan Latihan & Kuis
+                </h3>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <!-- Mode Quiz -->
+                    <div>
+                        <label class="block text-xs font-bold text-slate-500 uppercase mb-2">Tipe Latihan:</label>
+                        <select id="quiz-type" class="w-full bg-slate-50 border border-slate-300 text-slate-700 text-sm rounded-xl p-3 focus:ring-2 focus:ring-indigo-500 outline-none font-medium">
+                            <option value="TYPING">Latihan Ketik Mandiri (Romaji / Arti)</option>
+                            <option value="MCQ">Pilihan Ganda (4 Opsi)</option>
+                        </select>
+                    </div>
+
+                    <!-- Category Filter -->
+                    <div>
+                        <label class="block text-xs font-bold text-slate-500 uppercase mb-2">Kategori Soal:</label>
+                        <select id="quiz-category" class="w-full bg-slate-50 border border-slate-300 text-slate-700 text-sm rounded-xl p-3 focus:ring-2 focus:ring-indigo-500 outline-none font-medium">
+                            <option value="ALL">Semua Kategori</option>
+                            <option value="Waktu">Waktu (毎~)</option>
+                            <option value="Peraturan">Peraturan & Tanda</option>
+                            <option value="Kata Kerja">Kata Kerja</option>
+                            <option value="Tempat & Benda">Tempat & Benda</option>
+                            <option value="Acara & Upacara">Acara & Upacara</option>
+                            <option value="Sifat & Kondisi">Sifat & Kondisi</option>
+                        </select>
+                    </div>
+
+                    <!-- Question Count -->
+                    <div>
+                        <label class="block text-xs font-bold text-slate-500 uppercase mb-2">Jumlah Soal:</label>
+                        <select id="quiz-count" class="w-full bg-slate-50 border border-slate-300 text-slate-700 text-sm rounded-xl p-3 focus:ring-2 focus:ring-indigo-500 outline-none font-medium">
+                            <option value="10">10 Soal</option>
+                            <option value="20">20 Soal</option>
+                            <option value="50">Semua Soal</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button onclick="startQuiz()" class="w-full bg-gradient-to-r from-indigo-600 to-rose-600 hover:from-indigo-500 hover:to-rose-500 text-white font-bold py-3.5 px-6 rounded-2xl shadow-lg transition flex items-center justify-center gap-2 text-base">
+                    <i class="fa-solid fa-circle-play">
+                    </i> Mulai Latihan Sekarang
+                </button>
+            </div>
+
+            <!-- Quiz Arena Container (Hidden until started) -->
+            <div id="quiz-arena" class="hidden space-y-6">
+                <!-- Progress Header -->
+                <div class="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <span id="quiz-progress-badge" class="bg-indigo-600 text-white text-xs font-bold px-3 py-1.5 rounded-xl font-mono">
+                            Soal 1 / 10
+                        </span>
+                        <div id="quiz-streak-badge" class="text-xs font-bold text-amber-600 bg-amber-50 px-2.5 py-1 rounded-lg border border-amber-200 hidden">
+                            <i class="fa-solid fa-fire text-amber-500">
+                            </i> Streak: <span id="quiz-streak-count">0</span>
+                        </div>
+                    </div>
+                    <button onclick="quitQuiz()" class="text-xs text-slate-500 hover:text-rose-600 font-semibold transition">
+                        <i class="fa-solid fa-xmark">
+                        </i> Hentikan Kuis
+                    </button>
+                </div>
+
+                <!-- Question Display Card -->
+                <div class="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200/80 shadow-lg text-center space-y-6 relative overflow-hidden">
+                    <div class="flex justify-between items-center text-xs font-semibold text-slate-400">
+                        <span id="quiz-q-category">Kategori</span>
+                        <button onclick="speakQuizWord()" class="text-indigo-600 hover:text-indigo-800 text-sm flex items-center gap-1 font-medium bg-indigo-50 px-2.5 py-1 rounded-lg">
+                            <i class="fa-solid fa-volume-high">
+                            </i> Suara
+                        </button>
+                    </div>
+
+                    <div>
+                        <p class="text-xs font-bold text-indigo-500 uppercase tracking-widest mb-1">Apa Arti / Cara Baca Dari:</p>
+                        <h2 id="quiz-q-kanji" class="font-jp text-4xl sm:text-6xl font-black text-slate-800 my-3">
+                            -
+                        </h2>
+                    </div>
+
+                    <!-- MODE 1: FILL IN TYPING INPUT -->
+                    <div id="quiz-typing-container" class="space-y-4 max-w-md mx-auto">
+                        <input type="text" id="quiz-typing-input" placeholder="Ketik Romaji atau Arti Indonesia..." autocomplete="off" class="w-full bg-slate-50 border-2 border-slate-300 focus:border-indigo-600 text-slate-800 text-center text-lg font-semibold rounded-2xl p-3.5 outline-none transition shadow-inner">
+                        
+                        <div class="flex gap-2">
+                            <button id="quiz-submit-btn" onclick="checkTypingAnswer()" class="flex-1 bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-3 rounded-xl transition text-sm shadow-md">
+                                Periksa Jawaban
+                            </button>
+                            <button id="quiz-hint-btn" onclick="showHint()" class="bg-amber-100 hover:bg-amber-200 text-amber-800 font-bold px-4 py-3 rounded-xl transition text-sm">
+                                Petunjuk
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- MODE 2: MULTIPLE CHOICE OPTIONS -->
+                    <div id="quiz-mcq-container" class="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-xl mx-auto hidden">
+                        <!-- 4 MCQ Buttons injected by JS -->
+                    </div>
+
+                    <!-- Feedback Alert Drawer -->
+                    <div id="quiz-feedback" class="hidden p-4 rounded-2xl text-left text-sm font-medium transition">
+                        <!-- Answer explanation injected by JS -->
+                    </div>
+                </div>
+
+                <!-- Next Question Button -->
+                <div class="flex justify-end">
+                    <button id="quiz-next-btn" onclick="nextQuizQuestion()" class="hidden bg-slate-800 hover:bg-slate-700 text-white font-bold px-6 py-3 rounded-xl transition text-sm flex items-center gap-2 shadow-md">
+                        Soal Berikutnya <i class="fa-solid fa-arrow-right">
+                        </i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Quiz Summary Modal (Completed) -->
+            <div id="quiz-result-card" class="hidden bg-white p-8 rounded-3xl border border-slate-200 shadow-xl text-center space-y-6 max-w-lg mx-auto">
+                <div class="w-20 h-20 bg-amber-100 text-amber-500 rounded-full flex items-center justify-center text-4xl mx-auto border-4 border-amber-200">
+                    <i class="fa-solid fa-trophy">
+                    </i>
+                </div>
+                <div>
+                    <h3 class="text-2xl font-black text-slate-800">Latihan Selesai!</h3>
+                    <p class="text-slate-500 text-sm mt-1">Kerja bagus! Berikut ringkasan hasil latihan Anda:</p>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4 bg-slate-50 p-4 rounded-2xl border border-slate-200/80">
+                    <div>
+                        <p class="text-xs text-slate-400 font-semibold">Skor Akhir</p>
+                        <p id="res-score" class="text-3xl font-black text-indigo-600">0%</p>
+                    </div>
+                    <div>
+                        <p class="text-xs text-slate-400 font-semibold">Benar / Total</p>
+                        <p id="res-correct-total" class="text-3xl font-black text-emerald-600">0 / 0</p>
+                    </div>
+                </div>
+
+                <div class="flex gap-3">
+                    <button onclick="quitQuiz()" class="flex-1 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-3 rounded-xl transition text-sm">
+                        Kembali
+                    </button>
+                    <button onclick="startQuiz()" class="flex-1 bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-3 rounded-xl transition text-sm shadow-md">
+                        Coba Lagi
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4: VOCAB BANK & MANAGEMENT -->
+        <section id="tab-vocab" class="tab-content hidden space-y-6">
+            <!-- Search & Filter Controls -->
+            <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200/80 shadow-sm space-y-4">
+                <div class="flex flex-col sm:flex-row gap-3">
+                    <!-- Search Input -->
+                    <div class="relative flex-1">
+                        <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3.5 text-slate-400 text-sm">
+                        </i>
+                        <input type="text" id="vocab-search" oninput="renderVocabTable()" placeholder="Cari Kanji, Romaji, atau Arti..." class="w-full bg-slate-50 border border-slate-300 text-slate-800 text-sm rounded-xl pl-10 pr-4 py-2.5 focus:ring-2 focus:ring-indigo-500 outline-none font-medium">
+                    </div>
+
+                    <!-- Category Filter -->
+                    <select id="vocab-filter-cat" onchange="renderVocabTable()" class="bg-slate-50 border border-slate-300 text-slate-700 text-sm rounded-xl px-3 py-2.5 focus:ring-2 focus:ring-indigo-500 outline-none font-medium">
+                        <option value="ALL">Semua Kategori</option>
+                        <option value="Waktu">Waktu (毎~)</option>
+                        <option value="Peraturan">Peraturan & Tanda</option>
+                        <option value="Kata Kerja">Kata Kerja</option>
+                        <option value="Tempat & Benda">Tempat & Benda</option>
+                        <option value="Acara & Upacara">Acara & Upacara</option>
+                        <option value="Sifat & Kondisi">Sifat & Kondisi</option>
+                        <option value="MASTERED">Sudah Hafal</option>
+                        <option value="UNMASTERED">Belum Hafal</option>
+                    </select>
+
+                    <button onclick="resetToDefaultData()" title="Kembalikan data awal catatan" class="bg-slate-100 hover:bg-slate-200 text-slate-600 px-3 py-2.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5 shrink-0">
+                        <i class="fa-solid fa-rotate-left">
+                        </i> Reset Data
+                    </button>
+                </div>
+            </div>
+
+            <!-- Vocabulary Cards List Grid -->
+            <div id="vocab-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <!-- Cards injected dynamically by JS -->
+            </div>
+        </section>
+
+    </main>
+
+    <!-- MODAL FORM: ADD / EDIT VOCABULARY -->
+    <div id="modal-add-vocab" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-100 space-y-5 animate-in fade-in zoom-in duration-200">
+            <div class="flex justify-between items-center border-b pb-3">
+                <h3 id="modal-vocab-title" class="text-lg font-bold text-slate-800 flex items-center gap-2">
+                    <i class="fa-solid fa-square-plus text-indigo-600">
+                    </i> Tambah Kosakata Baru
+                </h3>
+                <button onclick="closeAddModal()" class="text-slate-400 hover:text-slate-600 transition">
+                    <i class="fa-solid fa-xmark text-lg">
+                    </i>
+                </button>
+            </div>
+
+            <form id="vocab-form" onsubmit="saveVocabItem(event)" class="space-y-4">
+                <input type="hidden" id="form-item-id">
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Kanji / Hiragana <span class="text-rose-500">*</span></label>
+                    <input type="text" id="form-kanji" required placeholder="Contoh: 毎日 atau 規則" class="w-full bg-slate-50 border border-slate-300 text-slate-800 text-sm font-jp font-bold rounded-xl p-3 focus:ring-2 focus:ring-indigo-500 outline-none">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Romaji (Cara Baca) <span class="text-rose-500">*</span></label>
+                    <input type="text" id="form-romaji" required placeholder="Contoh: mainichi" class="w-full bg-slate-50 border border-slate-300 text-slate-800 text-sm font-mono rounded-xl p-3 focus:ring-2 focus:ring-indigo-500 outline-none">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Arti Bahasa Indonesia <span class="text-rose-500">*</span></label>
+                    <input type="text" id="form-meaning" required placeholder="Contoh: Setiap hari" class="w-full bg-slate-50 border border-slate-300 text-slate-800 text-sm rounded-xl p-3 focus:ring-2 focus:ring-indigo-500 outline-none">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Kategori <span class="text-rose-500">*</span></label>
+                    <select id="form-category" required class="w-full bg-slate-50 border border-slate-300 text-slate-800 text-sm rounded-xl p-3 focus:ring-2 focus:ring-indigo-500 outline-none">
+                        <option value="Waktu">Waktu (毎~)</option>
+                        <option value="Peraturan">Peraturan & Tanda</option>
+                        <option value="Kata Kerja">Kata Kerja</option>
+                        <option value="Tempat & Benda">Tempat & Benda</option>
+                        <option value="Acara & Upacara">Acara & Upacara</option>
+                        <option value="Sifat & Kondisi">Sifat & Kondisi</option>
+                    </select>
+                </div>
+
+                <div class="flex gap-3 pt-2">
+                    <button type="button" onclick="closeAddModal()" class="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold py-3 rounded-xl transition text-sm">
+                        Batal
+                    </button>
+                    <button type="submit" class="flex-1 bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-3 rounded-xl transition text-sm shadow-md">
+                        Simpan Data
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT APPLICATION LOGIC -->
+    <script>
+        // 1. DEFAULT DATASET PRELOADED FROM THE HANDWRITTEN NOTES
+        const INITIAL_VOCAB_DATA = [
+            // Waktu (毎~)
+            { id: '1', kanji: '毎日', romaji: 'mainichi', meaning: 'Setiap hari', category: 'Waktu', mastered: false },
+            { id: '2', kanji: '毎月', romaji: 'maitsuki', meaning: 'Setiap bulan', category: 'Waktu', mastered: false },
+            { id: '3', kanji: '毎年', romaji: 'maitoshi', meaning: 'Setiap tahun', category: 'Waktu', mastered: false },
+            { id: '4', kanji: '毎週', romaji: 'maishuu', meaning: 'Setiap minggu', category: 'Waktu', mastered: false },
+            { id: '5', kanji: '毎時間', romaji: 'maijikan', meaning: 'Setiap jam', category: 'Waktu', mastered: false },
+            { id: '6', kanji: '毎分', romaji: 'maifun', meaning: 'Setiap menit', category: 'Waktu', mastered: false },
+            { id: '7', kanji: '毎秒', romaji: 'maibyou', meaning: 'Setiap detik', category: 'Waktu', mastered: false },
+            { id: '8', kanji: '毎朝', romaji: 'maiasa', meaning: 'Setiap pagi', category: 'Waktu', mastered: false },
+            { id: '9', kanji: '毎晩', romaji: 'maiban', meaning: 'Setiap malam', category: 'Waktu', mastered: false },
+
+            // Peraturan & Tanda
+            { id: '10', kanji: '規則', romaji: 'kisoku', meaning: 'Peraturan', category: 'Peraturan', mastered: false },
+            { id: '11', kanji: '使用禁止', romaji: 'shiyoukinshi', meaning: 'Dilarang menggunakan', category: 'Peraturan', mastered: false },
+            { id: '12', kanji: '立入禁止', romaji: 'tachirikinshi', meaning: 'Dilarang masuk', category: 'Peraturan', mastered: false },
+            { id: '13', kanji: '非常口', romaji: 'hijouguchi', meaning: 'Pintu darurat', category: 'Peraturan', mastered: false },
+            { id: '14', kanji: '無料', romaji: 'muryou', meaning: 'Gratis', category: 'Peraturan', mastered: false },
+            { id: '15', kanji: '営業中', romaji: 'eigyouchuu', meaning: 'Sedang buka / Beroperasi', category: 'Peraturan', mastered: false },
+
+            // Kata Kerja
+            { id: '16', kanji: '折ります', romaji: 'orimasu', meaning: 'Melipat / Mematahkan', category: 'Kata Kerja', mastered: false },
+            { id: '17', kanji: '気がつきます', romaji: 'ki ga tsukimasu', meaning: 'Menyadari', category: 'Kata Kerja', mastered: false },
+            { id: '18', kanji: '見つけます', romaji: 'mitsukemasu', meaning: 'Menemukan', category: 'Kata Kerja', mastered: false },
+            { id: '19', kanji: '見つかります', romaji: 'mitsukarimasu', meaning: 'Ditemukan', category: 'Kata Kerja', mastered: false },
+            { id: '20', kanji: '質問します', romaji: 'shitsumon shimasu', meaning: 'Bertanya', category: 'Kata Kerja', mastered: false },
+            { id: '21', kanji: '開く', romaji: 'aku', meaning: 'Terbuka', category: 'Kata Kerja', mastered: false },
+            { id: '22', kanji: '開ける', romaji: 'akeru', meaning: 'Membuka', category: 'Kata Kerja', mastered: false },
+            { id: '23', kanji: '閉まります', romaji: 'shimaru', meaning: 'Tertutup', category: 'Kata Kerja', mastered: false },
+            { id: '24', kanji: '閉めます', romaji: 'shimeru', meaning: 'Menutup (pintu, jendela, dll)', category: 'Kata Kerja', mastered: false },
+            { id: '25', kanji: '閉じる', romaji: 'tojiru', meaning: 'Menutup (mata, buku, payung, laptop)', category: 'Kata Kerja', mastered: false },
+            { id: '26', kanji: '変わります', romaji: 'kawarimasu', meaning: 'Berubah', category: 'Kata Kerja', mastered: false },
+            { id: '27', kanji: '困ります', romaji: 'komarimasu', meaning: 'Kesulitan / Bingung', category: 'Kata Kerja', mastered: false },
+            { id: '28', kanji: '拾います', romaji: 'hiroimasu', meaning: 'Memungut / Mengambil', category: 'Kata Kerja', mastered: false },
+            { id: '29', kanji: '貼ります', romaji: 'harimasu', meaning: 'Menempelkan', category: 'Kata Kerja', mastered: false },
+            { id: '30', kanji: '掛けます', romaji: 'kakemasu', meaning: 'Menggantungkan', category: 'Kata Kerja', mastered: false },
+            { id: '31', kanji: '飾ります', romaji: 'kazarimasu', meaning: 'Menghias / Memajang', category: 'Kata Kerja', mastered: false },
+            { id: '32', kanji: '並べます', romaji: 'narabemasu', meaning: 'Menyusun', category: 'Kata Kerja', mastered: false },
+            { id: '33', kanji: '植えます', romaji: 'uemasu', meaning: 'Menanam', category: 'Kata Kerja', mastered: false },
+            { id: '34', kanji: '過ごします', romaji: 'sugoshimasu', meaning: 'Menghabiskan waktu', category: 'Kata Kerja', mastered: false },
+            { id: '35', kanji: '運動します', romaji: 'undou shimasu', meaning: 'Berolahraga', category: 'Kata Kerja', mastered: false },
+            { id: '36', kanji: '相談します', romaji: 'soudan shimasu', meaning: 'Diskusi / Berkonsultasi', category: 'Kata Kerja', mastered: false },
+            { id: '37', kanji: '準備します', romaji: 'junbi shimasu', meaning: 'Bersiap-siap / Mempersiapkan', category: 'Kata Kerja', mastered: false },
+            { id: '38', kanji: '休憩します', romaji: 'kyuukei shimasu', meaning: 'Istirahat sejenak', category: 'Kata Kerja', mastered: false },
+            { id: '39', kanji: '残業します', romaji: 'zangyou shimasu', meaning: 'Lembur', category: 'Kata Kerja', mastered: false },
+            { id: '40', kanji: '散歩します', romaji: 'sanpo shimasu', meaning: 'Jalan-jalan santai', category: 'Kata Kerja', mastered: false },
+            { id: '41', kanji: '始まります', romaji: 'hajimarimasu', meaning: 'Dimulai', category: 'Kata Kerja', mastered: false },
+            { id: '42', kanji: '失敗します', romaji: 'shippai shimasu', meaning: 'Gagal', category: 'Kata Kerja', mastered: false },
+            { id: '43', kanji: '成功します', romaji: 'seikou shimasu', meaning: 'Sukses / Berhasil', category: 'Kata Kerja', mastered: false },
+            { id: '44', kanji: '合格します', romaji: 'goukaku shimasu', meaning: 'Lulus ujian', category: 'Kata Kerja', mastered: false },
+            { id: '45', kanji: '続けます', romaji: 'tsuzukemasu', meaning: 'Melanjutkan', category: 'Kata Kerja', mastered: false },
+            { id: '46', kanji: '吹きます', romaji: 'fukimasu', meaning: 'Meniup', category: 'Kata Kerja', mastered: false },
+            { id: '47', kanji: '降ります', romaji: 'furimasu', meaning: 'Turun (hujan, salju)', category: 'Kata Kerja', mastered: false },
+            { id: '48', kanji: '投げます', romaji: 'nagemasu', meaning: 'Melempar', category: 'Kata Kerja', mastered: false },
+            { id: '49', kanji: '捕まえます', romaji: 'tsukamaemasu', meaning: 'Menangkap', category: 'Kata Kerja', mastered: false },
+            { id: '50', kanji: '蹴ります', romaji: 'kerimasu', meaning: 'Menendang', category: 'Kata Kerja', mastered: false },
+            { id: '51', kanji: '打ちます', romaji: 'uchimasu', meaning: 'Memukul', category: 'Kata Kerja', mastered: false },
+            { id: '52', kanji: '注意します', romaji: 'chuui shimasu', meaning: 'Berhati-hati / Memperhatikan', category: 'Kata Kerja', mastered: false },
+
+            // Tempat & Benda
+            { id: '53', kanji: '門', romaji: 'mon', meaning: 'Gerbang / Pintu masuk', category: 'Tempat & Benda', mastered: false },
+            { id: '54', kanji: '関', romaji: 'kan', meaning: 'Penghalang / Batas', category: 'Tempat & Benda', mastered: false },
+            { id: '55', kanji: '関西', romaji: 'kansai', meaning: 'Wilayah Kansai', category: 'Tempat & Benda', mastered: false },
+            { id: '56', kanji: '時間', romaji: 'jikan', meaning: 'Waktu / Jam / Durasi', category: 'Tempat & Benda', mastered: false },
+            { id: '57', kanji: '有料', romaji: 'yuuryou', meaning: 'Berbayar', category: 'Tempat & Benda', mastered: false },
+            { id: '58', kanji: '港', romaji: 'minato', meaning: 'Pelabuhan', category: 'Tempat & Benda', mastered: false },
+            { id: '59', kanji: '近所', romaji: 'kinjo', meaning: 'Tetangga / Lingkungan sekitar', category: 'Tempat & Benda', mastered: false },
+            { id: '60', kanji: '屋上', romaji: 'okujou', meaning: 'Atap gedung / Rooftop', category: 'Tempat & Benda', mastered: false },
+            { id: '61', kanji: '海外', romaji: 'kaigai', meaning: 'Luar negeri', category: 'Tempat & Benda', mastered: false },
+            { id: '62', kanji: '機会', romaji: 'kikai', meaning: 'Kesempatan', category: 'Tempat & Benda', mastered: false },
+            { id: '63', kanji: 'お寺', romaji: 'otera', meaning: 'Kuil Buddha', category: 'Tempat & Benda', mastered: false },
+            { id: '64', kanji: '城', romaji: 'shiro', meaning: 'Kastel / Istana', category: 'Tempat & Benda', mastered: false },
+            { id: '65', kanji: '神社', romaji: 'jinja', meaning: 'Kuil Shinto', category: 'Tempat & Benda', mastered: false },
+            { id: '66', kanji: '教会', romaji: 'kyoukai', meaning: 'Gereja', category: 'Tempat & Benda', mastered: false },
+            { id: '67', kanji: 'イスラム教の寺院', romaji: 'isuramukyou no jiin', meaning: 'Masjid / Kuil agama Islam', category: 'Tempat & Benda', mastered: false },
+            { id: '68', kanji: '予定', romaji: 'yotei', meaning: 'Rencana / Jadwal', category: 'Tempat & Benda', mastered: false },
+            { id: '69', kanji: 'ごみ箱', romaji: 'gomibako', meaning: 'Tempat sampah', category: 'Tempat & Benda', mastered: false },
+            { id: '70', kanji: '鏡', romaji: 'kagami', meaning: 'Cermin', category: 'Tempat & Benda', mastered: false },
+            { id: '71', kanji: '火傷', romaji: 'yakedo', meaning: 'Luka bakar', category: 'Tempat & Benda', mastered: false },
+            { id: '72', kanji: '私', romaji: 'watashi', meaning: 'Saya', category: 'Tempat & Benda', mastered: false },
+            { id: '73', kanji: '貴方', romaji: 'anata', meaning: 'Anda', category: 'Tempat & Benda', mastered: false },
+            { id: '74', kanji: 'あの人', romaji: 'ano hito', meaning: 'Orang itu', category: 'Tempat & Benda', mastered: false },
+            { id: '75', kanji: 'あの方', romaji: 'ano kata', meaning: 'Orang itu (sopan)', category: 'Tempat & Benda', mastered: false },
+            { id: '76', kanji: '皆さん', romaji: 'minasan', meaning: 'Anda sekalian', category: 'Tempat & Benda', mastered: false },
+            { id: '77', kanji: '～さん', romaji: '~san', meaning: 'Tuan / Nyonya / Nona', category: 'Tempat & Benda', mastered: false },
+            { id: '78', kanji: '先生', romaji: 'sensei', meaning: 'Guru / Dosen', category: 'Tempat & Benda', mastered: false },
+            { id: '79', kanji: '教師', romaji: 'kyoushi', meaning: 'Pengajar', category: 'Tempat & Benda', mastered: false },
+            { id: '80', kanji: '学生', romaji: 'gakusei', meaning: 'Mahasiswa / Pelajar', category: 'Tempat & Benda', mastered: false },
+            { id: '81', kanji: '会社員', romaji: 'kaishain', meaning: 'Karyawan perusahaan', category: 'Tempat & Benda', mastered: false },
+            { id: '82', kanji: '銀行員', romaji: 'ginkouin', meaning: 'Pegawai bank', category: 'Tempat & Benda', mastered: false },
+            { id: '83', kanji: '医者', romaji: 'isha', meaning: 'Dokter', category: 'Tempat & Benda', mastered: false },
+            { id: '84', kanji: '研究者', romaji: 'kenkyuusha', meaning: 'Peneliti', category: 'Tempat & Benda', mastered: false },
+            { id: '85', kanji: 'エンジニア', romaji: 'enjinior', meaning: 'Insinyur / Engineer', category: 'Tempat & Benda', mastered: false },
+            { id: '86', kanji: '大学', romaji: 'daigaku', meaning: 'Universitas', category: 'Tempat & Benda', mastered: false },
+            { id: '87', kanji: '病院', romaji: 'byouin', meaning: 'Rumah sakit', category: 'Tempat & Benda', mastered: false },
+            { id: '88', kanji: '電気', romaji: 'denki', meaning: 'Listrik / Lampu', category: 'Tempat & Benda', mastered: false },
+            { id: '89', kanji: '誰', romaji: 'dare', meaning: 'Siapa', category: 'Tempat & Benda', mastered: false },
+            { id: '90', kanji: 'どなた', romaji: 'donata', meaning: 'Siapa (sopan)', category: 'Tempat & Benda', mastered: false },
+            { id: '91', kanji: '何歳', romaji: 'nansai', meaning: 'Umur berapa', category: 'Tempat & Benda', mastered: false },
+            { id: '92', kanji: '国', romaji: 'kuni', meaning: 'Negara', category: 'Tempat & Benda', mastered: false },
+            { id: '93', kanji: 'これ', romaji: 'kore', meaning: 'Ini', category: 'Tempat & Benda', mastered: false },
+            { id: '94', kanji: 'それ', romaji: 'sore', meaning: 'Itu', category: 'Tempat & Benda', mastered: false },
+            { id: '95', kanji: 'あれ', romaji: 'are', meaning: 'Itu (jauh)', category: 'Tempat & Benda', mastered: false },
+            { id: '96', kanji: '本', romaji: 'hon', meaning: 'Buku', category: 'Tempat & Benda', mastered: false },
+            { id: '97', kanji: '辞書', romaji: 'jisho', meaning: 'Kamus', category: 'Tempat & Benda', mastered: false },
+            { id: '98', kanji: '雑誌', romaji: 'zasshi', meaning: 'Majalah', category: 'Tempat & Benda', mastered: false },
+            { id: '99', kanji: '新聞', romaji: 'shinbun', meaning: 'Koran', category: 'Tempat & Benda', mastered: false },
+            { id: '100', kanji: 'ノート', romaji: 'nooto', meaning: 'Buku catatan', category: 'Tempat & Benda', mastered: false },
+            { id: '101', kanji: '手帳', romaji: 'techou', meaning: 'Buku agenda', category: 'Tempat & Benda', mastered: false },
+            { id: '102', kanji: '名刺', romaji: 'meishi', meaning: 'Kartu nama', category: 'Tempat & Benda', mastered: false },
+            { id: '103', kanji: 'カード', romaji: 'kaado', meaning: 'Kartu', category: 'Tempat & Benda', mastered: false },
+            { id: '104', kanji: '鉛筆', romaji: 'enpitsu', meaning: 'Pensil', category: 'Tempat & Benda', mastered: false },
+            { id: '105', kanji: 'ボールペン', romaji: 'boorupen', meaning: 'Pulpen', category: 'Tempat & Benda', mastered: false },
+            { id: '106', kanji: 'シャープペンシル', romaji: 'shaapupenshiru', meaning: 'Pensil mekanik', category: 'Tempat & Benda', mastered: false },
+            { id: '107', kanji: '鍵', romaji: 'kagi', meaning: 'Kunci', category: 'Tempat & Benda', mastered: false },
+            { id: '108', kanji: '時計', romaji: 'tokei', meaning: 'Jam', category: 'Tempat & Benda', mastered: false },
+            { id: '109', kanji: '傘', romaji: 'kasa', meaning: 'Payung', category: 'Tempat & Benda', mastered: false },
+            { id: '110', kanji: '鞄', romaji: 'kaban', meaning: 'Tas', category: 'Tempat & Benda', mastered: false },
+            { id: '111', kanji: 'テレビ', romaji: 'terebi', meaning: 'Televisi', category: 'Tempat & Benda', mastered: false },
+            { id: '112', kanji: 'ラジオ', romaji: 'rajio', meaning: 'Radio', category: 'Tempat & Benda', mastered: false },
+            { id: '113', kanji: 'カメラ', romaji: 'kamera', meaning: 'Kamera', category: 'Tempat & Benda', mastered: false },
+            { id: '114', kanji: 'コンピューター', romaji: 'konpyuutaa', meaning: 'Komputer', category: 'Tempat & Benda', mastered: false },
+            { id: '115', kanji: '自動車', romaji: 'jidousha', meaning: 'Mobil', category: 'Tempat & Benda', mastered: false },
+            { id: '116', kanji: '机', romaji: 'tsukue', meaning: 'Meja', category: 'Tempat & Benda', mastered: false },
+            { id: '117', kanji: '椅子', romaji: 'isu', meaning: 'Kursi', category: 'Tempat & Benda', mastered: false },
+            { id: '118', kanji: 'チョコレート', romaji: 'chokoreeto', meaning: 'Cokelat', category: 'Tempat & Benda', mastered: false },
+            { id: '119', kanji: 'コーヒー', romaji: 'koohii', meaning: 'Kopi', category: 'Tempat & Benda', mastered: false },
+            { id: '120', kanji: '土産', romaji: 'omiyage', meaning: 'Oleh-oleh', category: 'Tempat & Benda', mastered: false },
+            { id: '121', kanji: '英語', romaji: 'eigo', meaning: 'Bahasa Inggris', category: 'Tempat & Benda', mastered: false },
+            { id: '122', kanji: '日本語', romaji: 'nihongo', meaning: 'Bahasa Jepang', category: 'Tempat & Benda', mastered: false },
+            { id: '123', kanji: '何', romaji: 'nan', meaning: 'Apa', category: 'Tempat & Benda', mastered: false },
+            { id: '124', kanji: 'ここ', romaji: 'koko', meaning: 'Di sini', category: 'Tempat & Benda', mastered: false },
+            { id: '125', kanji: 'そこ', romaji: 'soko', meaning: 'Di situ', category: 'Tempat & Benda', mastered: false },
+            { id: '126', kanji: 'どこ', romaji: 'doko', meaning: 'Di mana', category: 'Tempat & Benda', mastered: false },
+            { id: '127', kanji: 'こちら', romaji: 'kochira', meaning: 'Sebelah sini', category: 'Tempat & Benda', mastered: false },
+            { id: '128', kanji: 'そちら', romaji: 'sochira', meaning: 'Sebelah situ', category: 'Tempat & Benda', mastered: false },
+            { id: '129', kanji: 'あちら', romaji: 'achira', meaning: 'Sebelah sana', category: 'Tempat & Benda', mastered: false },
+            { id: '130', kanji: 'どちら', romaji: 'dochira', meaning: 'Sebelah mana', category: 'Tempat & Benda', mastered: false },
+            { id: '131', kanji: '食堂', romaji: 'shokudou', meaning: 'Kantin / Ruang makan', category: 'Tempat & Benda', mastered: false },
+            { id: '132', kanji: '事務所', romaji: 'jimusho', meaning: 'Kantor', category: 'Tempat & Benda', mastered: false },
+            { id: '133', kanji: '会議室', romaji: 'kaigishitsu', meaning: 'Ruang rapat', category: 'Tempat & Benda', mastered: false },
+            { id: '134', kanji: '受付', romaji: 'uketsuke', meaning: 'Resepsionis', category: 'Tempat & Benda', mastered: false },
+            { id: '135', kanji: 'ロビー', romaji: 'robii', meaning: 'Lobi', category: 'Tempat & Benda', mastered: false },
+            { id: '136', kanji: '部屋', romaji: 'heya', meaning: 'Kamar', category: 'Tempat & Benda', mastered: false },
+            { id: '137', kanji: 'トイレ', romaji: 'toire', meaning: 'Toilet', category: 'Tempat & Benda', mastered: false },
+            { id: '138', kanji: 'お手洗い', romaji: 'otearai', meaning: 'Kamar kecil', category: 'Tempat & Benda', mastered: false },
+            { id: '139', kanji: '階段', romaji: 'kaidan', meaning: 'Tangga', category: 'Tempat & Benda', mastered: false },
+            { id: '140', kanji: 'エレベーター', romaji: 'erebeetaa', meaning: 'Elevator', category: 'Tempat & Benda', mastered: false },
+            { id: '141', kanji: 'エスカレーター', romaji: 'esukareetaa', meaning: 'Eskalator', category: 'Tempat & Benda', mastered: false },
+            { id: '142', kanji: '自動販売機', romaji: 'jidouhanbaiki', meaning: 'Mesin penjual otomatis', category: 'Tempat & Benda', mastered: false },
+            { id: '143', kanji: '電話', romaji: 'denwa', meaning: 'Telepon', category: 'Tempat & Benda', mastered: false },
+            { id: '144', kanji: '会社', romaji: 'kaisha', meaning: 'Perusahaan', category: 'Tempat & Benda', mastered: false },
+            { id: '145', kanji: '家', romaji: 'uchi', meaning: 'Rumah', category: 'Tempat & Benda', mastered: false },
+            { id: '146', kanji: '靴', romaji: 'kutsu', meaning: 'Sepatu', category: 'Tempat & Benda', mastered: false },
+            { id: '147', kanji: 'ネクタイ', romaji: 'nekutai', meaning: 'Dasi', category: 'Tempat & Benda', mastered: false },
+            { id: '148', kanji: 'ワイン', romaji: 'wain', meaning: 'Anggur / Wine', category: 'Tempat & Benda', mastered: false },
+            { id: '149', kanji: '煙草', romaji: 'tabako', meaning: 'Rokok', category: 'Tempat & Benda', mastered: false },
+            { id: '150', kanji: '売り場', romaji: 'uriba', meaning: 'Tempat penjualan', category: 'Tempat & Benda', mastered: false },
+            { id: '151', kanji: '地下', romaji: 'chika', meaning: 'Bawah tanah', category: 'Tempat & Benda', mastered: false },
+            { id: '152', kanji: '今', romaji: 'ima', meaning: 'Sekarang', category: 'Tempat & Benda', mastered: false },
+            { id: '153', kanji: '学校', romaji: 'gakkou', meaning: 'Sekolah', category: 'Tempat & Benda', mastered: false },
+            { id: '154', kanji: 'ご飯', romaji: 'gohan', meaning: 'Nasi / Makanan', category: 'Tempat & Benda', mastered: false },
+            { id: '155', kanji: '手', romaji: 'te', meaning: 'Tangan', category: 'Tempat & Benda', mastered: false },
+            { id: '156', kanji: '桜', romaji: 'sakura', meaning: 'Bunga sakura', category: 'Tempat & Benda', mastered: false },
+            { id: '157', kanji: '料理', romaji: 'ryouri', meaning: 'Masakan', category: 'Tempat & Benda', mastered: false },
+            { id: '158', kanji: '犬', romaji: 'inu', meaning: 'Anjing', category: 'Tempat & Benda', mastered: false },
+            { id: '159', kanji: '兄弟', romaji: 'kyoudai', meaning: 'Saudara kandung', category: 'Tempat & Benda', mastered: false },
+            { id: '160', kanji: '天気', romaji: 'tenki', meaning: 'Cuaca', category: 'Tempat & Benda', mastered: false },
+            { id: '161', kanji: '車', romaji: 'kuruma', meaning: 'Mobil', category: 'Tempat & Benda', mastered: false },
+            { id: '162', kanji: '意見', romaji: 'iken', meaning: 'Pendapat', category: 'Tempat & Benda', mastered: false },
+            { id: '163', kanji: '財布', romaji: 'saifu', meaning: 'Dompet', category: 'Tempat & Benda', mastered: false },
+            { id: '164', kanji: '予定', romaji: 'yotei', meaning: 'Rencana', category: 'Tempat & Benda', mastered: false },
+            { id: '165', kanji: 'マナー', romaji: 'manaa', meaning: 'Tata krama', category: 'Tempat & Benda', mastered: false },
+            { id: '166', kanji: '感謝', romaji: 'kansha', meaning: 'Rasa terima kasih', category: 'Tempat & Benda', mastered: false },
+        
+            // Acara & Upacara
+            { id: '167', kanji: '結婚式', romaji: 'kekkon shiki', meaning: 'Upacara Pernikahan', category: 'Acara & Upacara', mastered: false },
+            { id: '168', kanji: '葬式', romaji: 'soushiki', meaning: 'Upacara Kematian', category: 'Acara & Upacara', mastered: false },
+            { id: '169', kanji: '式', romaji: 'shiki', meaning: 'Upacara', category: 'Acara & Upacara', mastered: false },
+            { id: '170', kanji: '展覧会', romaji: 'tenrankai', meaning: 'Pameran', category: 'Acara & Upacara', mastered: false },
+            { id: '171', kanji: '忘年会', romaji: 'bounenkai', meaning: 'Pesta Akhir Tahun', category: 'Acara & Upacara', mastered: false },
+            { id: '172', kanji: '卒業式', romaji: 'sotsugyou shiki', meaning: 'Upacara Kelulusan', category: 'Acara & Upacara', mastered: false },
+            { id: '173', kanji: '入学式', romaji: 'nyuugaku shiki', meaning: 'Penerimaan Siswa Baru', category: 'Acara & Upacara', mastered: false },
+
+            // Sifat & Kondisi
+            { id: '174', kanji: '正しい', romaji: 'tadashii', meaning: 'Benar / Tepat', category: 'Sifat & Kondisi', mastered: false },
+            { id: '175', kanji: '珍しい', romaji: 'mezurashii', meaning: 'Langka / Aneh', category: 'Sifat & Kondisi', mastered: false },
+            { id: '176', kanji: '間違っている', romaji: 'machigatte iru', meaning: 'Keliru / Salah', category: 'Sifat & Kondisi', mastered: false },
+            { id: '177', kanji: '曇ります', romaji: 'kumorimasu', meaning: 'Mendung / Berawan', category: 'Sifat & Kondisi', mastered: false },
+            { id: '178', kanji: '晴れます', romaji: 'haremasu', meaning: 'Cerah', category: 'Sifat & Kondisi', mastered: false },
+            { id: '179', kanji: '道がすきます', romaji: 'michi ga sukimasu', meaning: 'Jalan sepi / Lengang', category: 'Sifat & Kondisi', mastered: false },
+            { id: '180', kanji: '道が凍って滑ります', romaji: 'michi ga kotte suberimasu', meaning: 'Jalan licin (beku)', category: 'Sifat & Kondisi', mastered: false },
+            { id: '181', kanji: '道がデコボコしています', romaji: 'michi ga dekoboko shite imasu', meaning: 'Jalan berlubang', category: 'Sifat & Kondisi', mastered: false },
+            { id: '182', kanji: '道がひどく混んでいます', romaji: 'michi ga hidoku konde imasu', meaning: 'Jalan macet parah', category: 'Sifat & Kondisi', mastered: false },
+        ];
+
+
+        // 2. STATE MANAGEMENT & LOCAL STORAGE
+        let vocabList = [];
+        let activeTab = 'dashboard';
+
+        // Flashcard State
+        let flashcardQueue = [];
+        let fcIndex = 0;
+        let isCardFlipped = false;
+
+        // Quiz State
+        let quizQuestions = [];
+        let quizIndex = 0;
+        let quizScore = 0;
+        let quizStreak = 0;
+        let currentQuizItem = null;
+
+        // Initialize Application
+        window.addEventListener('DOMContentLoaded', () => {
+            loadVocabData();
+            updateDashboardStats();
+            renderVocabTable();
+            initFlashcards();
+        });
+
+        function loadVocabData() {
+            const saved = localStorage.getItem('jp_vocab_app_data_v2');
+            if (saved) {
+                try {
+                    vocabList = JSON.parse(saved);
+                } catch(e) {
+                    vocabList = [...INITIAL_VOCAB_DATA];
+                }
+            } else {
+                vocabList = [...INITIAL_VOCAB_DATA];
+                saveVocabData();
+            }
+        }
+
+        function saveVocabData() {
+            localStorage.setItem('jp_vocab_app_data_v2', JSON.stringify(vocabList));
+            updateDashboardStats();
+        }
+
+        function resetToDefaultData() {
+            if (confirm('Apakah Anda yakin ingin mengembalikan daftar kosakata ke catatan awal? Data buatan Anda akan direset.')) {
+                vocabList = [...INITIAL_VOCAB_DATA];
+                saveVocabData();
+                renderVocabTable();
+                initFlashcards();
+                alert('Data berhasil di-reset!');
+            }
+        }
+
+        // 3. NAVIGATION TAB SWITCHING
+        function switchTab(tabId) {
+            activeTab = tabId;
+            
+            // Hide all tab content
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+
+            // Desktop Nav Styling
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.className = "nav-btn px-4 py-2 rounded-lg text-sm font-medium transition flex items-center gap-2 text-indigo-200 hover:text-white hover:bg-indigo-800/60";
+            });
+            const activeDesktopBtn = document.getElementById(`nav-${tabId}`);
+            if(activeDesktopBtn) {
+                activeDesktopBtn.className = "nav-btn px-4 py-2 rounded-lg text-sm font-medium transition flex items-center gap-2 bg-indigo-600 text-white shadow-sm";
+            }
+
+            // Mobile Nav Styling
+            document.querySelectorAll('.mnav-btn').forEach(btn => {
+                btn.className = "mnav-btn flex flex-col items-center text-xs text-indigo-300 hover:text-white font-medium";
+            });
+            const activeMobileBtn = document.getElementById(`mnav-${tabId}`);
+            if(activeMobileBtn) {
+                activeMobileBtn.className = "mnav-btn flex flex-col items-center text-xs text-rose-400 font-medium font-bold";
+            }
+
+            if(tabId === 'flashcard') {
+                initFlashcards();
+            } else if(tabId === 'vocab') {
+                renderVocabTable();
+            }
+        }
+
+        // 4. AUDIO SYNTHESIS & SOUND EFFECTS
+        function speakJapanese(text) {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'ja-JP';
+                utterance.rate = 0.85;
+                window.speechSynthesis.speak(utterance);
+            }
+        }
+
+        function playSoundEffect(type) {
+            try {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+
+                if (type === 'correct') {
+                    osc.frequency.setValueAtTime(523.25, ctx.currentTime);
+                    osc.frequency.exponentialRampToValueAtTime(659.25, ctx.currentTime + 0.1);
+                    osc.frequency.exponentialRampToValueAtTime(783.99, ctx.currentTime + 0.2);
+                    gain.gain.setValueAtTime(0.2, ctx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.3);
+                    osc.start(ctx.currentTime);
+                    osc.stop(ctx.currentTime + 0.3);
+                } else if (type === 'wrong') {
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(200, ctx.currentTime);
+                    osc.frequency.exponentialRampToValueAtTime(140, ctx.currentTime + 0.15);
+                    gain.gain.setValueAtTime(0.2, ctx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.25);
+                    osc.start(ctx.currentTime);
+                    osc.stop(ctx.currentTime + 0.25);
+                } else if (type === 'flip') {
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(400, ctx.currentTime);
+                    osc.frequency.exponentialRampToValueAtTime(550, ctx.currentTime + 0.08);
+                    gain.gain.setValueAtTime(0.08, ctx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.08);
+                    osc.start(ctx.currentTime);
+                    osc.stop(ctx.currentTime + 0.08);
+                }
+            } catch(e){}
+        }
+
+        // 5. DASHBOARD STATS LOGIC
+        function updateDashboardStats() {
+            const total = vocabList.length;
+            const mastered = vocabList.filter(item => item.mastered).length;
+            const review = total - mastered;
+            const percent = total > 0 ? Math.round((mastered / total) * 100) : 0;
+
+            document.getElementById('stat-total').innerText = total;
+            document.getElementById('stat-mastered').innerText = mastered;
+            document.getElementById('stat-review').innerText = review;
+            document.getElementById('stat-percentage').innerText = `${percent}%`;
+
+            document.getElementById('progress-text').innerText = `${mastered} / ${total} Kata`;
+            document.getElementById('mastery-bar').style.width = `${percent}%`;
+
+            // Render Category Grid
+            const categories = ['Waktu', 'Peraturan', 'Kata Kerja', 'Tempat & Benda', 'Acara & Upacara', 'Sifat & Kondisi'];
+            const catGrid = document.getElementById('category-cards-grid');
+            catGrid.innerHTML = '';
+
+            categories.forEach(cat => {
+                const catItems = vocabList.filter(i => i.category === cat);
+                const catMastered = catItems.filter(i => i.mastered).length;
+                const catPercent = catItems.length > 0 ? Math.round((catMastered / catItems.length) * 100) : 0;
+
+                const card = document.createElement('div');
+                card.className = "bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md transition cursor-pointer";
+                card.onclick = () => {
+                    document.getElementById('flashcard-category-filter').value = cat;
+                    switchTab('flashcard');
+                };
+
+                card.innerHTML = `
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-xs font-bold text-slate-500 uppercase tracking-wide">${cat}</span>
+                        <span class="text-xs font-mono font-bold text-indigo-600">${catMastered}/${catItems.length}</span>
+                    </div>
+                    <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+                        <div class="bg-indigo-600 h-full rounded-full" style="width: ${catPercent}%"></div>
+                    </div>
+                `;
+                catGrid.appendChild(card);
+            });
+        }
+
+        // 6. FLASHCARD ENGINE
+        function initFlashcards() {
+            filterFlashcards();
+        }
+
+        function filterFlashcards() {
+            const cat = document.getElementById('flashcard-category-filter').value;
+            if (cat === 'ALL') {
+                flashcardQueue = [...vocabList];
+            } else if (cat === 'UNMASTERED') {
+                flashcardQueue = vocabList.filter(item => !item.mastered);
+            } else {
+                flashcardQueue = vocabList.filter(item => item.category === cat);
+            }
+
+            fcIndex = 0;
+            showCard();
+        }
+
+        function shuffleFlashcards() {
+            for (let i = flashcardQueue.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [flashcardQueue[i], flashcardQueue[j]] = [flashcardQueue[j], flashcardQueue[i]];
+            }
+            fcIndex = 0;
+            showCard();
+        }
+
+        function showCard() {
+            if (isCardFlipped) {
+                flipCard(false); // reset back to front without sound
+            }
+
+            const counterEl = document.getElementById('fc-counter');
+            if (flashcardQueue.length === 0) {
+                counterEl.innerText = "0 / 0";
+                document.getElementById('fc-front-kanji').innerText = "Kosakata Kosong";
+                document.getElementById('fc-front-category').innerText = "-";
+                document.getElementById('fc-front-status').innerText = "";
+                return;
+            }
+
+            counterEl.innerText = `${fcIndex + 1} / ${flashcardQueue.length}`;
+            const item = flashcardQueue[fcIndex];
+
+            // Front
+            document.getElementById('fc-front-kanji').innerText = item.kanji;
+            document.getElementById('fc-front-category').innerText = item.category;
+            
+            const statusBadge = document.getElementById('fc-front-status');
+            if(item.mastered) {
+                statusBadge.innerText = "✓ Sudah Hafal";
+                statusBadge.className = "text-xs font-semibold px-2.5 py-1 rounded-md bg-emerald-100 text-emerald-700";
+            } else {
+                statusBadge.innerText = "• Belum Hafal";
+                statusBadge.className = "text-xs font-semibold px-2.5 py-1 rounded-md bg-amber-100 text-amber-700";
+            }
+
+            // Back
+            document.getElementById('fc-back-kanji').innerText = item.kanji;
+            document.getElementById('fc-back-romaji').innerText = item.romaji;
+            document.getElementById('fc-back-meaning').innerText = item.meaning;
+            document.getElementById('fc-back-category').innerText = item.category;
+        }
+
+        function flipCard(playSound = true) {
+            const card = document.getElementById('flashcard-card');
+            isCardFlipped = !isCardFlipped;
+            if(isCardFlipped) {
+                card.classList.add('rotate-y-180');
+            } else {
+                card.classList.remove('rotate-y-180');
+            }
+            if(playSound) playSoundEffect('flip');
+        }
+
+        function speakCurrentWord() {
+            if (flashcardQueue[fcIndex]) {
+                speakJapanese(flashcardQueue[fcIndex].kanji);
+            }
+        }
+
+        function nextCard() {
+            if (flashcardQueue.length === 0) return;
+            fcIndex = (fcIndex + 1) % flashcardQueue.length;
+            showCard();
+        }
+
+        function prevCard() {
+            if (flashcardQueue.length === 0) return;
+            fcIndex = (fcIndex - 1 + flashcardQueue.length) % flashcardQueue.length;
+            showCard();
+        }
+
+        function markCurrentCard(masteredStatus) {
+            if (flashcardQueue.length === 0) return;
+            const currentItem = flashcardQueue[fcIndex];
+            
+            // Find original item in main list
+            const original = vocabList.find(i => i.id === currentItem.id);
+            if (original) {
+                original.mastered = masteredStatus;
+                saveVocabData();
+                showCard();
+                playSoundEffect(masteredStatus ? 'correct' : 'wrong');
+            }
+            nextCard();
+        }
+
+        // 7. QUIZ & TYPING PRACTICE ENGINE
+        function startQuiz() {
+            const type = document.getElementById('quiz-type').value;
+            const cat = document.getElementById('quiz-category').value;
+            const count = parseInt(document.getElementById('quiz-count').value);
+
+            let pool = [];
+            if (cat === 'ALL') {
+                pool = [...vocabList];
+            } else {
+                pool = vocabList.filter(i => i.category === cat);
+            }
+
+            if (pool.length === 0) {
+                alert('Tidak ada kosakata pada kategori ini untuk dibuat kuis.');
+                return;
+            }
+
+            // Shuffle pool
+            for (let i = pool.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [pool[i], pool[j]] = [pool[j], pool[i]];
+            }
+
+            quizQuestions = pool.slice(0, count);
+            quizIndex = 0;
+            quizScore = 0;
+            quizStreak = 0;
+
+            document.getElementById('quiz-config-card').classList.add('hidden');
+            document.getElementById('quiz-result-card').classList.add('hidden');
+            document.getElementById('quiz-arena').classList.remove('hidden');
+
+            renderQuizQuestion();
+        }
+
+        function renderQuizQuestion() {
+            currentQuizItem = quizQuestions[quizIndex];
+            const type = document.getElementById('quiz-type').value;
+
+            document.getElementById('quiz-progress-badge').innerText = `Soal ${quizIndex + 1} / ${quizQuestions.length}`;
+            document.getElementById('quiz-q-category').innerText = currentQuizItem.category;
+            document.getElementById('quiz-q-kanji').innerText = currentQuizItem.kanji;
+            
+            document.getElementById('quiz-feedback').classList.add('hidden');
+            document.getElementById('quiz-next-btn').classList.add('hidden');
+
+            const streakBadge = document.getElementById('quiz-streak-badge');
+            if (quizStreak >= 2) {
+                streakBadge.classList.remove('hidden');
+                document.getElementById('quiz-streak-count').innerText = quizStreak;
+            } else {
+                streakBadge.classList.add('hidden');
+            }
+
+            const typingContainer = document.getElementById('quiz-typing-container');
+            const mcqContainer = document.getElementById('quiz-mcq-container');
+
+            if (type === 'TYPING') {
+                typingContainer.classList.remove('hidden');
+                mcqContainer.classList.add('hidden');
+                
+                const input = document.getElementById('quiz-typing-input');
+                input.value = '';
+                input.disabled = false;
+                input.focus();
+                
+                document.getElementById('quiz-submit-btn').classList.remove('hidden');
+                document.getElementById('quiz-hint-btn').classList.remove('hidden');
+            } else {
+                typingContainer.classList.add('hidden');
+                mcqContainer.classList.remove('hidden');
+                mcqContainer.innerHTML = '';
+
+                // Generate 4 MCQ options
+                const options = [currentQuizItem];
+                const otherItems = vocabList.filter(i => i.id !== currentQuizItem.id);
+                for (let i = otherItems.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [otherItems[i], otherItems[j]] = [otherItems[j], otherItems[i]];
+                }
+
+                for (let i = 0; i < Math.min(3, otherItems.length); i++) {
+                    options.push(otherItems[i]);
+                }
+
+                // Shuffle options
+                for (let i = options.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [options[i], options[j]] = [options[j], options[i]];
+                }
+
+                options.forEach(opt => {
+                    const btn = document.createElement('button');
+                    btn.className = "mcq-opt-btn bg-slate-50 hover:bg-indigo-50 border-2 border-slate-200 hover:border-indigo-400 text-slate-800 font-semibold p-4 rounded-2xl text-left text-sm sm:text-base transition flex flex-col justify-between";
+                    btn.onclick = () => checkMcqAnswer(opt, btn);
+                    btn.innerHTML = `
+                        <span class="font-bold font-mono text-indigo-700">${opt.romaji}</span>
+                        <span class="text-xs text-slate-500">${opt.meaning}</span>
+                    `;
+                    mcqContainer.appendChild(btn);
+                });
+            }
+        }
+
+        function normalizeString(str) {
+            return str.toLowerCase()
+                      .replace(/\s+/g, '')
+                      .replace(/ō/g, 'ou')
+                      .replace(/ū/g, 'uu')
+                      .replace(/ā/g, 'aa')
+                      .replace(/ē/g, 'ee');
+        }
+
+        function checkTypingAnswer() {
+            const input = document.getElementById('quiz-typing-input');
+            const userAns = normalizeString(input.value);
+            if (!userAns) return;
+
+            const targetRomaji = normalizeString(currentQuizItem.romaji);
+            const targetMeaning = normalizeString(currentQuizItem.meaning);
+
+            const isCorrect = userAns.length >= 2 && (targetRomaji.includes(userAns) || targetMeaning.includes(userAns) || userAns === targetRomaji);
+
+            input.disabled = true;
+            document.getElementById('quiz-submit-btn').classList.add('hidden');
+            document.getElementById('quiz-hint-btn').classList.add('hidden');
+
+            handleQuizResult(isCorrect);
+        }
+
+        function checkMcqAnswer(selectedOption, buttonEl) {
+            const isCorrect = selectedOption.id === currentQuizItem.id;
+            
+            // Disable all MCQ buttons
+            document.querySelectorAll('.mcq-opt-btn').forEach(btn => {
+                btn.onclick = null;
+                btn.classList.add('opacity-60');
+            });
+            buttonEl.classList.remove('opacity-60');
+
+            if (isCorrect) {
+                buttonEl.className = "mcq-opt-btn bg-emerald-100 border-2 border-emerald-500 text-emerald-900 font-semibold p-4 rounded-2xl text-left shadow-sm";
+            } else {
+                buttonEl.className = "mcq-opt-btn bg-rose-100 border-2 border-rose-500 text-rose-900 font-semibold p-4 rounded-2xl text-left shadow-sm";
+            }
+
+            handleQuizResult(isCorrect);
+        }
+
+        function handleQuizResult(isCorrect) {
+            const feedbackEl = document.getElementById('quiz-feedback');
+            feedbackEl.classList.remove('hidden');
+
+            if (isCorrect) {
+                quizScore++;
+                quizStreak++;
+                playSoundEffect('correct');
+                feedbackEl.className = "p-4 rounded-2xl text-left text-sm font-medium bg-emerald-50 text-emerald-800 border border-emerald-200 flex items-center gap-3";
+                feedbackEl.innerHTML = `
+                    <i class="fa-solid fa-circle-check text-emerald-600 text-xl"></i>
+                    <div>
+                        <strong class="font-bold">Benar sekali!</strong>
+                        <p class="text-xs mt-0.5">${currentQuizItem.kanji} = <span class="font-mono">${currentQuizItem.romaji}</span> (${currentQuizItem.meaning})</p>
+                    </div>
+                `;
+
+                // Update mastery automatically
+                const original = vocabList.find(i => i.id === currentQuizItem.id);
+                if (original) {
+                    original.mastered = true;
+                    saveVocabData();
+                }
+
+            } else {
+                quizStreak = 0;
+                playSoundEffect('wrong');
+                feedbackEl.className = "p-4 rounded-2xl text-left text-sm font-medium bg-rose-50 text-rose-800 border border-rose-200 flex items-center gap-3";
+                feedbackEl.innerHTML = `
+                    <i class="fa-solid fa-circle-xmark text-rose-600 text-xl"></i>
+                    <div>
+                        <strong class="font-bold">Kurang tepat.</strong>
+                        <p class="text-xs mt-0.5">Jawaban benar: ${currentQuizItem.kanji} = <span class="font-mono font-bold">${currentQuizItem.romaji}</span> (${currentQuizItem.meaning})</p>
+                    </div>
+                `;
+            }
+
+            document.getElementById('quiz-next-btn').classList.remove('hidden');
+        }
+
+        function showHint() {
+            const input = document.getElementById('quiz-typing-input');
+            input.value = currentQuizItem.romaji.substring(0, 3) + '...';
+        }
+
+        function speakQuizWord() {
+            if (currentQuizItem) {
+                speakJapanese(currentQuizItem.kanji);
+            }
+        }
+
+        function nextQuizQuestion() {
+            quizIndex++;
+            if (quizIndex < quizQuestions.length) {
+                renderQuizQuestion();
+            } else {
+                finishQuiz();
+            }
+        }
+
+        function finishQuiz() {
+            document.getElementById('quiz-arena').classList.add('hidden');
+            const resCard = document.getElementById('quiz-result-card');
+            resCard.classList.remove('hidden');
+
+            const percent = Math.round((quizScore / quizQuestions.length) * 100);
+            document.getElementById('res-score').innerText = `${percent}%`;
+            document.getElementById('res-correct-total').innerText = `${quizScore} / ${quizQuestions.length}`;
+
+            if (percent >= 80) {
+                confetti({
+                    particleCount: 100,
+                    spread: 70,
+                    origin: { y: 0.6 }
+                });
+            }
+        }
+
+        function quitQuiz() {
+            document.getElementById('quiz-arena').classList.add('hidden');
+            document.getElementById('quiz-result-card').classList.add('hidden');
+            document.getElementById('quiz-config-card').classList.remove('hidden');
+        }
+
+        // 8. VOCAB BANK TABLE & FORM MANAGEMENT
+        function renderVocabTable() {
+            const search = document.getElementById('vocab-search').value.toLowerCase();
+            const filterCat = document.getElementById('vocab-filter-cat').value;
+
+            let filtered = vocabList.filter(item => {
+                const matchSearch = item.kanji.toLowerCase().includes(search) || 
+                                    item.romaji.toLowerCase().includes(search) || 
+                                    item.meaning.toLowerCase().includes(search);
+
+                let matchCat = true;
+                if (filterCat === 'MASTERED') matchCat = item.mastered;
+                else if (filterCat === 'UNMASTERED') matchCat = !item.mastered;
+                else if (filterCat !== 'ALL') matchCat = item.category === filterCat;
+
+                return matchSearch && matchCat;
+            });
+
+            const grid = document.getElementById('vocab-grid');
+            grid.innerHTML = '';
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `
+                    <div class="col-span-full text-center py-12 bg-white rounded-2xl border border-slate-200">
+                        <i class="fa-solid fa-folder-open text-4xl text-slate-300 mb-2"></i>
+                        <p class="text-sm font-semibold text-slate-500">Tidak ada kosakata yang cocok.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            filtered.forEach(item => {
+                const card = document.createElement('div');
+                card.className = "bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md transition flex flex-col justify-between space-y-3";
+                
+                card.innerHTML = `
+                    <div class="flex justify-between items-start">
+                        <span class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-600 border border-slate-200">${item.category}</span>
+                        <div class="flex items-center gap-1">
+                            <button onclick="speakJapanese('${item.kanji}')" title="Dengarkan Audio" class="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-600 hover:bg-indigo-600 hover:text-white transition flex items-center justify-center text-xs">
+                                <i class="fa-solid fa-volume-high"></i>
+                            </button>
+                            <button onclick="editVocabItem('${item.id}')" title="Edit Kosakata" class="w-8 h-8 rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200 transition flex items-center justify-center text-xs">
+                                <i class="fa-solid fa-pen"></i>
+                            </button>
+                            <button onclick="deleteVocabItem('${item.id}')" title="Hapus Kosakata" class="w-8 h-8 rounded-lg bg-rose-50 text-rose-600 hover:bg-rose-600 hover:text-white transition flex items-center justify-center text-xs">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h4 class="font-jp text-3xl font-black text-slate-800 mb-1">${item.kanji}</h4>
+                        <p class="text-sm font-mono font-bold text-amber-600">${item.romaji}</p>
+                        <p class="text-sm font-semibold text-slate-700 mt-1">${item.meaning}</p>
+                    </div>
+
+                    <div class="pt-2 border-t border-slate-100 flex justify-between items-center">
+                        <button onclick="toggleMasteryStatus('${item.id}')" class="text-xs font-bold px-3 py-1 rounded-xl transition flex items-center gap-1.5 ${item.mastered ? 'bg-emerald-100 text-emerald-800 hover:bg-emerald-200' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}">
+                            <i class="fa-solid ${item.mastered ? 'fa-circle-check text-emerald-600' : 'fa-circle-notch text-slate-400'}"></i>
+                            ${item.mastered ? 'Sudah Hafal' : 'Tandai Hafal'}
+                        </button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function toggleMasteryStatus(id) {
+            const item = vocabList.find(i => i.id === id);
+            if (item) {
+                item.mastered = !item.mastered;
+                saveVocabData();
+                renderVocabTable();
+            }
+        }
+
+        // 9. MODAL HANDLERS FOR ADDING / EDITING
+        function openAddModal() {
+            document.getElementById('modal-vocab-title').innerText = "Tambah Kosakata Baru";
+            document.getElementById('vocab-form').reset();
+            document.getElementById('form-item-id').value = '';
+            document.getElementById('modal-add-vocab').classList.remove('hidden');
+        }
+
+        function closeAddModal() {
+            document.getElementById('modal-add-vocab').classList.add('hidden');
+        }
+
+        function editVocabItem(id) {
+            const item = vocabList.find(i => i.id === id);
+            if (!item) return;
+
+            document.getElementById('modal-vocab-title').innerText = "Edit Kosakata";
+            document.getElementById('form-item-id').value = item.id;
+            document.getElementById('form-kanji').value = item.kanji;
+            document.getElementById('form-romaji').value = item.romaji;
+            document.getElementById('form-meaning').value = item.meaning;
+            document.getElementById('form-category').value = item.category;
+
+            document.getElementById('modal-add-vocab').classList.remove('hidden');
+        }
+
+        function saveVocabItem(e) {
+            e.preventDefault();
+            const id = document.getElementById('form-item-id').value;
+            const kanji = document.getElementById('form-kanji').value.trim();
+            const romaji = document.getElementById('form-romaji').value.trim();
+            const meaning = document.getElementById('form-meaning').value.trim();
+            const category = document.getElementById('form-category').value;
+
+            if (id) {
+                // Edit existing
+                const item = vocabList.find(i => i.id === id);
+                if (item) {
+                    item.kanji = kanji;
+                    item.romaji = romaji;
+                    item.meaning = meaning;
+                    item.category = category;
+                }
+            } else {
+                // Add new
+                const newItem = {
+                    id: Date.now().toString(),
+                    kanji,
+                    romaji,
+                    meaning,
+                    category,
+                    mastered: false
+                };
+                vocabList.unshift(newItem);
+            }
+
+            saveVocabData();
+            closeAddModal();
+            renderVocabTable();
+            initFlashcards();
+        }
+
+        function deleteVocabItem(id) {
+            if (confirm('Hapus kosakata ini dari daftar hafalan Anda?')) {
+                vocabList = vocabList.filter(i => i.id !== id);
+                saveVocabData();
+                renderVocabTable();
+                initFlashcards();
+            }
+        }
+    </script>
+</body>
+</html>
