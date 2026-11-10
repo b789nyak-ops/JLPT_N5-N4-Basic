@@ -1685,6 +1685,7 @@
             const original = vocabList.find(i => i.id === currentItem.id);
             if (original) {
                 original.mastered = masteredStatus;
+                original.nextReview = newDate().tolSOString();
                 saveVocabData();
                 showCard();
                 playSoundEffect(masteredStatus ? 'correct' : 'wrong');
