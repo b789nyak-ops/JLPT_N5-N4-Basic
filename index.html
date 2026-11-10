@@ -1941,6 +1941,35 @@
                 renderVocabTable();
                 initFlashcards();
             }
+<!-- KONTENER KUIS PILIHAN GANDA -->
+<div id="quiz-container" class="max-w-xl mx-auto p-5 bg-white rounded-2xl shadow-lg border border-gray-100">
+  <!-- Progress Header -->
+  <div id="quiz-header" class="flex justify-between items-center pb-3 mb-4 border-b border-gray-100">
+    <span id="quiz-progress" class="font-bold text-gray-600 text-sm">Soal 1 / 100</span>
+    <span id="quiz-score" class="text-xs bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full font-bold">Skor: 0</span>
+  </div>
+
+  <!-- Area Kartu Soal -->
+  <div id="quiz-card" class="text-center py-4 mb-4">
+    <h2 id="quiz-kanji" class="text-4xl font-black text-indigo-950 mb-1">漢字</h2>
+    <p id="quiz-romaji" class="text-gray-400 font-medium text-base">romaji</p>
+  </div>
+
+  <!-- Pilihan Jawaban -->
+  <div id="quiz-options" class="grid grid-cols-1 gap-3 mb-4">
+    <!-- Pilihan jawaban di-inject lewat JavaScript -->
+  </div>
+
+  <!-- Tampilan Hasil Kuis (Awalnya tersembunyi) -->
+  <div id="quiz-result" class="hidden text-center py-6">
+    <div class="text-5xl mb-3">🎉</div>
+    <h3 class="text-2xl font-bold text-gray-800 mb-2">Kuis Selesai!</h3>
+    <p id="final-score-text" class="text-gray-600 mb-6 leading-relaxed"></p>
+    <button onclick="startQuiz()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-xl transition shadow-md">
+      Ulangi Kuis
+    </button>
+  </div>
+</div>
         }
     </script>
 </body>
