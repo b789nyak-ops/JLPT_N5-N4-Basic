@@ -1421,7 +1421,7 @@
             });
         }
 
-        // 6. FLASHCARD ENGINE
+        // 6. FLASHCARD ENGINE (Diperbarui agar berbasis ID unik, tidak mudah melompat)
         function initFlashcards() {
             filterFlashcards();
         }
@@ -1463,8 +1463,15 @@
                 return;
             }
 
+            // Pastikan indeks aman
+            if (fcIndex >= flashcardQueue.length) fcIndex = 0;
+            if (fcIndex < 0) fcIndex = flashcardQueue.length - 1;
+
             counterEl.innerText = `${fcIndex + 1} / ${flashcardQueue.length}`;
-            const item = flashcardQueue[fcIndex];
+            
+            // Ambil item berdasarkan ID asli dari vocabList agar sinkron
+            const currentQueueItem = flashcardQueue[fcIndex];
+            const item = vocabList.find(i => i.id === currentQueueItem.id) || currentQueueItem;
 
             // Front
             document.getElementById('fc-front-kanji').innerText = item.kanji;
@@ -1486,44 +1493,15 @@
             document.getElementById('fc-back-category').innerText = item.category;
         }
 
-        function flipCard(playSound = true) {
-            const card = document.getElementById('flashcard-card');
-            isCardFlipped = !isCardFlipped;
-            if(isCardFlipped) {
-                card.classList.add('rotate-y-180');
-            } else {
-                card.classList.remove('rotate-y-180');
-            }
-            if(playSound) playSoundEffect('flip');
-        }
-
-        function speakCurrentWord() {
-            if (flashcardQueue[fcIndex]) {
-                speakJapanese(flashcardQueue[fcIndex].kanji);
-            }
-        }
-
-        function nextCard() {
-            if (flashcardQueue.length === 0) return;
-            fcIndex = (fcIndex + 1) % flashcardQueue.length;
-            showCard();
-        }
-
-        function prevCard() {
-            if (flashcardQueue.length === 0) return;
-            fcIndex = (fcIndex - 1 + flashcardQueue.length) % flashcardQueue.length;
-            showCard();
-        }
-
         function markCurrentCard(masteredStatus) {
             if (flashcardQueue.length === 0) return;
             const currentItem = flashcardQueue[fcIndex];
             
+            // Cari berdasarkan ID unik di dalam master vocabList
             const original = vocabList.find(i => i.id === currentItem.id);
             if (original) {
                 original.mastered = masteredStatus;
                 saveVocabData();
-                showCard();
                 playSoundEffect(masteredStatus ? 'correct' : 'wrong');
             }
             nextCard();
