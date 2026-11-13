@@ -112,9 +112,6 @@
                     </i> Bank Kata
                 </button>
             </nav>
-
-            <!-- Quick Action Button -->
-            
         </div>
     </header>
 
@@ -567,6 +564,62 @@
             </div>
         </section>
 
+        <!-- MODAL DETAIL KANJI & LATIHAN MENULIS -->
+        <div id="kanji-detail-modal" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+            <div class="bg-white rounded-3xl shadow-2xl w-full max-w-lg overflow-hidden flex flex-col max-h-[90vh]">
+                <!-- Header Modal -->
+                <div class="bg-indigo-900 p-4 flex justify-between items-center text-white">
+                    <h3 class="font-bold text-lg">Detail & Latihan Menulis</h3>
+                    <button onclick="closeKanjiDetail()" class="text-indigo-200 hover:text-white transition text-xl">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+                
+                <!-- Body Modal -->
+                <div class="p-6 overflow-y-auto flex-1 space-y-5">
+                    <div class="text-center">
+                        <h2 id="modal-detail-kanji" class="font-jp text-6xl font-black text-slate-800 mb-2">-</h2>
+                        <p id="modal-detail-romaji" class="font-mono text-lg font-bold text-amber-600">-</p>
+                        <p id="modal-detail-meaning" class="text-slate-600 font-semibold">-</p>
+                    </div>
+
+                    <div class="bg-indigo-50 p-4 rounded-2xl border border-indigo-100 text-sm space-y-3">
+                        <div>
+                            <span class="font-bold text-indigo-800 block mb-1">Onyomi (音読み):</span>
+                            <span id="modal-detail-onyomi" class="text-slate-700">-</span>
+                        </div>
+                        <div>
+                            <span class="font-bold text-indigo-800 block mb-1">Kunyomi (訓読み):</span>
+                            <span id="modal-detail-kunyomi" class="text-slate-700">-</span>
+                        </div>
+                        <div>
+                            <span class="font-bold text-indigo-800 block mb-1">Filosofi / Penjelasan:</span>
+                            <span id="modal-detail-filosofi" class="text-slate-700">-</span>
+                        </div>
+                    </div>
+
+                    <!-- Canvas Latihan Menulis -->
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <label class="font-bold text-slate-700 text-sm">Latihan Menulis (Coret di bawah):</label>
+                            <button onclick="clearCanvas()" class="text-xs bg-rose-100 text-rose-700 px-3 py-1 rounded-lg hover:bg-rose-200 font-bold transition">
+                                <i class="fa-solid fa-eraser"></i> Hapus
+                            </button>
+                        </div>
+                        <div class="border-2 border-dashed border-slate-300 rounded-2xl bg-slate-50 overflow-hidden flex justify-center relative touch-none mx-auto w-[300px] h-[300px]">
+                            <canvas id="writing-canvas" width="300" height="300" class="cursor-crosshair absolute z-10"></canvas>
+                            <!-- Garis bantu kuadran -->
+                            <div class="absolute inset-0 pointer-events-none flex items-center justify-center opacity-20 z-0">
+                                <div class="w-full h-px bg-slate-500 absolute"></div>
+                                <div class="h-full w-px bg-slate-500 absolute"></div>
+                            </div>
+                        </div>
+                        <p class="text-xs text-slate-400 text-center mt-2">Progres coretan otomatis tersimpan walau di-refresh</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </main>
 
     <!-- JAVASCRIPT APPLICATION LOGIC -->
@@ -583,70 +636,70 @@
             { id: '7', kanji: '毎秒', romaji: 'maibyou', meaning: 'Setiap detik', category: 'Waktu', mastered: false },
             { id: '8', kanji: '毎朝', romaji: 'maiasa', meaning: 'Setiap pagi', category: 'Waktu', mastered: false },
             { id: '9', kanji: '毎晩', romaji: 'maiban', meaning: 'Setiap malam', category: 'Waktu', mastered: false },
-  { id: '10', kanji: '今', romaji: 'ima', meaning: 'Sekarang', category: 'Waktu', mastered: false },
-  { id: '11', kanji: '午前', romaji: 'gozen', meaning: 'Pagi / AM', category: 'Waktu', mastered: false },
-  { id: '12', kanji: '午後', romaji: 'gogo', meaning: 'Sore/Malam / PM', category: 'Waktu', mastered: false },
-  { id: '13', kanji: '朝', romaji: 'asa', meaning: 'Pagi', category: 'Waktu', mastered: false },
-  { id: '14', kanji: '昼', romaji: 'hiru', meaning: 'Siang', category: 'Waktu', mastered: false },
-  { id: '15', kanji: '晩', romaji: 'ban', meaning: 'Malam', category: 'Waktu', mastered: false },
-  { id: '16', kanji: '夜', romaji: 'yoru', meaning: 'Malam', category: 'Waktu', mastered: false },
-  { id: '17', kanji: 'おととい', romaji: 'ototoi', meaning: 'Hari kemaren lusa', category: 'Waktu', mastered: false },
-  { id: '18', kanji: '昨日', romaji: 'kinou', meaning: 'Kemarin', category: 'Waktu', mastered: false },
-  { id: '19', kanji: '今日', romaji: 'kyou', meaning: 'Hari ini', category: 'Waktu', mastered: false },
-  { id: '20', kanji: '明日', romaji: 'ashita', meaning: 'Besok', category: 'Waktu', mastered: false },
-  { id: '21', kanji: '明後日', romaji: 'asatte', meaning: 'Besok lusa', category: 'Waktu', mastered: false },
-  { id: '22', kanji: '今朝', romaji: 'kesa', meaning: 'Pagi ini', category: 'Waktu', mastered: false },
-  { id: '23', kanji: '今晩', romaji: 'konban', meaning: 'Malam ini', category: 'Waktu', mastered: false },
-  { id: '24', kanji: '先週', romaji: 'senshuu', meaning: 'Minggu lalu', category: 'Waktu', mastered: false },
-  { id: '25', kanji: '今週', romaji: 'konshuu', meaning: 'Minggu ini', category: 'Waktu', mastered: false },
-  { id: '26', kanji: '来週', romaji: 'raishuu', meaning: 'Minggu depan', category: 'Waktu', mastered: false },
-  { id: '27', kanji: '再来週', romaji: 'saraishuu', meaning: 'Dua minggu lagi', category: 'Waktu', mastered: false },
-  { id: '28', kanji: '先月', romaji: 'sengetsu', meaning: 'Bulan lalu', category: 'Waktu', mastered: false },
-  { id: '29', kanji: '今月', romaji: 'kongetsu', meaning: 'Bulan ini', category: 'Waktu', mastered: false },
-  { id: '30', kanji: '来月', romaji: 'raigetsu', meaning: 'Bulan depan', category: 'Waktu', mastered: false },
-  { id: '31', kanji: '再来月', romaji: 'saraigetsu', meaning: 'Dua bulan lagi', category: 'Waktu', mastered: false },
-  { id: '32', kanji: '昨年', romaji: 'sakunen', meaning: 'Tahun lalu (formal)', category: 'Waktu', mastered: false },
-  { id: '33', kanji: '去年', romaji: 'kyonen', meaning: 'Tahun lalu', category: 'Waktu', mastered: false },
-  { id: '34', kanji: '今年', romaji: 'kotoshi', meaning: 'Tahun ini', category: 'Waktu', mastered: false },
-  { id: '35', kanji: '来年', romaji: 'rainen', meaning: 'Tahun depan', category: 'Waktu', mastered: false },
-  { id: '36', kanji: '再来年', romaji: 'sarainen', meaning: 'Dua tahun lagi', category: 'Waktu', mastered: false },
-  { id: '37', kanji: '月曜日', romaji: 'getsuyoubi', meaning: 'Hari Senin', category: 'Waktu', mastered: false },
-  { id: '38', kanji: '火曜日', romaji: 'kayoubi', meaning: 'Hari Selasa', category: 'Waktu', mastered: false },
-  { id: '39', kanji: '水曜日', romaji: 'suiyoubi', meaning: 'Hari Rabu', category: 'Waktu', mastered: false },
-  { id: '40', kanji: '木曜日', romaji: 'mokuyoubi', meaning: 'Hari Kamis', category: 'Waktu', mastered: false },
-  { id: '41', kanji: '金曜日', romaji: 'kinyoubi', meaning: 'Hari Jumat', category: 'Waktu', mastered: false },
-  { id: '42', kanji: '土曜日', romaji: 'doyoubi', meaning: 'Hari Sabtu', category: 'Waktu', mastered: false },
-  { id: '43', kanji: '日曜日', romaji: 'nichiyoubi', meaning: 'Hari Minggu', category: 'Waktu', mastered: false },
-  { id: '44', kanji: '週末', romaji: 'shumatsu', meaning: 'Akhir pekan', category: 'Waktu', mastered: false },
-  { id: '45', kanji: '平日', romaji: 'heijitsu', meaning: 'Hari kerja / weekdays', category: 'Waktu', mastered: false },
-  { id: '46', kanji: '祝日', romaji: 'shukujitsu', meaning: 'Hari libur nasional', category: 'Waktu', mastered: false },
-  { id: '47', kanji: '何曜日', romaji: 'nanyoubi', meaning: 'Hari apa', category: 'Waktu', mastered: false },
-  { id: '48', kanji: '何時', romaji: 'nanji', meaning: 'Jam berapa', category: 'Waktu', mastered: false },
-  { id: '49', kanji: '何分', romaji: 'nanpun / nanfun', meaning: 'Menit berapa', category: 'Waktu', mastered: false },
-  { id: '50', kanji: '何日', romaji: 'nannichi', meaning: 'Tanggal berapa / Berapa hari', category: 'Waktu', mastered: false },
-  { id: '51', kanji: '何月', romaji: 'nangatsu', meaning: 'Bulan apa', category: 'Waktu', mastered: false },
-  { id: '52', kanji: '何年', romaji: 'nannen', meaning: 'Tahun berapa', category: 'Waktu', mastered: false },
-  { id: '53', kanji: 'いつ', romaji: 'itsu', meaning: 'Kapan', category: 'Waktu', mastered: false },
-  { id: '54', kanji: '頃', romaji: 'koro / goro', meaning: 'Sekitar (untuk waktu)', category: 'Waktu', mastered: false },
-  { id: '55', kanji: '時', romaji: 'ji', meaning: 'Jam...', category: 'Waktu', mastered: false },
-  { id: '56', kanji: '分', romaji: 'fun / pun', meaning: 'Menit...', category: 'Waktu', mastered: false },
-  { id: '57', kanji: '半', romaji: 'han', meaning: 'Setengah / 30 menit', category: 'Waktu', mastered: false },
-  { id: '58', kanji: '秒', romaji: 'byou', meaning: 'Detik...', category: 'Waktu', mastered: false },
-  { id: '59', kanji: '最初', romaji: 'saisho', meaning: 'Pertama / Awal', category: 'Waktu', mastered: false },
-  { id: '60', kanji: '最後', romaji: 'saigo', meaning: 'Terakhir', category: 'Waktu', mastered: false },
-  { id: '61', kanji: '最近', romaji: 'saikin', meaning: 'Belakangan ini / Baru-baru ini', category: 'Waktu', mastered: false },
-  { id: '62', kanji: '前', romaji: 'mae', meaning: 'Sebelum / Yang lalu', category: 'Waktu', mastered: false },
-  { id: '63', kanji: '後', romaji: 'ato / ushiro', meaning: 'Sesudah / Setelah', category: 'Waktu', mastered: false },
-  { id: '64', kanji: '将来', romaji: 'shourai', meaning: 'Masa depan', category: 'Waktu', mastered: false },
-  { id: '65', kanji: '昔', romaji: 'mukashi', meaning: 'Zaman dulu / Dahulu kala', category: 'Waktu', mastered: false },
-  { id: '66', kanji: '時代', romaji: 'jidai', meaning: 'Era / Zaman', category: 'Waktu', mastered: false },
-  { id: '67', kanji: '時々', romaji: 'tokidoki', meaning: 'Kadang-kadang', category: 'Waktu', mastered: false },
-  { id: '68', kanji: 'いつも', romaji: 'itsumo', meaning: 'Selalu', category: 'Waktu', mastered: false },
-  { id: '69', kanji: '大抵', romaji: 'taitei', meaning: 'Biasanya', category: 'Waktu', mastered: false },
-  { id: '70', kanji: '滅多に', romaji: 'metta ni', meaning: 'Jarang sekali', category: 'Waktu', mastered: false },
-  { id: '71', kanji: 'もう', romaji: 'mou', meaning: 'Sudah', category: 'Waktu', mastered: false },
-  { id: '72', kanji: 'まだ', romaji: 'mada', meaning: 'Belum / Masih', category: 'Waktu', mastered: false },
-  { id: '73', kanji: 'そろそろ', romaji: 'sorosoro', meaning: 'Sebentar lagi / Segera', category: 'Waktu', mastered: false },
+            { id: '10', kanji: '今', romaji: 'ima', meaning: 'Sekarang', category: 'Waktu', mastered: false },
+            { id: '11', kanji: '午前', romaji: 'gozen', meaning: 'Pagi / AM', category: 'Waktu', mastered: false },
+            { id: '12', kanji: '午後', romaji: 'gogo', meaning: 'Sore/Malam / PM', category: 'Waktu', mastered: false },
+            { id: '13', kanji: '朝', romaji: 'asa', meaning: 'Pagi', category: 'Waktu', mastered: false },
+            { id: '14', kanji: '昼', romaji: 'hiru', meaning: 'Siang', category: 'Waktu', mastered: false },
+            { id: '15', kanji: '晩', romaji: 'ban', meaning: 'Malam', category: 'Waktu', mastered: false },
+            { id: '16', kanji: '夜', romaji: 'yoru', meaning: 'Malam', category: 'Waktu', mastered: false },
+            { id: '17', kanji: 'おととい', romaji: 'ototoi', meaning: 'Hari kemaren lusa', category: 'Waktu', mastered: false },
+            { id: '18', kanji: '昨日', romaji: 'kinou', meaning: 'Kemarin', category: 'Waktu', mastered: false },
+            { id: '19', kanji: '今日', romaji: 'kyou', meaning: 'Hari ini', category: 'Waktu', mastered: false },
+            { id: '20', kanji: '明日', romaji: 'ashita', meaning: 'Besok', category: 'Waktu', mastered: false },
+            { id: '21', kanji: '明後日', romaji: 'asatte', meaning: 'Besok lusa', category: 'Waktu', mastered: false },
+            { id: '22', kanji: '今朝', romaji: 'kesa', meaning: 'Pagi ini', category: 'Waktu', mastered: false },
+            { id: '23', kanji: '今晩', romaji: 'konban', meaning: 'Malam ini', category: 'Waktu', mastered: false },
+            { id: '24', kanji: '先週', romaji: 'senshuu', meaning: 'Minggu lalu', category: 'Waktu', mastered: false },
+            { id: '25', kanji: '今週', romaji: 'konshuu', meaning: 'Minggu ini', category: 'Waktu', mastered: false },
+            { id: '26', kanji: '来週', romaji: 'raishuu', meaning: 'Minggu depan', category: 'Waktu', mastered: false },
+            { id: '27', kanji: '再来週', romaji: 'saraishuu', meaning: 'Dua minggu lagi', category: 'Waktu', mastered: false },
+            { id: '28', kanji: '先月', romaji: 'sengetsu', meaning: 'Bulan lalu', category: 'Waktu', mastered: false },
+            { id: '29', kanji: '今月', romaji: 'kongetsu', meaning: 'Bulan ini', category: 'Waktu', mastered: false },
+            { id: '30', kanji: '来月', romaji: 'raigetsu', meaning: 'Bulan depan', category: 'Waktu', mastered: false },
+            { id: '31', kanji: '再来月', romaji: 'saraigetsu', meaning: 'Dua bulan lagi', category: 'Waktu', mastered: false },
+            { id: '32', kanji: '昨年', romaji: 'sakunen', meaning: 'Tahun lalu (formal)', category: 'Waktu', mastered: false },
+            { id: '33', kanji: '去年', romaji: 'kyonen', meaning: 'Tahun lalu', category: 'Waktu', mastered: false },
+            { id: '34', kanji: '今年', romaji: 'kotoshi', meaning: 'Tahun ini', category: 'Waktu', mastered: false },
+            { id: '35', kanji: '来年', romaji: 'rainen', meaning: 'Tahun depan', category: 'Waktu', mastered: false },
+            { id: '36', kanji: '再来年', romaji: 'sarainen', meaning: 'Dua tahun lagi', category: 'Waktu', mastered: false },
+            { id: '37', kanji: '月曜日', romaji: 'getsuyoubi', meaning: 'Hari Senin', category: 'Waktu', mastered: false },
+            { id: '38', kanji: '火曜日', romaji: 'kayoubi', meaning: 'Hari Selasa', category: 'Waktu', mastered: false },
+            { id: '39', kanji: '水曜日', romaji: 'suiyoubi', meaning: 'Hari Rabu', category: 'Waktu', mastered: false },
+            { id: '40', kanji: '木曜日', romaji: 'mokuyoubi', meaning: 'Hari Kamis', category: 'Waktu', mastered: false },
+            { id: '41', kanji: '金曜日', romaji: 'kinyoubi', meaning: 'Hari Jumat', category: 'Waktu', mastered: false },
+            { id: '42', kanji: '土曜日', romaji: 'doyoubi', meaning: 'Hari Sabtu', category: 'Waktu', mastered: false },
+            { id: '43', kanji: '日曜日', romaji: 'nichiyoubi', meaning: 'Hari Minggu', category: 'Waktu', mastered: false },
+            { id: '44', kanji: '週末', romaji: 'shumatsu', meaning: 'Akhir pekan', category: 'Waktu', mastered: false },
+            { id: '45', kanji: '平日', romaji: 'heijitsu', meaning: 'Hari kerja / weekdays', category: 'Waktu', mastered: false },
+            { id: '46', kanji: '祝日', romaji: 'shukujitsu', meaning: 'Hari libur nasional', category: 'Waktu', mastered: false },
+            { id: '47', kanji: '何曜日', romaji: 'nanyoubi', meaning: 'Hari apa', category: 'Waktu', mastered: false },
+            { id: '48', kanji: '何時', romaji: 'nanji', meaning: 'Jam berapa', category: 'Waktu', mastered: false },
+            { id: '49', kanji: '何分', romaji: 'nanpun / nanfun', meaning: 'Menit berapa', category: 'Waktu', mastered: false },
+            { id: '50', kanji: '何日', romaji: 'nannichi', meaning: 'Tanggal berapa / Berapa hari', category: 'Waktu', mastered: false },
+            { id: '51', kanji: '何月', romaji: 'nangatsu', meaning: 'Bulan apa', category: 'Waktu', mastered: false },
+            { id: '52', kanji: '何年', romaji: 'nannen', meaning: 'Tahun berapa', category: 'Waktu', mastered: false },
+            { id: '53', kanji: 'いつ', romaji: 'itsu', meaning: 'Kapan', category: 'Waktu', mastered: false },
+            { id: '54', kanji: '頃', romaji: 'koro / goro', meaning: 'Sekitar (untuk waktu)', category: 'Waktu', mastered: false },
+            { id: '55', kanji: '時', romaji: 'ji', meaning: 'Jam...', category: 'Waktu', mastered: false },
+            { id: '56', kanji: '分', romaji: 'fun / pun', meaning: 'Menit...', category: 'Waktu', mastered: false },
+            { id: '57', kanji: '半', romaji: 'han', meaning: 'Setengah / 30 menit', category: 'Waktu', mastered: false },
+            { id: '58', kanji: '秒', romaji: 'byou', meaning: 'Detik...', category: 'Waktu', mastered: false },
+            { id: '59', kanji: '最初', romaji: 'saisho', meaning: 'Pertama / Awal', category: 'Waktu', mastered: false },
+            { id: '60', kanji: '最後', romaji: 'saigo', meaning: 'Terakhir', category: 'Waktu', mastered: false },
+            { id: '61', kanji: '最近', romaji: 'saikin', meaning: 'Belakangan ini / Baru-baru ini', category: 'Waktu', mastered: false },
+            { id: '62', kanji: '前', romaji: 'mae', meaning: 'Sebelum / Yang lalu', category: 'Waktu', mastered: false },
+            { id: '63', kanji: '後', romaji: 'ato / ushiro', meaning: 'Sesudah / Setelah', category: 'Waktu', mastered: false },
+            { id: '64', kanji: '将来', romaji: 'shourai', meaning: 'Masa depan', category: 'Waktu', mastered: false },
+            { id: '65', kanji: '昔', romaji: 'mukashi', meaning: 'Zaman dulu / Dahulu kala', category: 'Waktu', mastered: false },
+            { id: '66', kanji: '時代', romaji: 'jidai', meaning: 'Era / Zaman', category: 'Waktu', mastered: false },
+            { id: '67', kanji: '時々', romaji: 'tokidoki', meaning: 'Kadang-kadang', category: 'Waktu', mastered: false },
+            { id: '68', kanji: 'いつも', romaji: 'itsumo', meaning: 'Selalu', category: 'Waktu', mastered: false },
+            { id: '69', kanji: '大抵', romaji: 'taitei', meaning: 'Biasanya', category: 'Waktu', mastered: false },
+            { id: '70', kanji: '滅多に', romaji: 'metta ni', meaning: 'Jarang sekali', category: 'Waktu', mastered: false },
+            { id: '71', kanji: 'もう', romaji: 'mou', meaning: 'Sudah', category: 'Waktu', mastered: false },
+            { id: '72', kanji: 'まだ', romaji: 'mada', meaning: 'Belum / Masih', category: 'Waktu', mastered: false },
+            { id: '73', kanji: 'そろそろ', romaji: 'sorosoro', meaning: 'Sebentar lagi / Segera', category: 'Waktu', mastered: false },
             
             // Peraturan & Tanda
             { id: '10', kanji: '規則', romaji: 'kisoku', meaning: 'Peraturan', category: 'Peraturan', mastered: false },
@@ -1419,12 +1472,19 @@
         let quizStreak = 0;
         let currentQuizItem = null;
 
+        // Canvas State
+        let canvas = null;
+        let ctx = null;
+        let isDrawing = false;
+        let currentDetailId = null;
+
         // Initialize Application
         window.addEventListener('DOMContentLoaded', () => {
             loadVocabData();
             updateDashboardStats();
             renderVocabTable();
             initFlashcards();
+            initCanvas(); // Initialize Canvas Listeners
         });
 
         function loadVocabData() {
@@ -1611,7 +1671,7 @@
 
         function showCard() {
             if (isCardFlipped) {
-                flipCard(false); // reset back to front without sound
+                flipCard(false);
             }
 
             const counterEl = document.getElementById('fc-counter');
@@ -1679,7 +1739,6 @@
             if (flashcardQueue.length === 0) return;
             const currentItem = flashcardQueue[fcIndex];
             
-            // Find original item in main list
             const original = vocabList.find(i => i.id === currentItem.id);
             if (original) {
                 original.mastered = masteredStatus;
@@ -1708,7 +1767,6 @@
                 return;
             }
 
-            // Shuffle pool
             for (let i = pool.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
                 [pool[i], pool[j]] = [pool[j], pool[i]];
@@ -1764,7 +1822,6 @@
                 mcqContainer.classList.remove('hidden');
                 mcqContainer.innerHTML = '';
 
-                // Generate 4 MCQ options
                 const options = [currentQuizItem];
                 const otherItems = vocabList.filter(i => i.id !== currentQuizItem.id);
                 for (let i = otherItems.length - 1; i > 0; i--) {
@@ -1776,7 +1833,6 @@
                     options.push(otherItems[i]);
                 }
 
-                // Shuffle options
                 for (let i = options.length - 1; i > 0; i--) {
                     const j = Math.floor(Math.random() * (i + 1));
                     [options[i], options[j]] = [options[j], options[i]];
@@ -1824,7 +1880,6 @@
         function checkMcqAnswer(selectedOption, buttonEl) {
             const isCorrect = selectedOption.id === currentQuizItem.id;
             
-            // Disable all MCQ buttons
             document.querySelectorAll('.mcq-opt-btn').forEach(btn => {
                 btn.onclick = null;
                 btn.classList.add('opacity-60');
@@ -1857,7 +1912,6 @@
                     </div>
                 `;
 
-                // Update mastery automatically
                 const original = vocabList.find(i => i.id === currentQuizItem.id);
                 if (original) {
                     original.mastered = true;
@@ -1957,13 +2011,15 @@
 
             filtered.forEach(item => {
                 const card = document.createElement('div');
-                card.className = "bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md transition flex flex-col justify-between space-y-3";
+                // Tambahkan event onClick ke card dan styling cursor-pointer
+                card.className = "bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md transition flex flex-col justify-between space-y-3 cursor-pointer";
+                card.onclick = () => openKanjiDetail(item.id);
                 
                 card.innerHTML = `
                     <div class="flex justify-between items-start">
                         <span class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-600 border border-slate-200">${item.category}</span>
                         <div class="flex items-center gap-1">
-                            <button onclick="speakJapanese('${item.kanji}')" title="Dengarkan Audio" class="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-600 hover:bg-indigo-600 hover:text-white transition flex items-center justify-center text-xs">
+                            <button onclick="event.stopPropagation(); speakJapanese('${item.kanji}')" title="Dengarkan Audio" class="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-600 hover:bg-indigo-600 hover:text-white transition flex items-center justify-center text-xs">
                                 <i class="fa-solid fa-volume-high"></i>
                             </button>
                         </div>
@@ -1976,7 +2032,7 @@
                     </div>
 
                     <div class="pt-2 border-t border-slate-100 flex justify-between items-center">
-                        <button onclick="toggleMasteryStatus('${item.id}')" class="text-xs font-bold px-3 py-1 rounded-xl transition flex items-center gap-1.5 ${item.mastered ? 'bg-emerald-100 text-emerald-800 hover:bg-emerald-200' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}">
+                        <button onclick="event.stopPropagation(); toggleMasteryStatus('${item.id}')" class="text-xs font-bold px-3 py-1 rounded-xl transition flex items-center gap-1.5 ${item.mastered ? 'bg-emerald-100 text-emerald-800 hover:bg-emerald-200' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}">
                             <i class="fa-solid ${item.mastered ? 'fa-circle-check text-emerald-600' : 'fa-circle-notch text-slate-400'}"></i>
                             ${item.mastered ? 'Sudah Hafal' : 'Tandai Hafal'}
                         </button>
@@ -1995,76 +2051,119 @@
             }
         }
 
-        // 9. MODAL HANDLERS FOR ADDING / EDITING
-        function openAddModal() {
-            document.getElementById('modal-vocab-title').innerText = "Tambah Kosakata Baru";
-            document.getElementById('vocab-form').reset();
-            document.getElementById('form-item-id').value = '';
-            document.getElementById('modal-add-vocab').classList.remove('hidden');
+        // 9. LOGIKA KANVAS LATIHAN MENULIS & MODAL DETAIL KANJI
+        function initCanvas() {
+            canvas = document.getElementById('writing-canvas');
+            if(canvas) {
+                ctx = canvas.getContext('2d');
+                
+                // Event Mouse (Desktop)
+                canvas.addEventListener('mousedown', startDrawing);
+                canvas.addEventListener('mousemove', draw);
+                canvas.addEventListener('mouseup', stopDrawing);
+                canvas.addEventListener('mouseout', stopDrawing);
+
+                // Event Touch (Mobile)
+                canvas.addEventListener('touchstart', startDrawing, {passive: false});
+                canvas.addEventListener('touchmove', draw, {passive: false});
+                canvas.addEventListener('touchend', stopDrawing);
+            }
         }
 
-        function closeAddModal() {
-            document.getElementById('modal-add-vocab').classList.add('hidden');
+        function getCoordinates(e) {
+            const rect = canvas.getBoundingClientRect();
+            const scaleX = canvas.width / rect.width;
+            const scaleY = canvas.height / rect.height;
+            
+            let clientX, clientY;
+            if (e.touches && e.touches.length > 0) {
+                clientX = e.touches[0].clientX;
+                clientY = e.touches[0].clientY;
+            } else {
+                clientX = e.clientX;
+                clientY = e.clientY;
+            }
+            return {
+                x: (clientX - rect.left) * scaleX,
+                y: (clientY - rect.top) * scaleY
+            };
         }
 
-        function editVocabItem(id) {
+        function startDrawing(e) {
+            e.preventDefault();
+            isDrawing = true;
+            const pos = getCoordinates(e);
+            ctx.beginPath();
+            ctx.moveTo(pos.x, pos.y);
+            ctx.lineWidth = 6;
+            ctx.lineCap = 'round';
+            ctx.strokeStyle = '#1e293b'; 
+        }
+
+        function draw(e) {
+            if (!isDrawing) return;
+            e.preventDefault();
+            const pos = getCoordinates(e);
+            ctx.lineTo(pos.x, pos.y);
+            ctx.stroke();
+        }
+
+        function stopDrawing(e) {
+            if (!isDrawing) return;
+            isDrawing = false;
+            // Menyimpan coretan ke localStorage otomatis
+            if (currentDetailId) {
+                localStorage.setItem(`kanji_canvas_${currentDetailId}`, canvas.toDataURL());
+            }
+        }
+
+        function clearCanvas() {
+            if(ctx && canvas) {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                if (currentDetailId) {
+                    localStorage.removeItem(`kanji_canvas_${currentDetailId}`);
+                }
+            }
+        }
+
+        function openKanjiDetail(id) {
             const item = vocabList.find(i => i.id === id);
             if (!item) return;
 
-            document.getElementById('modal-vocab-title').innerText = "Edit Kosakata";
-            document.getElementById('form-item-id').value = item.id;
-            document.getElementById('form-kanji').value = item.kanji;
-            document.getElementById('form-romaji').value = item.romaji;
-            document.getElementById('form-meaning').value = item.meaning;
-            document.getElementById('form-category').value = item.category;
+            currentDetailId = id;
 
-            document.getElementById('modal-add-vocab').classList.remove('hidden');
-        }
+            // Mengisi data modal
+            document.getElementById('modal-detail-kanji').innerText = item.kanji;
+            document.getElementById('modal-detail-romaji').innerText = item.romaji;
+            document.getElementById('modal-detail-meaning').innerText = item.meaning;
+            
+            // Catatan: Jika ingin menampilkan Onyomi & Kunyomi, kamu perlu menambah properti 'onyomi' & 'kunyomi' pada data INITIAL_VOCAB_DATA nanti
+            document.getElementById('modal-detail-onyomi').innerText = item.onyomi || 'Belum ada data (tambahkan di dataset).';
+            document.getElementById('modal-detail-kunyomi').innerText = item.kunyomi || 'Belum ada data (tambahkan di dataset).';
+            document.getElementById('modal-detail-filosofi').innerText = item.philosophy || 'Belum ada data filosofi.';
 
-        function saveVocabItem(e) {
-            e.preventDefault();
-            const id = document.getElementById('form-item-id').value;
-            const kanji = document.getElementById('form-kanji').value.trim();
-            const romaji = document.getElementById('form-romaji').value.trim();
-            const meaning = document.getElementById('form-meaning').value.trim();
-            const category = document.getElementById('form-category').value;
+            // Menampilkan Modal
+            document.getElementById('kanji-detail-modal').classList.remove('hidden');
 
-            if (id) {
-                // Edit existing
-                const item = vocabList.find(i => i.id === id);
-                if (item) {
-                    item.kanji = kanji;
-                    item.romaji = romaji;
-                    item.meaning = meaning;
-                    item.category = category;
+            // Mereset & Meload coretan dari localStorage
+            if(ctx && canvas) {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                const savedImage = localStorage.getItem(`kanji_canvas_${id}`);
+                if (savedImage) {
+                    const img = new Image();
+                    img.onload = () => {
+                        ctx.drawImage(img, 0, 0);
+                    };
+                    img.src = savedImage;
                 }
-            } else {
-                // Add new
-                const newItem = {
-                    id: Date.now().toString(),
-                    kanji,
-                    romaji,
-                    meaning,
-                    category,
-                    mastered: false
-                };
-                vocabList.unshift(newItem);
-            }
-
-            saveVocabData();
-            closeAddModal();
-            renderVocabTable();
-            initFlashcards();
-        }
-
-        function deleteVocabItem(id) {
-            if (confirm('Hapus kosakata ini dari daftar hafalan Anda?')) {
-                vocabList = vocabList.filter(i => i.id !== id);
-                saveVocabData();
-                renderVocabTable();
-                initFlashcards();
             }
         }
+
+        function closeKanjiDetail() {
+            document.getElementById('kanji-detail-modal').classList.add('hidden');
+            currentDetailId = null;
+        }
+
     </script>
 </body>
 </html>
