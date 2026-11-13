@@ -87,7 +87,7 @@
                 </div>
                 <div>
                     <h1 class="font-bold text-lg leading-tight tracking-wide flex items-center gap-2">
-                        日本語 Master <span class="bg-rose-500/30 text-rose-200 text-xs px-2 py-0.5 rounded-full font-normal border border-rose-400/30">N4 / JFT</span>
+                        日本語 Master Japan <span class="bg-rose-500/30 text-rose-200 text-xs px-2 py-0.5 rounded-full font-normal border border-rose-400/30">N4 / JFT</span>
                     </h1>
                     <p class="text-xs text-indigo-200">Media Hafalan Kosakata Jepang</p>
                 </div>
@@ -257,7 +257,7 @@
                         <option value="Tempat & Benda">Tempat & Benda</option>
                         <option value="Acara & Upacara">Acara & Upacara</option>
                         <option value="Sifat & Kondisi">Sifat & Kondisi</option>
-                        <option value="Bencana & Darurat">Bencana & Darurat</option>
+                        <option value="Alam & Bencana Alam">Alam & Bencana Alam</option>
                         <option value="Partikel & Keterangan">Partikel & Keterangan</option>
                     </select>
                 </div>
@@ -398,7 +398,7 @@
                             <option value="Tempat & Benda">Tempat & Benda</option>
                             <option value="Acara & Upacara">Acara & Upacara</option>
                             <option value="Sifat & Kondisi">Sifat & Kondisi</option>
-                            <option value="Bencana & Darurat">Bencana & Darurat</option>
+                            <option value="Alam & Bencana Alam">Alam & Bencana Alam</option>
                             <option value="Partikel & Keterangan">Partikel & Keterangan</option>
                         </select>
                     </div>
@@ -409,6 +409,7 @@
                         <select id="quiz-count" class="w-full bg-slate-50 border border-slate-300 text-slate-700 text-sm rounded-xl p-3 focus:ring-2 focus:ring-indigo-500 outline-none font-medium">
                             <option value="10">10 Soal</option>
                             <option value="20">20 Soal</option>
+                            <option value="30">30 Soal</option>
                             <option value="50">50 Soal</option>
                             <option value="100">100 Soal</option>
                         </select>
@@ -547,7 +548,7 @@
                         <option value="Sifat & Kondisi">Sifat & Kondisi</option>
                         <option value="MASTERED">Sudah Hafal</option>
                         <option value="UNMASTERED">Belum Hafal</option>
-                        <option value="Bencana & Darurat">Bencana & Darurat</option>
+                        <option value="Alam & Bencana Alam">Alam & Bencana Alam</option>
                         <option value="Partikel & Keterangan">Partikel & Keterangan</option>
                     </select>
 
@@ -626,7 +627,7 @@
     <script>
         // 1. DEFAULT DATASET PRELOADED FROM THE HANDWRITTEN NOTES
         const INITIAL_VOCAB_DATA = [
-    // --- KATEGORI: WAKTU ---
+    // --- KATEGORI: WAKTU --- \\
     { id: '1', kanji: '毎日', romaji: 'mainichi', meaning: 'Setiap hari', category: 'Waktu', mastered: false, onyomi: 'マイ (mai), ニチ (nichi)', kunyomi: 'ひ (hi), か (ka)', philosophy: 'Gabungan 毎 (setiap/tumbuh berulang) dan 日 (hari/matahari).' },
     { id: '2', kanji: '毎月', romaji: 'maitsuki', meaning: 'Setiap bulan', category: 'Waktu', mastered: false, onyomi: 'マイ (mai), ゲツ (getsu), ガツ (gatsu)', kunyomi: 'つき (tsuki)', philosophy: 'Gabungan 毎 (setiap) dan 月 (bulan).' },
     { id: '3', kanji: '毎年', romaji: 'maitoshi', meaning: 'Setiap tahun', category: 'Waktu', mastered: false, onyomi: 'マイ (mai), ネン (nen)', kunyomi: 'とし (toshi)', philosophy: 'Gabungan 毎 (setiap) dan 年 (tahun/panen padi).' },
@@ -701,6 +702,273 @@
     { id: '72', kanji: 'まだ', romaji: 'mada', meaning: 'Belum / Masih', category: 'Waktu', mastered: false, onyomi: '-', kunyomi: '-', philosophy: '-' },
     { id: '73', kanji: 'そろそろ', romaji: 'sorosoro', meaning: 'Sebentar lagi / Segera', category: 'Waktu', mastered: false, onyomi: '-', kunyomi: '-', philosophy: '-' },
 
+    // --- KATA KERJA --- \\
+    { id: '16', kanji: '折ります', romaji: 'orimasu', meaning: 'Melipat / Mematahkan', category: 'Kata Kerja', mastered: false, onyomi: 'セツ (setsu)', kunyomi: 'お.る (o.ru)', philosophy: 'Tangan (手) memegang dan memotong/membengkokkan (折).' },
+    { id: '17', kanji: '気がつきます', romaji: 'ki ga tsukimasu', meaning: 'Menyadari', category: 'Kata Kerja', mastered: false, onyomi: 'キ (ki), ツキ (tsuki)', kunyomi: 'き (ki), つ.く (tsu.ku)', philosophy: 'Semangat/pikiran (気) tiba-tiba melekat/sampai (付).' },
+    { id: '18', kanji: '見つけます', romaji: 'mitsukemasu', meaning: 'Menemukan', category: 'Kata Kerja', mastered: false, onyomi: 'ケン (ken)', kunyomi: 'み.つける (mi.tsukeru)', philosophy: 'Melihat (見) dan mendapati sesuatu.' },
+    { id: '19', kanji: '見つかります', romaji: 'mitsukarimasu', meaning: 'Ditemukan', category: 'Kata Kerja', mastered: false, onyomi: 'ケン (ken)', kunyomi: 'み.つかる (mi.tsukaru)', philosophy: 'Bentuk intransitif dari menemukan.' },
+    { id: '20', kanji: '質問します', romaji: 'shitsumon shimasu', meaning: 'Bertanya', category: 'Kata Kerja', mastered: false, onyomi: 'シツ (shitsu), モン (mon)', kunyomi: 'と.う (to.u)', philosophy: 'Mempertanyakan kualitas/inti (質) ke gerbang/pintu luar (問).' },
+    { id: '22', kanji: '開けます', romaji: 'akemasu', meaning: 'Membuka', category: 'Kata Kerja', mastered: false, onyomi: 'カイ (kai)', kunyomi: 'あ.ける (a.keru)', philosophy: 'Palang pintu gerbang dibuka.' },
+    { id: '24', kanji: '閉めます', romaji: 'shimemasu', meaning: 'Menutup (pintu, jendela, dll)', category: 'Kata Kerja', mastered: false, onyomi: 'ヘイ (hei)', kunyomi: 'し.める (shi.meru)', philosophy: 'Menutup pintu atau penutup.' },
+    { id: '25', kanji: '閉じます', romaji: 'tojimasu', meaning: 'Menutup (mata, buku, payung, laptop)', category: 'Kata Kerja', mastered: false, onyomi: 'トウ (tou)', kunyomi: 'と.じる (to.jiru)', philosophy: 'Menutup rapat sesuatu yang terbuka.' },
+    { id: '26', kanji: '変わります', romaji: 'kawarimasu', meaning: 'Berubah', category: 'Kata Kerja', mastered: false, onyomi: 'ヘン (hen)', kunyomi: 'か.わる (ka.waru)', philosophy: 'Sesuatu yang beralih dari satu kondisi ke kondisi lain.' },
+    { id: '27', kanji: '困ります', romaji: 'komarimasu', meaning: 'Kesulitan / Bingung', category: 'Kata Kerja', mastered: false, onyomi: 'コン (kon)', kunyomi: 'こ.まる (ko.maru)', philosophy: 'Pohon yang terkurung di dalam kotak, merasa kesulitan.' },
+    { id: '28', kanji: '拾います', romaji: 'hiroimasu', meaning: 'Memungut / Mengambil', category: 'Kata Kerja', mastered: false, onyomi: '-', kunyomi: 'ひろ.う (hiro.u)', philosophy: 'Menggunakan tangan untuk memungut sesuatu di tanah.' },
+    { id: '31', kanji: '飾ります', romaji: 'kazarimasu', meaning: 'Menghias / Memajang', category: 'Kata Kerja', mastered: false, onyomi: 'ショク (shoku)', kunyomi: 'かざ.る (kaza.ru)', philosophy: 'Mempercantik atau merangkai suatu benda agar tampak indah.' },
+    { id: '34', kanji: '過ごします', romaji: 'sugoshimasu', meaning: 'Menghabiskan waktu', category: 'Kata Kerja', mastered: false, onyomi: 'カ (ka)', kunyomi: 'すご.す (sugo.su)', philosophy: 'Melewati atau menjalani kurun waktu tertentu.' },
+    { id: '35', kanji: '運動します', romaji: 'undou shimasu', meaning: 'Berolahraga', category: 'Kata Kerja', mastered: false, onyomi: 'ウン (un), ドウ (dou)', kunyomi: 'うご.く (ugoku)', philosophy: 'Menggerakkan (動) tubuh dan energi (運).' },
+    { id: '36', kanji: '相談します', romaji: 'soudan shimasu', meaning: 'Diskusi / Berkonsultasi', category: 'Kata Kerja', mastered: false, onyomi: 'ソウ (sou), ダン (dan)', kunyomi: '-', philosophy: 'Saling bertukar gagasan dan pandangan.' },
+    { id: '38', kanji: '休憩します', romaji: 'kyuukei shimasu', meaning: 'Istirahat sejenak', category: 'Kata Kerja', mastered: false, onyomi: 'キュウ (kyuu), ケイ (kei)', kunyomi: 'やす.む (yasumu)', philosophy: 'Tubuh bersandar untuk beristirahat.' },
+    { id: '41', kanji: '始まります', romaji: 'hajimarimasu', meaning: 'Dimulai', category: 'Kata Kerja', mastered: false, onyomi: 'シ (shi)', kunyomi: 'はじ.まる (haji.maru)', philosophy: 'Titik awal dari suatu proses atau kegiatan.' },
+    { id: '42', kanji: '失敗します', romaji: 'shippai shimasu', meaning: 'Gagal', category: 'Kata Kerja', mastered: false, onyomi: 'シッ (shi-), パイ (pai)', kunyomi: '-', philosophy: 'Kehilangan arah atau meleset dari target.' },
+    { id: '43', kanji: '成功します', romaji: 'seikou shimasu', meaning: 'Sukses / Berhasil', category: 'Kata Kerja', mastered: false, onyomi: 'セイ (sei), コウ (kou)', kunyomi: '-', philosophy: 'Mencapai hasil yang gemilang.' },
+    { id: '44', kanji: '合格します', romaji: 'goukaku shimasu', meaning: 'Lulus ujian', category: 'Kata Kerja', mastered: false, onyomi: 'ゴウ (gou), カク (kaku)', kunyomi: 'かな.う (kanau)', philosophy: 'Memenuhi standar atau kriteria yang ditetapkan.' },
+    { id: '45', kanji: '続けます', romaji: 'tsuzukemasu', meaning: 'Melanjutkan', category: 'Kata Kerja', mastered: false, onyomi: 'ゾク (zoku)', kunyomi: 'つづ.ける (tsuzu.keru)', philosophy: 'Meneruskan hal yang sedang berjalan tanpa putus.' },
+    { id: '46', kanji: '吹きます', romaji: 'fukimasu', meaning: 'Meniup', category: 'Kata Kerja', mastered: false, onyomi: 'スイ (sui)', kunyomi: 'ふ.く (fu.ku)', philosophy: 'Menghembuskan udara dari mulut atau angin.' },
+    { id: '47', kanji: '降ります', romaji: 'furimasu', meaning: 'Turun (hujan, salju)', category: 'Kata Kerja', mastered: false, onyomi: 'コウ (kou)', kunyomi: 'ふ.る (fu.ru)', philosophy: 'Turun dari langit atau dari kendaraan.' },
+    { id: '48', kanji: '投げます', romaji: 'nagemasu', meaning: 'Melempar', category: 'Kata Kerja', mastered: false, onyomi: 'トウ (tou)', kunyomi: 'な.げる (na.geru)', philosophy: 'Mengayunkan tangan untuk melontarkan benda jauh.' },
+    { id: '49', kanji: '捕まえます', romaji: 'tsukamaemasu', meaning: 'Menangkap', category: 'Kata Kerja', mastered: false, onyomi: 'ホ (ho)', kunyomi: 'つか.まえる (tsukamaeru)', philosophy: 'Memegang atau menahan sesuatu yang bergerak.' },
+    { id: '50', kanji: '蹴ります', romaji: 'kerimasu', meaning: 'Menendang', category: 'Kata Kerja', mastered: false, onyomi: 'シュウ (shuu)', kunyomi: 'け.る (ke.ru)', philosophy: 'Menggunakan kaki untuk mendorong benda dengan kuat.' },
+    { id: '51', kanji: '打ちます', romaji: 'uchimasu', meaning: 'Memukul', category: 'Kata Kerja', mastered: false, onyomi: 'ダ (da)', kunyomi: 'う.つ (u.tsu)', philosophy: 'Menghantamkan sesuatu ke permukaan.' },
+    { id: '52', kanji: '注意します', romaji: 'chuui shimasu', meaning: 'Berhati-hati / Memperhatikan', category: 'Kata Kerja', mastered: false, onyomi: 'チュウ (chuu), イ (i)', kunyomi: '-', philosophy: 'Memusatkan perhatian agar terhindar dari bahaya.' },
+    { id: '101', kanji: '起きます', romaji: 'okimasu', meaning: 'Bangun', category: 'Kata Kerja', mastered: false, onyomi: 'キ (ki)', kunyomi: 'お.きる (o.kiru)', philosophy: 'Berdiri atau bangkit dari tidur.' },
+    { id: '102', kanji: '寝ます', romaji: 'nemasu', meaning: 'Tidur', category: 'Kata Kerja', mastered: false, onyomi: 'シン (shin)', kunyomi: 'ね.る (ne.ru)', philosophy: 'Berbaring untuk beristirahat.' },
+    { id: '103', kanji: '働きます', romaji: 'hatarakimasu', meaning: 'Bekerja', category: 'Kata Kerja', mastered: false, onyomi: 'ドウ (dou)', kunyomi: 'はタら.く (hataraku)', philosophy: 'Menggunakan tenaga (力) manusia (人) untuk beraktivitas.' },
+    { id: '104', kanji: '休みます', romaji: 'yasumimasu', meaning: 'Istirahat / Libur', category: 'Kata Kerja', mastered: false, onyomi: 'キュウ (kyuu)', kunyomi: 'やす.む (yasumu)', philosophy: 'Orang (人) bersandar di pohon (木) untuk beristirahat.' },
+    { id: '105', kanji: '勉強します', romaji: 'benkyou shimasu', meaning: 'Belajar', category: 'Kata Kerja', mastered: false, onyomi: 'ベン (ben), キョウ (kyou)', kunyomi: 'つと.める (tsutomeru)', philosophy: 'Memaksakan diri untuk tekun menuntut ilmu.' },
+    { id: '106', kanji: '終わります', romaji: 'owarimasu', meaning: 'Selesai', category: 'Kata Kerja', mastered: false, onyomi: 'ガツ (gatsu)', kunyomi: 'お.わる (o.waru)', philosophy: 'Titik akhir dari suatu rangkaian kegiatan.' },
+    { id: '107', kanji: '行きます', romaji: 'ikimasu', meaning: 'Pergi', category: 'Kata Kerja', mastered: false, onyomi: 'コウ (kou), キョウ (kyou)', kunyomi: 'い.く (i.ku), ゆ.く (yu.ku)', philosophy: 'Melangkah maju berjalan menuju ke suatu tempat.' },
+    { id: '108', kanji: '来ます', romaji: 'kimasu', meaning: 'Datang', category: 'Kata Kerja', mastered: false, onyomi: '라이 (rai)', kunyomi: 'く.る (ku.ru)', philosophy: 'Bergerak mendekat ke arah pembicara.' },
+    { id: '109', kanji: '帰ります', romaji: 'kaerimasu', meaning: 'Pulang', category: 'Kata Kerja', mastered: false, onyomi: 'キ (ki)', kunyomi: 'かえ.る (kae.ru)', philosophy: 'Kembali ke tempat asal / rumah.' },
+    { id: '110', kanji: '食べます', romaji: 'tabemasu', meaning: 'Makan', category: 'Kata Kerja', mastered: false, onyomi: 'ショク (shoku), ジキ (jiki)', kunyomi: 'た.べる (ta.beru)', philosophy: 'Memasukkan makanan ke dalam mulut.' },
+    { id: '111', kanji: '飲みます', romaji: 'nomimasu', meaning: 'Minum', category: 'Kata Kerja', mastered: false, onyomi: 'イン (in)', kunyomi: 'の.む (no.mu)', philosophy: 'Menelan cairan melalui mulut.' },
+    { id: '112', kanji: '吸います', romaji: 'suimasu', meaning: 'Menghisap (Rokok)', category: 'Kata Kerja', mastered: false, onyomi: 'キュウ (kyuu)', kunyomi: 'す.う (su.u)', philosophy: 'Menarik udara atau asap ke dalam.' },
+    { id: '113', kanji: '見ます', romaji: 'mimasu', meaning: 'Melihat / Menonton', category: 'Kata Kerja', mastered: false, onyomi: 'ケン (ken)', kunyomi: 'み.る (mi.ru)', philosophy: 'Menggunakan mata untuk mengamati.' },
+    { id: '114', kanji: '聞きます', romaji: 'kikimasu', meaning: 'Mendengar / Bertanya', category: 'Kata Kerja', mastered: false, onyomi: 'ブン (bun), モン (mon)', kunyomi: 'き.く (ki.ku)', philosophy: 'Menangkap suara dengan telinga.' },
+    { id: '115', kanji: '読みます', romaji: 'yomimasu', meaning: 'Membaca', category: 'Kata Kerja', mastered: false, onyomi: 'ドク (doku), トク (toku)', kunyomi: 'よ.む (yo.mu)', philosophy: 'Melisankan atau memahami tulisan.' },
+    { id: '116', kanji: '書きます', romaji: 'kakimasu', meaning: 'Menulis / Menggambar', category: 'Kata Kerja', mastered: false, onyomi: 'ショ (sho)', kunyomi: 'か.く (ka.ku)', philosophy: 'Membuat goresan pena di atas kertas.' },
+    { id: '117', kanji: '買います', romaji: 'kaimasu', meaning: 'Membeli', category: 'Kata Kerja', mastered: false, onyomi: 'バイ (bai)', kunyomi: 'か.う (ka.u)', philosophy: 'Memperoleh barang dengan menukar uang.' },
+    { id: '118', kanji: '撮ります', romaji: 'torimasu', meaning: 'Mengambil (Foto)', category: 'Kata Kerja', mastered: false, onyomi: 'サツ (satsu)', kunyomi: 'と.る (to.ru)', philosophy: 'Mengabadikan momen dengan kamera.' },
+    { id: '119', kanji: '会います', romaji: 'aimasu', meaning: 'Bertemu', category: 'Kata Kerja', mastered: false, onyomi: 'カイ (kai), エ (e)', kunyomi: 'あ.う (a.u)', philosophy: 'Jumpa dengan seseorang secara langsung.' },
+    { id: '120', kanji: '切ります', romaji: 'kirimasu', meaning: 'Memotong', category: 'Kata Kerja', mastered: false, onyomi: 'セツ (setsu), サイ (sai)', kunyomi: 'き.る (ki.ru)', philosophy: 'Menggunakan pisau untuk membelah.' },
+    { id: '121', kanji: '送ります', romaji: 'okurimasu', meaning: 'Mengirim', category: 'Kata Kerja', mastered: false, onyomi: 'ソウ (sou)', kunyomi: 'おく.る (oku.ru)', philosophy: 'Memberangkatkan barang atau pesan ke tujuan.' },
+    { id: '122', kanji: 'あげます', romaji: 'agemasu', meaning: 'Memberikan', category: 'Kata Kerja', mastered: false, onyomi: '-', kunyomi: 'あ.げる (a.geru)', philosophy: 'Menyerahkan sesuatu kepada orang lain.' },
+    { id: '123', kanji: 'もらいます', romaji: 'moraimasu', meaning: 'Menerima', category: 'Kata Kerja', mastered: false, onyomi: '-', kunyomi: 'もら.う (morau)', philosophy: 'Mendapatkan sesuatu dari orang lain.' },
+    { id: '124', kanji: '貸します', romaji: 'kashimasu', meaning: 'Meminjamkan', category: 'Kata Kerja', mastered: false, onyomi: 'タイ (tai)', kunyomi: 'か.す (ka.su)', philosophy: 'Memberikan pinjaman barang ke orang lain.' },
+    { id: '125', kanji: '借ります', romaji: 'karimasu', meaning: 'Meminjam', category: 'Kata Kerja', mastered: false, onyomi: 'シャク (shaku)', kunyomi: 'か.りる (ka.riru)', philosophy: 'Memakai barang milik orang lain sementara.' },
+    { id: '126', kanji: '教えます', romaji: 'oshiemasu', meaning: 'Mengajar / Memberitahu', category: 'Kata Kerja', mastered: false, onyomi: 'キョウ (kyou)', kunyomi: 'おし.える (oshi.eru)', philosophy: 'Menularkan ilmu atau informasi.' },
+    { id: '127', kanji: '習います', romaji: 'naraimasu', meaning: 'Belajar (dari orang lain)', category: 'Kata Kerja', mastered: false, onyomi: 'シュウ (shuu)', kunyomi: 'なら.う (narau)', philosophy: 'Menerima pelajaran.' },
+    { id: '128', kanji: 'わかります', romaji: 'wakarimasu', meaning: 'Mengerti / Paham', category: 'Kata Kerja', mastered: false, onyomi: 'カク (kaku)', kunyomi: 'わ.かる (wakaru)', philosophy: 'Mengetahui dengan jelas.' },
+    { id: '129', kanji: 'あります', romaji: 'arimasu', meaning: 'Ada (Benda Mati)', category: 'Kata Kerja', mastered: false, onyomi: 'ユウ (yuu), ウ (u)', kunyomi: 'あ.る (a.ru)', philosophy: 'Keberadaan wujud benda mati.' },
+    { id: '130', kanji: 'います', romaji: 'imasu', meaning: 'Ada (Benda Hidup)', category: 'Kata Kerja', mastered: false, onyomi: '-', kunyomi: 'い.る (i.ru)', philosophy: 'Keberadaan makhluk hidup.' },
+    { id: '131', kanji: '遊びます', romaji: 'asobimasu', meaning: 'Bermain', category: 'Kata Kerja', mastered: false, onyomi: 'ユウ (yuu)', kunyomi: 'あそ.ぶ (asobu)', philosophy: 'Melakukan rekreasi atau kesenangan.' },
+    { id: '132', kanji: '泳ぎます', romaji: 'oyogimasu', meaning: 'Berenang', category: 'Kata Kerja', mastered: false, onyomi: 'エイ (ei)', kunyomi: 'およ.ぐ (oyogu)', philosophy: 'Bergerak di dalam air.' },
+    { id: '133', kanji: '迎えます', romaji: 'mukaemasu', meaning: 'Menjemput / Menyambut', category: 'Kata Kerja', mastered: false, onyomi: 'ゲイ (gei)', kunyomi: 'むか.える (mukaeru)', philosophy: 'Menyambut kedatangan seseorang.' },
+    { id: '134', kanji: '疲れます', romaji: 'tsukaremasu', meaning: 'Menjadi Lelah', category: 'Kata Kerja', mastered: false, onyomi: 'ヒ (hi)', kunyomi: 'つか.れる (tsukareru)', philosophy: 'Kondisi fisik letih lesu.' },
+    { id: '135', kanji: '出します', romaji: 'dashimasu', meaning: 'Mengeluarkan / Menyerahkan', category: 'Kata Kerja', mastered: false, onyomi: 'シュツ (shutsu)', kunyomi: 'だ.す (dasu)', philosophy: 'Memindahkan sesuatu ke luar.' },
+    { id: '136', kanji: '入ります', romaji: 'hairimasu', meaning: 'Masuk', category: 'Kata Kerja', mastered: false, onyomi: 'ニュウ (nyuu)', kunyomi: 'はい.る (hairu), い.る (iru)', philosophy: 'Melangkah ke dalam.' },
+    { id: '137', kanji: '出ます', romaji: 'demasu', meaning: 'Keluar', category: 'Kata Kerja', mastered: false, onyomi: 'シュツ (shutsu)', kunyomi: 'で.る (deru)', philosophy: 'Beranjak ke luar.' },
+    { id: '138', kanji: '押します', romaji: 'oshimasu', meaning: 'Menekan / Mendorong', category: 'Kata Kerja', mastered: false, onyomi: 'オウ (ou)', kunyomi: 'お.す (osu)', philosophy: 'Memberi tekanan ke depan.' },
+    { id: '139', kanji: '覚えます', romaji: 'oboemasu', meaning: 'Mengingat / Menghafal', category: 'Kata Kerja', mastered: false, onyomi: 'カク (kaku)', kunyomi: 'おぼ.える (oboeru)', philosophy: 'Menyimpan dalam ingatan.' },
+    { id: '140', kanji: '忘れます', romaji: 'wasuremasu', meaning: 'Lupa', category: 'Kata Kerja', mastered: false, onyomi: 'ボウ (bou)', kunyomi: 'わす.れる (wasureru)', philosophy: 'Kehilangan ingatan akan sesuatu.' },
+    { id: '141', kanji: 'なくします', romaji: 'nakushimasu', meaning: 'Kehilangan', category: 'Kata Kerja', mastered: false, onyomi: '-', kunyomi: 'な.くす (nakusu)', philosophy: 'Barang yang tak tahu rimbanya.' },
+    { id: '142', kanji: '払います', romaji: 'haraimasu', meaning: 'Membayar', category: 'Kata Kerja', mastered: false, onyomi: 'フツ (futsu)', kunyomi: 'はら.う (harau)', philosophy: 'Menyerahkan uang untuk pembelian.' },
+    { id: '143', kanji: '脱ぎます', romaji: 'nugimasu', meaning: 'Melepas (Pakaian/Sepatu)', category: 'Kata Kerja', mastered: false, onyomi: 'ダツ (datsu)', kunyomi: 'ぬ.ぐ (nugu)', philosophy: 'Menanggalkan pakaian atau alas kaki.' },
+    { id: '144', kanji: '持って行きます', romaji: 'motte ikimasu', meaning: 'Membawa Pergi', category: 'Kata Kerja', mastered: false, onyomi: '持 (ji), 行 (kou)', kunyomi: 'も.って (motte), い.きます (ikimasu)', philosophy: 'Memegang dan pergi.' },
+    { id: '145', kanji: '持って来ます', romaji: 'motte kimasu', meaning: 'Membawa Datang', category: 'Kata Kerja', mastered: false, onyomi: '持 (ji), 来 (rai)', kunyomi: 'も.って (motte), く.きます (kukimasu)', philosophy: 'Memegang dan datang.' },
+    { id: '146', kanji: 'できます', romaji: 'dekimasu', meaning: 'Bisa / Mampu', category: 'Kata Kerja', mastered: false, onyomi: 'セキ (seki)', kunyomi: 'で.きる (dekiru)', philosophy: 'Mampu merampungkan sesuatu.' },
+    { id: '147', kanji: '洗います', romaji: 'araimasu', meaning: 'Mencuci', category: 'Kata Kerja', mastered: false, onyomi: 'セン (sen)', kunyomi: 'あら.う (arau)', philosophy: 'Membersihkan dengan air.' },
+    { id: '148', kanji: '弾きます', romaji: 'hikimasu', meaning: 'Bermain (Alat Musik String/Tuts)', category: 'Kata Kerja', mastered: false, onyomi: 'ダン (dan)', kunyomi: 'ひ.く (hiku)', philosophy: 'Memetik atau menekan senar/tuts alat musik.' },
+    { id: '149', kanji: '歌います', romaji: 'utaimasu', meaning: 'Bernyanyi', category: 'Kata Kerja', mastered: false, onyomi: 'カ (ka)', kunyomi: 'うた.う (utau)', philosophy: 'Melantunkan nada suara.' },
+    { id: '150', kanji: '集めます', romaji: 'atsumemasu', meaning: 'Mengumpulkan', category: 'Kata Kerja', mastered: false, onyomi: 'シュウ (shuu)', kunyomi: 'あつ.める (atsumeru)', philosophy: 'Menghimpun berbagai hal jadi satu.' },
+    { id: '151', kanji: '開きます', romaji: 'akimasu', meaning: 'Terbuka (Otomatis)', category: 'Kata Kerja', mastered: false, onyomi: 'カイ (kai)', kunyomi: 'あ.く (aku)', philosophy: 'Keadaan terbuka dengan sendirinya.' },
+    { id: '152', kanji: '閉まります', romaji: 'shimarimasu', meaning: 'Tertutup (Otomatis)', category: 'Kata Kerja', mastered: false, onyomi: 'ヘイ (hei)', kunyomi: 'し.まる (shimaru)', philosophy: 'Keadaan tertutup dengan sendirinya.' },
+    { id: '153', kanji: 'つきます', romaji: 'tsukimasu', meaning: 'Menyala (Lampu/Listrik)', category: 'Kata Kerja', mastered: false, onyomi: '-', kunyomi: 'つ.く (tsuku)', philosophy: 'Aliran listrik terhubung menyala.' },
+    { id: '154', kanji: '消えます', romaji: 'kiemasu', meaning: 'Padam / Menghilang', category: 'Kata Kerja', mastered: false, onyomi: 'ショウ (shou)', kunyomi: 'き.える (kieru)', philosophy: 'Cahaya atau wujud lenyap.' },
+    { id: '155', kanji: '壊れます', romaji: 'kowaremasu', meaning: 'Rusak', category: 'Kata Kerja', mastered: false, onyomi: 'カイ (kai)', kunyomi: 'こわ.れる (kowareru)', philosophy: 'Benda yang hancur atau tidak berfungsi.' },
+    { id: '156', kanji: '割れます', romaji: 'waremasu', meaning: 'Pecah', category: 'Kata Kerja', mastered: false, onyomi: 'カツ (katsu)', kunyomi: 'わ.れる (wareru)', philosophy: 'Benda padat retak terbelah.' },
+    { id: '157', kanji: '折れます', romaji: 'oremasu', meaning: 'Patah', category: 'Kata Kerja', mastered: false, onyomi: 'セツ (setsu)', kunyomi: 'お.れる (oreru)', philosophy: 'Benda panjang patah menjadi dua.' },
+    { id: '158', kanji: '破れます', romaji: 'yaburemasu', meaning: 'Robek', category: 'Kata Kerja', mastered: false, onyomi: 'ハ (ha)', kunyomi: 'やぶ.れる (yabureru)', philosophy: 'Kain atau kertas terkoyak.' },
+    { id: '159', kanji: '汚れます', romaji: 'yogoremasu', meaning: 'Menjadi Kotor', category: 'Kata Kerja', mastered: false, onyomi: 'オ (o)', kunyomi: 'よご.れる (yogoreru)', philosophy: 'Permukaan benda ternoda.' },
+    { id: '160', kanji: '外れます', romaji: 'hazuremasu', meaning: 'Terlepas (Kancing/Baut)', category: 'Kata Kerja', mastered: false, onyomi: 'ガイ (gai)', kunyomi: 'はず.れる (hazureru)', philosophy: 'Koneksi ikatan terlepas.' },
+    { id: '161', kanji: '止まります', romaji: 'tomarimasu', meaning: 'Berhenti', category: 'Kata Kerja', mastered: false, onyomi: 'シ (shi)', kunyomi: 'と.まる (tomaru)', philosophy: 'Gerakan terhenti total.' },
+    { id: '162', kanji: 'まちがえます', romaji: 'machigaemasu', meaning: 'Berbuat Salah / Keliru', category: 'Kata Kerja', mastered: false, onyomi: '-', kunyomi: 'まちが.える (machiagaeru)', philosophy: 'Melakukan kekeliruan.' },
+    { id: '163', kanji: '落とします', romaji: 'otoshimasu', meaning: 'Menjatuhkan', category: 'Kata Kerja', mastered: false, onyomi: 'ラク (raku)', kunyomi: 'お.とす (otosu)', philosophy: 'Membuat benda jatuh ke bawah.' },
+    { id: '164', kanji: '掛かります', romaji: 'kakarimasu', meaning: 'Terkunci', category: 'Kata Kerja', mastered: false, onyomi: 'ケイ (kei)', kunyomi: 'かか.る (kakaru)', philosophy: 'Tersangkut atau terkunci.' },
+    { id: '165', kanji: '貼ります', romaji: 'harimasu', meaning: 'Menempelkan', category: 'Kata Kerja', mastered: false, onyomi: 'チョウ (chou)', kunyomi: 'はり.ます (harimasu)', philosophy: 'Melekatkan lembaran pada bidang.' },
+    { id: '166', kanji: '掛けます', romaji: 'kakemasu', meaning: 'Menggantungkan', category: 'Kata Kerja', mastered: false, onyomi: 'ケイ (kei)', kunyomi: 'か.ける (kakeru)', philosophy: 'Menyangkutkan benda pada paku.' },
+    { id: '167', kanji: '並べます', romaji: 'narabemasu', meaning: 'Menata / Menyusun berjejer', category: 'Kata Kerja', mastered: false, onyomi: 'ヘイ (hei)', kunyomi: 'なら.べる (naraberu)', philosophy: 'Menyusun rapi berdampingan.' },
+    { id: '168', kanji: '植えます', romaji: 'uemasu', meaning: 'Menanam', category: 'Kata Kerja', mastered: false, onyomi: 'ショク (shoku)', kunyomi: 'う.える (ueru)', philosophy: 'Memasukkan bibit tanaman ke tanah.' },
+    { id: '169', kanji: '戻します', romaji: 'modoshimasu', meaning: 'Mengembalikan ke tempat semula', category: 'Kata Kerja', mastered: false, onyomi: 'レイ (rei)', kunyomi: 'もど.す (modosu)', philosophy: 'Memulihkan posisi asal.' },
+    { id: '170', kanji: 'まとめます', romaji: 'matomemasu', meaning: 'Merangkum / Membereskan', category: 'Kata Kerja', mastered: false, onyomi: '-', kunyomi: 'まと.める (matomeru)', philosophy: 'Menyusun berbagai hal menjadi satu kesatuan.' },
+    { id: '171', kanji: 'しまいます', romaji: 'shimaimasu', meaning: 'Memasukkan / Menyimpan', category: 'Kata Kerja', mastered: false, onyomi: '-', kunyomi: 'しま.う (shimau)', philosophy: 'Menaruh barang ke tempat penyimpanan.' },
+    { id: '172', kanji: '決めます', romaji: 'kimemasu', meaning: 'Memutuskan', category: 'Kata Kerja', mastered: false, onyomi: 'ケツ (ketsu)', kunyomi: 'き.める (kimeru)', philosophy: 'Menetapkan pilihan pasti.' },
+    { id: '173', kanji: '知らせます', romaji: 'shirasemasu', meaning: 'Memberitahu', category: 'Kata Kerja', mastered: false, onyomi: 'チ (chi)', kunyomi: 'し.らせる (shiraseru)', philosophy: 'Memberikan informasi ke pihak lain.' },
+    { id: '174', kanji: '予習します', romaji: 'yoshuu shimasu', meaning: 'Persiapan Belajar', category: 'Kata Kerja', mastered: false, onyomi: 'ヨ (yo), シュウ (shuu)', kunyomi: '-', philosophy: 'Belajar materi sebelum kelas dimulai.' },
+    { id: '175', kanji: '復習します', romaji: 'fukushuu shimasu', meaning: 'Mengulang Pelajaran', category: 'Kata Kerja', mastered: false, onyomi: 'フク (fuku), シュウ (shuu)', kunyomi: '-', philosophy: 'Mengulang kembali materi pelajaran.' },
+    { id: '176', kanji: '歩きます', romaji: 'arukimasu', meaning: 'Berjalan kaki', category: 'Kata Kerja', mastered: false, onyomi: 'ホ (ho), ブ (bu)', kunyomi: 'ある.く (aruku)', philosophy: 'Melangkahkan kaki di atas tanah.' },
+    { id: '177', kanji: '急ぎます', romaji: 'isogimasu', meaning: 'Buru-buru / Bergegas', category: 'Kata Kerja', mastered: false, onyomi: 'キュウ (kyuu)', kunyomi: 'いそ.ぐ (isogu)', philosophy: 'Bergerak cepat karena waktu mendesak.' },
+    { id: '178', kanji: '待ちます', romaji: 'machimasu', meaning: 'Menunggu', category: 'Kata Kerja', mastered: false, onyomi: 'タイ (tai)', kunyomi: 'ま.つ (matsu)', philosophy: 'Berdiam sejenak menanti sesuatu.' },
+    { id: '179', kanji: '持ちます', romaji: 'mochimasu', meaning: 'Membawa / Memegang', category: 'Kata Kerja', mastered: false, onyomi: 'ジ (ji)', kunyomi: 'も.つ (motsu)', philosophy: 'Menggenggam benda di tangan.' },
+    { id: '180', kanji: '取ります', romaji: 'torimasu', meaning: 'Mengambil', category: 'Kata Kerja', mastered: false, onyomi: 'シュ (shu)', kunyomi: 'と.る (toru)', philosophy: 'Meraih dan memegang suatu benda.' },
+    { id: '181', kanji: '手伝います', romaji: 'tetsudaimasu', meaning: 'Membantu', category: 'Kata Kerja', mastered: false, onyomi: 'デン (den)', kunyomi: 'てつだ.う (tetsudau)', philosophy: 'Uluran tangan meringankan beban.' },
+    { id: '182', kanji: '呼びます', romaji: 'yobimasu', meaning: 'Memanggil', category: 'Kata Kerja', mastered: false, onyomi: 'コウ (kou)', kunyomi: 'よ.ぶ (yobu)', philosophy: 'Bersuara mengundang perhatian seseorang.' },
+    { id: '183', kanji: '話します', romaji: 'hanashimasu', meaning: 'Berbicara', category: 'Kata Kerja', mastered: false, onyomi: 'ワ (wa)', kunyomi: 'はな.す (hanasu)', philosophy: 'Mengucapkan kata-kata berdialog.' },
+    { id: '184', kanji: '使います', romaji: 'tsukaimasu', meaning: 'Menggunakan', category: 'Kata Kerja', mastered: false, onyomi: 'シ (shi)', kunyomi: 'つか.う (tsukau)', philosophy: 'Memanfaatkan fungsi suatu benda.' },
+    { id: '185', kanji: '止めます', romaji: 'tomemasu', meaning: 'Menghentikan / Memarkir', category: 'Kata Kerja', mastered: false, onyomi: 'シ (shi)', kunyomi: 'と.める (tomeru)', philosophy: 'Membuat kendaraan/gerak berhenti.' },
+    { id: '186', kanji: '見せます', romaji: 'misemasu', meaning: 'Memperlihatkan', category: 'Kata Kerja', mastered: false, onyomi: 'ケン (ken)', kunyomi: 'み.せる (miseru)', philosophy: 'Menunjukkan objek ke pandangan orang.' },
+    { id: '187', kanji: '座ります', romaji: 'suwarimasu', meaning: 'Duduk', category: 'Kata Kerja', mastered: false, onyomi: 'ザ (za)', kunyomi: 'すわ.る (suwaru)', philosophy: 'Menempatkan tubuh bertumpu pada alas.' },
+    { id: '188', kanji: '立ちます', romaji: 'tachimasu', meaning: 'Berdiri', category: 'Kata Kerja', mastered: false, onyomi: 'リツ (ritsu)', kunyomi: 'た.つ (tatsu)', philosophy: 'Menegakkan badan bertumpu pada kaki.' },
+    { id: '189', kanji: '降ります', romaji: 'orimasu', meaning: 'Turun (dari kendaraan)', category: 'Kata Kerja', mastered: false, onyomi: 'コウ (kou)', kunyomi: 'お.りる (oriru)', philosophy: 'Keluar dari moda transportasi.' },
+    { id: '190', kanji: '乗ります', romaji: 'norimasu', meaning: 'Naik (kendaraan)', category: 'Kata Kerja', mastered: false, onyomi: 'ジョウ (jou)', kunyomi: 'の.る (noru)', philosophy: 'Masuk ke atas kendaraan.' },
+    { id: '191', kanji: '乗り換えます', romaji: 'norikaemasu', meaning: 'Transit / Pindah kendaraan', category: 'Kata Kerja', mastered: false, onyomi: '乗 (jou), 換 (kan)', kunyomi: 'の.りかえる (norikaeru)', philosophy: 'Berganti moda transportasi.' },
+    { id: '192', kanji: '浴びます', romaji: 'abimasu', meaning: 'Mandi (Mangguyur badan)', category: 'Kata Kerja', mastered: false, onyomi: 'ヨク (yoku)', kunyomi: 'あ.びる (abiru)', philosophy: 'Mengguyur tubuh dengan air.' },
+    { id: '193', kanji: '入れます', romaji: 'iremasu', meaning: 'Memasukkan', category: 'Kata Kerja', mastered: false, onyomi: 'ニュウ (nyuu)', kunyomi: 'い.れる (ireru)', philosophy: 'Menaruh benda ke dalam ruang.' },
+    { id: '194', kanji: 'やめます', romaji: 'yamemasu', meaning: 'Berhenti (dari pekerjaan/kebiasaan)', category: 'Kata Kerja', mastered: false, onyomi: 'シ (shi)', kunyomi: 'や.める (yameru)', philosophy: 'Menyudahi suatu kebiasaan.' },
+    { id: '195', kanji: '思い出します', romaji: 'omoidashimasu', meaning: 'Teringat / Mengingat kembali', category: 'Kata Kerja', mastered: false, onyomi: '思 (shi), 出 (shutsu)', kunyomi: 'おも.いだし (omoidasu)', philosophy: 'Memanggil kembali memori.' },
+    { id: '196', kanji: '気をつけます', romaji: 'ki o tsukemasu', meaning: 'Berhati-hati', category: 'Kata Kerja', mastered: false, onyomi: '気 (ki), 付 (tsu)', kunyomi: 'きをつける (ki o tsukeru)', philosophy: 'Mewaspadai keadaan sekitar.' },
+    { id: '197', kanji: '勝ちます', romaji: 'kachimasu', meaning: 'Menang', category: 'Kata Kerja', mastered: false, onyomi: 'ショウ (shou)', kunyomi: 'か.つ (katsu)', philosophy: 'Unggul dalam kompetisi.' },
+    { id: '198', kanji: '負けます', romaji: 'makemasu', meaning: 'Kalah', category: 'Kata Kerja', mastered: false, onyomi: 'フ (fu)', kunyomi: 'ま.ける (makeru)', philosophy: 'Bertekuk lutut dalam persaingan.' },
+    { id: '199', kanji: '役に立ちます', romaji: 'yaku ni tachimasu', meaning: 'Berguna / Bermanfaat', category: 'Kata Kerja', mastered: false, onyomi: '役 (yaku), 立 (ritsu)', kunyomi: 'やくにたつ (yaku ni tatsu)', philosophy: 'Memberikan andil positif.' },
+    { id: '200', kanji: '動きます', romaji: 'ugokimasu', meaning: 'Bergerak / Berjalan (Mesin)', category: 'Kata Kerja', mastered: false, onyomi: 'ドウ (dou)', kunyomi: 'うご.く (ugoku)', philosophy: 'Mesin atau objek mulai beroperasi.' },
+    { id: '201', kanji: '着ます', romaji: 'kimasu', meaning: 'Memakai (Pakaian atas/baju)', category: 'Kata Kerja', mastered: false, onyomi: 'ちゃく (chaku)', kunyomi: 'き.る (kiru)', philosophy: 'Menyelimuti tubuh dengan pakaian.' },
+    { id: '202', kanji: '履きます', romaji: 'hakimasu', meaning: 'Memakai (Sepatu/Celana)', category: 'Kata Kerja', mastered: false, onyomi: 'リ (ri)', kunyomi: 'は.く (haku)', philosophy: 'Mengenakan alas kaki atau bawahan.' },
+    { id: '203', kanji: 'かぶります', romaji: 'kaburimasu', meaning: 'Memakai (Topi)', category: 'Kata Kerja', mastered: false, onyomi: '-', kunyomi: 'かぶ.る (kaburu)', philosophy: 'Menutup kepala dengan topi.' },
+    { id: '204', kanji: 'かけます', romaji: 'kakemasu', meaning: 'Memakai (Kacamata)', category: 'Kata Kerja', mastered: false, onyomi: 'ケイ (kei)', kunyomi: 'か.ける (kakeru)', philosophy: 'Menyangkutkan kacamata di Telinga/Hidung.' },
+    { id: '205', kanji: '生まれます', romaji: 'umaremasu', meaning: 'Lahir', category: 'Kata Kerja', mastered: false, onyomi: 'セイ (sei)', kunyomi: 'う.まれる (umareru)', philosophy: 'Memulai kehidupan di dunia.' },
+    { id: '207', kanji: '回します', romaji: 'mawashimasu', meaning: 'Memutar', category: 'Kata Kerja', mastered: false, onyomi: 'カイ (kai)', kunyomi: 'まわ.す (mawasu)', philosophy: 'Menggerakkan benda secara melingkar.' },
+    { id: '208', kanji: '引きます', romaji: 'hikimasu', meaning: 'Menarik', category: 'Kata Kerja', mastered: false, onyomi: 'イン (in)', kunyomi: 'ひ.く (hiku)', philosophy: 'Mengarahkan benda mendekat dengan tarikan.' },
+    { id: '209', kanji: '触ります', romaji: 'sawarimasu', meaning: 'Menyentuh', category: 'Kata Kerja', mastered: false, onyomi: 'ショク (shoku)', kunyomi: 'さわ.る (sawaru)', philosophy: 'Mengenai permukaan dengan jemari.' },
+    { id: '210', kanji: '渡ります', romaji: 'watarimasu', meaning: 'Menyeberang', category: 'Kata Kerja', mastered: false, onyomi: 'ト (to)', kunyomi: 'わた.る (wataru)', philosophy: 'Melintas dari satu sisi ke sisi lain.' },
+    { id: '211', kanji: '曲がります', romaji: 'magarimasu', meaning: 'Berbelok', category: 'Kata Kerja', mastered: false, onyomi: 'キョク (kyoku)', kunyomi: 'まが.る (magaru)', philosophy: 'Mengubah arah lurus menjadi belokan.' },
+    { id: '212', kanji: 'くれます', romaji: 'kuremasu', meaning: 'Memberikan (kepada saya)', category: 'Kata Kerja', mastered: false, onyomi: '-', kunyomi: 'く.れる (kureru)', philosophy: 'Pemberian yang ditujukan kepada pihak pembicara.' },
+    { id: '213', kanji: '直します', romaji: 'naoshimasu', meaning: 'Memperbaiki', category: 'Kata Kerja', mastered: false, onyomi: 'チョク (choku), ジキ (jiki)', kunyomi: 'なお.す (naosu)', philosophy: 'Menjadikan rusak kembali normal.' },
+    { id: '214', kanji: '連れて行きます', romaji: 'tsurete ikimasu', meaning: 'Mengajak pergi (orang)', category: 'Kata Kerja', mastered: false, onyomi: '連 (ren), 行 (kou)', kunyomi: 'つ.れていく (tsurete iku)', philosophy: 'Menggandeng/membimbing seseorang pergi.' },
+    { id: '215', kanji: '連れて来ます', romaji: 'tsurete kimasu', meaning: 'Mengajak datang (orang)', category: 'Kata Kerja', mastered: false, onyomi: '連 (ren), 来 (rai)', kunyomi: 'つ.れてくる (tsurete kuru)', philosophy: 'Membimbing seseorang datang.' },
+    { id: '216', kanji: '考えます', romaji: 'kangaemasu', meaning: 'Berpikir / Memikirkan', category: 'Kata Kerja', mastered: false, onyomi: 'コウ (kou)', kunyomi: 'かんが.える (kangaeru)', philosophy: 'Memproses ide dalam akal budi.' },
+    { id: '217', kanji: '着きます', romaji: 'tsukimasu', meaning: 'Tiba / Sampai', category: 'Kata Kerja', mastered: false, onyomi: 'チャク (chaku)', kunyomi: 'つ.く (tsuku)', philosophy: 'Mencapai tujuan akhir perjalanan.' },
+    { id: '218', kanji: '足ります', romaji: 'tarimasu', meaning: 'Cukup', category: 'Kata Kerja', mastered: false, onyomi: 'ソク (soku)', kunyomi: 'たり.る (tariru)', philosophy: 'Jumlah atau porsi yang memadai.' },
+    { id: '219', kanji: '頑張ります', romaji: 'ganbarimasu', meaning: 'Berjuang / Semangat', category: 'Kata Kerja', mastered: false, onyomi: 'ガン (gan)', kunyomi: 'がんば.る (ganbaru)', philosophy: 'Meneguhkan tekad keras.' },
+    { id: '220', kanji: '見えます', romaji: 'miemasu', meaning: 'Terlihat', category: 'Kata Kerja', mastered: false, onyomi: 'ケン (ken)', kunyomi: 'み.える (mieru)', philosophy: 'Objek tertangkap oleh penglihatan.' },
+    { id: '221', kanji: '聞こえます', romaji: 'kikoemasu', meaning: 'Terdengar', category: 'Kata Kerja', mastered: false, onyomi: 'ブン (bun)', kunyomi: 'き.こえる (kikoeru)', philosophy: 'Suara tertangkap oleh telinga.' },
+    { id: '222', kanji: '売ります', romaji: 'urimasu', meaning: 'Menjual', category: 'Kata Kerja', mastered: false, onyomi: 'バイ (bai)', kunyomi: 'う.る (uru)', philosophy: 'Melepaskan barang demi uang.' },
+    { id: '223', kanji: '踊ります', romaji: 'odorimasu', meaning: 'Menari', category: 'Kata Kerja', mastered: false, onyomi: 'ヨウ (you)', kunyomi: 'おど.る (odoru)', philosophy: 'Menggerakkan tubuh berirama.' },
+    { id: '224', kanji: '選びます', romaji: 'erabimasu', meaning: 'Memilih', category: 'Kata Kerja', mastered: false, onyomi: 'セン (sen)', kunyomi: 'えら.ぶ (erabu)', philosophy: 'Menyeleksi opsi terbaik.' },
+    { id: '225', kanji: '通います', romaji: 'kayoimasu', meaning: 'Pulang pergi (rutin ke kampus/kantor)', category: 'Kata Kerja', mastered: false, onyomi: 'ツウ (tsuu)', kunyomi: '通.い (kayoi)', philosophy: 'Bulak-balik rutin ke suatu tempat.' },
+    { id: '226', kanji: '買い物します', romaji: 'kaimono shimasu', meaning: 'Berbelanja', category: 'Kata Kerja', mastered: false, onyomi: '買 (bai), 物 (butsu)', kunyomi: 'かいもの (kaimono)', philosophy: 'Membeli barang kebutuhan.' },
+    { id: '227', kanji: '散歩します', romaji: 'sanpo shimasu', meaning: 'Jalan-jalan', category: 'Kata Kerja', mastered: false, onyomi: '散 (san), 歩 (ho)', kunyomi: 'さんぽ (sanpo)', philosophy: 'Berjalan santai menikmati suasana.' },
+    { id: '228', kanji: '見学します', romaji: 'kengaku shimasu', meaning: 'Meninjau (untuk belajar)', category: 'Kata Kerja', mastered: false, onyomi: '見 (ken), 学 (gaku)', kunyomi: 'けんがく (kengaku)', philosophy: 'Belajar dengan cara mengamati langsung.' },
+    { id: '229', kanji: '電話します', romaji: 'denwa shimasu', meaning: 'Menelepon', category: 'Kata Kerja', mastered: false, onyomi: '電 (den), 話 (wa)', kunyomi: 'でんわ (denwa)', philosophy: 'Menghubungi lewat perangkat telepon.' },
+    { id: '230', kanji: '残業します', romaji: 'zangyou shimasu', meaning: 'Lembur', category: 'Kata Kerja', mastered: false, onyomi: '残 (zan), 業 (gyou)', kunyomi: 'ざんぎょう (zangyou)', philosophy: 'Bekerja melebihi jam normal.' },
+    { id: '231', kanji: '出張します', romaji: 'shucchou shimasu', meaning: 'Dinas luar kota', category: 'Kata Kerja', mastered: false, onyomi: '出 (shutsu), 張 (chou)', kunyomi: 'しゅっちょう (shucchou)', philosophy: 'Perjalanan kerja ke luar wilayah.' },
+    { id: '232', kanji: '食事します', romaji: 'shokuji shimasu', meaning: 'Makan (Formal)', category: 'Kata Kerja', mastered: false, onyomi: '食 (shoku), 事 (ji)', kunyomi: 'しょくじ (shokuji)', philosophy: 'Aktivitas makan secara formal.' },
+    { id: '233', kanji: '洗濯します', romaji: 'sentaku shimasu', meaning: 'Mencuci pakaian', category: 'Kata Kerja', mastered: false, onyomi: '洗 (sen), 濯 (taku)', kunyomi: 'せんたく (sentaku)', philosophy: 'Membersihkan pakaian kotor.' },
+    { id: '234', kanji: '掃除します', romaji: 'souji shimasu', meaning: 'Membersihkan ruangan', category: 'Kata Kerja', mastered: false, onyomi: '掃 (sou), 除 (jo)', kunyomi: 'そうじ (souji)', philosophy: 'Menyapu dan merapikan ruangan.' },
+    { id: '235', kanji: '運転します', romaji: 'unten shimasu', meaning: 'Menyetir', category: 'Kata Kerja', mastered: false, onyomi: '運 (un), 転 (ten)', kunyomi: 'うんてん (unten)', philosophy: 'Mengendalikan arah kendaraan.' },
+    { id: '236', kanji: '予約します', romaji: 'yoyaku shimasu', meaning: 'Memesan (Booking)', category: 'Kata Kerja', mastered: false, onyomi: '予 (yo), 約 (yaku)', kunyomi: 'よやく (yoyaku)', philosophy: 'Melakukan reservasi tempat/waktu.' },
+    { id: '237', kanji: '案内します', romaji: 'annai shimasu', meaning: 'Memandu / Mengantar', category: 'Kata Kerja', mastered: false, onyomi: '案 (an), 内 (nai)', kunyomi: 'あんない (annai)', philosophy: 'Menunjukkan arah atau lokasi.' },
+    { id: '238', kanji: '説明します', romaji: 'setsumei shimasu', meaning: 'Menjelaskan', category: 'Kata Kerja', mastered: false, onyomi: '説 (setsu), 明 (mei)', kunyomi: 'せつめい (setsumei)', philosophy: 'Menguraikan perincian agar paham.' },
+    { id: '239', kanji: '準備します', romaji: 'junbi shimasu', meaning: 'Mempersiapkan', category: 'Kata Kerja', mastered: false, onyomi: '準 (jun), 備 (bi)', kunyomi: 'じゅんび (junbi)', philosophy: 'Menyediakan segala keperluan.' },
+    { id: '240', kanji: '引っ越しします', romaji: 'hikkoshi shimasu', meaning: 'Pindah rumah', category: 'Kata Kerja', mastered: false, onyomi: '引 (hiki), 越 (koshi)', kunyomi: 'ひっこし (hikkoshi)', philosophy: 'Pindah tempat tinggal.' },
+    { id: '241', kanji: '探します', romaji: 'sagashimasu', meaning: 'Mencari', category: 'Kata Kerja', mastered: false, onyomi: 'タン (tan)', kunyomi: 'さが.す (sagasu)', philosophy: 'Berusaha menemukan sesuatu yang hilang/diinginkan.' },
+    { id: '242', kanji: '遅れます', romaji: 'okuremasu', meaning: 'Terlambat', category: 'Kata Kerja', mastered: false, onyomi: 'チ (chi)', kunyomi: 'おく.れる (okureru)', philosophy: 'Melebihi batas waktu yang ditentukan.' },
+    { id: '243', kanji: '間に合います', romaji: 'maniaimasu', meaning: 'Tepat waktu / Keburu', category: 'Kata Kerja', mastered: false, onyomi: '間 (ma), 合 (ai)', kunyomi: 'まにあった (maniatta)', philosophy: 'Sampai sebelum batas waktu habis.' },
+    { id: '244', kanji: 'やります', romaji: 'yarimasu', meaning: 'Melakukan (Kasual/Untuk bawahan)', category: 'Kata Kerja', mastered: false, onyomi: '-', kunyomi: 'や.る (yaru)', philosophy: 'Mengerjakan suatu tindakan.' },
+    { id: '245', kanji: '参加します', romaji: 'sanka shimasu', meaning: 'Berpartisipasi / Mengikuti', category: 'Kata Kerja', mastered: false, onyomi: '参 (san), 加 (ka)', kunyomi: 'さんか (sanka)', philosophy: 'Ikut bergabung dalam kegiatan.' },
+    { id: '246', kanji: '申し込みます', romaji: 'moushikomimasu', meaning: 'Mendaftar', category: 'Kata Kerja', mastered: false, onyomi: '申 (mou), 込 (komi)', kunyomi: 'もうしこむ (moushikomu)', philosophy: 'Mengajukan permohonan resmi.' },
+    { id: '247', kanji: '連絡します', romaji: 'renraku shimasu', meaning: 'Menghubungi', category: 'Kata Kerja', mastered: false, onyomi: '連 (ren), 絡 (raku)', kunyomi: 'れんらく (renraku)', philosophy: 'Memberikan kabar berita.' },
+    { id: '248', kanji: '片づきます', romaji: 'katadzukimasu', meaning: 'Beres / Rapi (Intransitif)', category: 'Kata Kerja', mastered: false, onyomi: '片 (kata), 付 (tsuke)', kunyomi: 'かたづく (katadzuku)', philosophy: 'Kondisi barang yang sudah dirapikan.' },
+    { id: '249', kanji: '飼います', romaji: 'kaimasu', meaning: 'Memelihara (Hewan)', category: 'Kata Kerja', mastered: false, onyomi: 'シ (shi)', kunyomi: 'か.う (kau)', philosophy: 'Merawat binatang piaraan.' },
+    { id: '250', kanji: '建てます', romaji: 'tatemasu', meaning: 'Membangun (Gedung/Rumah)', category: 'Kata Kerja', mastered: false, onyomi: 'ケン (ken)', kunyomi: 'た.てる (tateru)', philosophy: 'Mendirikan bangunan.' },
+    { id: '251', kanji: '走ります', romaji: 'hashirimasu', meaning: 'Berlari / Melaju', category: 'Kata Kerja', mastered: false, onyomi: 'ソウ (sou)', kunyomi: 'はし.る (hashiru)', philosophy: 'Bergerak dengan kecepatan kaki tinggi.' },
+    { id: '252', kanji: '彫ります', romaji: 'horimasu', meaning: 'Mengukir / Memahat', category: 'Kata Kerja', mastered: false, onyomi: 'チョウ (chou)', kunyomi: 'ほ.る (horu)', philosophy: 'Membuat pola pada kayu/batu.' },
+    { id: '253', kanji: '褒めます', romaji: 'homemasu', meaning: 'Memuji', category: 'Kata Kerja', mastered: false, onyomi: 'ホウ (hou)', kunyomi: 'ほ.める (homeru)', philosophy: 'Memberi sanjungan positif.' },
+    { id: '254', kanji: 'しかります', romaji: 'shikarimasu', meaning: 'Memarahi', category: 'Kata Kerja', mastered: false, onyomi: '-', kunyomi: 'しか.る (shikaru)', philosophy: 'Menegur kesalahan orang lain.' },
+    { id: '255', kanji: '誘います', romaji: 'sasoimasu', meaning: 'Mengajak', category: 'Kata Kerja', mastered: false, onyomi: 'ユウ (yuu)', kunyomi: 'さそ.う (sasou)', philosophy: 'Menawarkan agar ikut serta.' },
+    { id: '256', kanji: '起こします', romaji: 'okoshimasu', meaning: 'Membangunkan (Orang lain)', category: 'Kata Kerja', mastered: false, onyomi: 'キ (ki)', kunyomi: 'お.こす (okosu)', philosophy: 'Membuat orang lain bangun dari tidur.' },
+    { id: '257', kanji: '招待します', romaji: 'shoutai shimasu', meaning: 'Mengundang', category: 'Kata Kerja', mastered: false, onyomi: '招 (shou), 待 (tai)', kunyomi: 'しょうたい (shoutai)', philosophy: 'Memanggil tamu secara resmi.' },
+    { id: '258', kanji: '頼みます', romaji: 'tanomimasu', meaning: 'Meminta tolong / Memesan', category: 'Kata Kerja', mastered: false, onyomi: 'ライ (rai)', kunyomi: 'たの.む (tanomu)', philosophy: 'Menyerahkan urusan pada orang lain.' },
+    { id: '259', kanji: '盗みます', romaji: 'nusumimasu', meaning: 'Mencuri', category: 'Kata Kerja', mastered: false, onyomi: 'トウ (tou)', kunyomi: 'ぬす.む (nusumu)', philosophy: 'Mengambil hak milik orang lain secara diam-diam.' },
+    { id: '260', kanji: '踏みます', romaji: 'fumimasu', meaning: 'Menginjak', category: 'Kata Kerja', mastered: false, onyomi: 'トウ (tou)', kunyomi: 'ふ.む (fumu)', philosophy: 'Menaruh telapak kaki di atas benda.' },
+    { id: '261', kanji: '壊します', romaji: 'kowashimasu', meaning: 'Merusak (Transitif)', category: 'Kata Kerja', mastered: false, onyomi: 'カイ (kai)', kunyomi: 'こわ.す (kowasu)', philosophy: 'Sengaja membuat suatu benda hancur.' },
+    { id: '262', kanji: '汚します', romaji: 'yogoshimasu', meaning: 'Mengotori (Transitif)', category: 'Kata Kerja', mastered: false, onyomi: 'オ (o)', kunyomi: 'よご.す (yogosu)', philosophy: 'Sengaja mengotori suatu objek.' },
+    { id: '263', kanji: '行います', romaji: 'okonaimasu', meaning: 'Mengadakan (Acara/Event)', category: 'Kata Kerja', mastered: false, onyomi: 'コウ (kou)', kunyomi: 'おこな.う (okonau)', philosophy: 'Melaksanakan suatu upacara atau kegiatan.' },
+    { id: '264', kanji: '輸出します', romaji: 'yushutsu shimasu', meaning: 'Mengekspor', category: 'Kata Kerja', mastered: false, onyomi: '輸 (yu), 出 (shutsu)', kunyomi: 'ゆしゅつ (yushutsu)', philosophy: 'Mengirim barang keluar negeri.' },
+    { id: '265', kanji: '輸入します', romaji: 'yunyuu shimasu', meaning: 'Mengimpor', category: 'Kata Kerja', mastered: false, onyomi: '輸 (yu), 入 (nyuu)', kunyomi: 'ゆにゅう (yunyuu)', philosophy: 'Memasukkan barang dari luar negeri.' },
+    { id: '266', kanji: '翻訳します', romaji: 'honyaku shimasu', meaning: 'Menerjemahkan', category: 'Kata Kerja', mastered: false, onyomi: '翻 (hon), 訳 (yaku)', kunyomi: 'ほんやく (honyaku)', philosophy: 'Mengubah bahasa satu ke bahasa lain.' },
+    { id: '267', kanji: '発明します', romaji: 'hatsumei shimasu', meaning: 'Menemukan (Penemuan baru)', category: 'Kata Kerja', mastered: false, onyomi: '発 (hatsu), 明 (mei)', kunyomi: 'はつめい (hatsumei)', philosophy: 'Menciptakan teknologi/benda baru.' },
+    { id: '268', kanji: '発見します', romaji: 'hakken shimasu', meaning: 'Menemukan (Sesuatu yang sudah ada)', category: 'Kata Kerja', mastered: false, onyomi: '発 (hatsu), 見 (ken)', kunyomi: 'はっけん (hakken)', philosophy: 'Mendapati sesuatu yang sebelumnya tersembunyi.' },
+    { id: '269', kanji: '焼きます', romaji: 'yakimasu', meaning: 'Membakar / Memanggang', category: 'Kata Kerja', mastered: false, onyomi: 'ショウ (shou)', kunyomi: 'や.く (yaku)', philosophy: 'Memasak atau memanaskan dengan api.' },
+    { id: '270', kanji: '渡します', romaji: 'watashimasu', meaning: 'Menyerahkan', category: 'Kata Kerja', mastered: false, onyomi: 'ト (to)', kunyomi: 'わた.す (watasu)', philosophy: 'Memberikan langsung ke tangan orang.' },
+    { id: '271', kanji: '出かけます', romaji: 'dekakemasu', meaning: 'Pergi keluar (Rumah)', category: 'Kata Kerja', mastered: false, onyomi: '出 (shutsu), 掛 (ka)', kunyomi: 'でかける (dekakeru)', philosophy: 'Beranjak meninggalkan rumah untuk suatu keperluan.' },
+    { id: '272', kanji: '答えます', romaji: 'kotaemasu', meaning: 'Menjawab', category: 'Kata Kerja', mastered: false, onyomi: 'トウ (tou)', kunyomi: 'こた.える (kotaeru)', philosophy: 'Memberi respons atas pertanyaan.' },
+    { id: '273', kanji: '倒れます', romaji: 'taoremasu', meaning: 'Roboh / Tumbang', category: 'Kata Kerja', mastered: false, onyomi: 'トウ (tou)', kunyomi: 'たお.れる (taoreru)', philosophy: 'Kehilangan keseimbangan lalu jatuh.' },
+    { id: '274', kanji: '通ります', romaji: 'toorimasu', meaning: 'Melewati (Jalan)', category: 'Kata Kerja', mastered: false, onyomi: 'ツウ (tsuu)', kunyomi: 'とお.る (tooru)', philosophy: 'Melalui suatu rute.' },
+    { id: '275', kanji: '死にます', romaji: 'shinimasu', meaning: 'Meninggal / Mati', category: 'Kata Kerja', mastered: false, onyomi: 'シ (shi)', kunyomi: 'し.ぬ (shinu)', philosophy: 'Akhir dari siklus kehidupan.' },
+    { id: '276', kanji: 'びっくりします', romaji: 'bikkuri shimasu', meaning: 'Terkejut / Kaget', category: 'Kata Kerja', mastered: false, onyomi: '-', kunyomi: 'びっくり (bikkuri)', philosophy: 'Reaksi spontan atas kejadian tak terduga.' },
+    { id: '277', kanji: 'がっかりします', romaji: 'gakkari shimasu', meaning: 'Kecewa', category: 'Kata Kerja', mastered: false, onyomi: '-', kunyomi: 'がっかり (gakkari)', philosophy: 'Harapan tidak sesuai kenyataan.' },
+    { id: '278', kanji: '安心します', romaji: 'anshin shimasu', meaning: 'Lega / Tenang', category: 'Kata Kerja', mastered: false, onyomi: '安 (an), 心 (shin)', kunyomi: 'あんしん (anshin)', philosophy: 'Perasaan bebas dari rasa khawatir.' },
+    { id: '279', kanji: '遅刻します', romaji: 'chikoku shimasu', meaning: 'Datang terlambat', category: 'Kata Kerja', mastered: false, onyomi: '遅 (chi), 刻 (koku)', kunyomi: 'ちこく (chikoku)', philosophy: 'Tiba melewati batas waktu.' },
+    { id: '280', kanji: '早退します', romaji: 'soutai shimasu', meaning: 'Pulang lebih awal', category: 'Kata Kerja', mastered: false, onyomi: '早 (sou), 退 (tai)', kunyomi: 'そうたい (soutai)', philosophy: 'Meninggalkan tempat kerja/sekolah sebelum waktunya.' },
+    { id: '281', kanji: '喧嘩します', romaji: 'kenka shimasu', meaning: 'Bertengkar', category: 'Kata Kerja', mastered: false, onyomi: '喧 (ken), 嘩 (ka)', kunyomi: 'けんか (kenka)', philosophy: 'Berselisih paham secara emosional.' },
+    { id: '282', kanji: '離婚します', romaji: 'rikon shimasu', meaning: 'Bercerai', category: 'Kata Kerja', mastered: false, onyomi: '離 (ri), 婚 (kon)', kunyomi: 'りこん (rikon)', philosophy: 'Memutus ikatan pernikahan.' },
+    { id: '283', kanji: '太ります', romaji: 'futorimasu', meaning: 'Menjadi gemuk', category: 'Kata Kerja', mastered: false, onyomi: 'タイ (tai)', kunyomi: 'ふと.る (futoru)', philosophy: 'Berat badan bertambah.' },
+    { id: '284', kanji: 'やせます', romaji: 'yasemasu', meaning: 'Menjadi kurus', category: 'Kata Kerja', mastered: false, onyomi: '-', kunyomi: 'や.せる (yaseru)', philosophy: 'Massa tubuh berkurang.' },
+    { id: '285', kanji: 'ぶつかります', romaji: 'butsukarimasu', meaning: 'Bertabrakan / Terbentur', category: 'Kata Kerja', mastered: false, onyomi: '-', kunyomi: 'ぶつか.る (butsukaru)', philosophy: 'Dua objek saling menghantam.' },
+    { id: '286', kanji: '確かめます', romaji: 'tashikamemasu', meaning: 'Memastikan', category: 'Kata Kerja', mastered: false, onyomi: '確 (tashika)', kunyomi: 'たしか.める (tashikameru)', philosophy: 'Mengecek kebenaran informasi.' },
+    { id: '287', kanji: '数えます', romaji: 'kazoemasu', meaning: 'Menghitung', category: 'Kata Kerja', mastered: false, onyomi: '数 (suu)', kunyomi: 'かぞ.える (kazoeru)', philosophy: 'Menjumlahkan bilangan urut.' },
+    { id: '288', kanji: '測ります', romaji: 'hakarimasu', meaning: 'Mengukur / Menimbang', category: 'Kata Kerja', mastered: false, onyomi: '測 (soku)', kunyomi: 'はか.る (hakaru)', philosophy: 'Mencari nilai besaran/dimensi.' },
+    { id: '289', kanji: '出発します', romaji: 'shuppatsu shimasu', meaning: 'Berangkat', category: 'Kata Kerja', mastered: false, onyomi: '出 (shutsu), 発 (hatsu)', kunyomi: 'しゅっぱつ (shuppatsu)', philosophy: 'Memulai perjalanan.' },
+    { id: '290', kanji: '到着します', romaji: 'touchaku shimasu', meaning: 'Tiba (Formal)', category: 'Kata Kerja', mastered: false, onyomi: '到 (tou), 着 (chaku)', kunyomi: 'とうちゃく (touchaku)', philosophy: 'Sampai di lokasi tujuan akhir.' },
+    { id: '291', kanji: '酔います', romaji: 'yoimasu', meaning: 'Mabuk', category: 'Kata Kerja', mastered: false, onyomi: 'スイ (sui)', kunyomi: 'よ.う (you)', philosophy: 'Pusing akibat alkohol atau kendaraan.' },
+    { id: '292', kanji: '晴れます', romaji: 'haremasu', meaning: 'Cerah', category: 'Kata Kerja', mastered: false, onyomi: 'セイ (sei)', kunyomi: 'は.れる (hareru)', philosophy: 'Langit bersih tanpa awan mendung.' },
+    { id: '293', kanji: '曇ります', romaji: 'kumorimasu', meaning: 'Mendung', category: 'Kata Kerja', mastered: false, onyomi: 'ドン (don)', kunyomi: 'くも.る (kumoru)', philosophy: 'Langit tertutup awan gelap.' },
+    { id: '294', kanji: '吹きます', romaji: 'fukimasu', meaning: 'Bertiup (Angin)', category: 'Kata Kerja', mastered: false, onyomi: 'スイ (sui)', kunyomi: 'ふ.く (fuku)', philosophy: 'Angin menghembus kencang.' },
+    { id: '295', kanji: '治ります', romaji: 'naorimasu', meaning: 'Sembuh (Penyakit)', category: 'Kata Kerja', mastered: false, onyomi: 'ジ (ji)', kunyomi: 'なお.る (naoru)', philosophy: 'Kondisi badan kembali sehat.' },
+    { id: '296', kanji: '続きます', romaji: 'tsudukimasu', meaning: 'Berlanjut', category: 'Kata Kerja', mastered: false, onyomi: 'ゾク (zoku)', kunyomi: 'つづ.く (tsuduku)', philosophy: 'Belum berhenti/terus berjalan.' },
+    { id: '297', kanji: '冷やします', romaji: 'hiyashimasu', meaning: 'Mendinginkan', category: 'Kata Kerja', mastered: false, onyomi: 'レイ (rei)', kunyomi: 'ひ.やす (hiyasu)', philosophy: 'Membuat suhu benda jadi dingin.' },
+    { id: '298', kanji: '込みます', romaji: 'komimasu', meaning: 'Macet / Padat (Jalanan)', category: 'Kata Kerja', mastered: false, onyomi: '込 (komi)', kunyomi: 'こ.む (komu)', philosophy: 'Kondisi jalanan penuh sesak.' },
+    { id: '299', kanji: 'すきます', romaji: 'sukimasu', meaning: 'Sepi / Kosong (Jalanan/Perut)', category: 'Kata Kerja', mastered: false, onyomi: '-', kunyomi: 'す.く (suku)', philosophy: 'Kondisi lengang atau perut lapar.' },
+    { id: '300', kanji: '逃げます', romaji: 'nigemasu', meaning: 'Melarikan diri', category: 'Kata Kerja', mastered: false, onyomi: 'トウ (tou)', kunyomi: 'に.げる (nigeru)', philosophy: 'Menghindar dari bahaya/penangkapan.' },
+    { id: '301', kanji: '騒ぎます', romaji: 'sawagimasu', meaning: 'Berbuat gaduh / Ribut', category: 'Kata Kerja', mastered: false, onyomi: 'ソウ (sou)', kunyomi: 'さわ.ぐ (sawagu)', philosophy: 'Membuat keributan suara.' },
+    { id: '302', kanji: 'あきらめます', romaji: 'akiramemasu', meaning: 'Menyerah', category: 'Kata Kerja', mastered: false, onyomi: '-', kunyomi: 'あきら.める (akirameru)', philosophy: 'Melepaskan harapan.' },
+    { id: '303', kanji: '投げます', romaji: 'nagemasu', meaning: 'Melempar', category: 'Kata Kerja', mastered: false, onyomi: 'トウ (tou)', kunyomi: 'な.げる (nageru)', philosophy: 'Melontarkan benda dengan tangan.' },
+    { id: '304', kanji: '守ります', romaji: 'mamorimasu', meaning: 'Melindungi / Mematuhi (Janji/Aturan)', category: 'Kata Kerja', mastered: false, onyomi: 'シュ (shu)', kunyomi: 'まも.る (mamoru)', philosophy: 'Menjaga agar tetap aman/patuh.' },
+    { id: '305', kanji: '上がります', romaji: 'agarimasu', meaning: 'Naik / Meningkat', category: 'Kata Kerja', mastered: false, onyomi: 'ジョウ (jou)', kunyomi: 'あ.がる (agaru)', philosophy: 'Bergerak ke posisi lebih tinggi.' },
+    { id: '306', kanji: '下がります', romaji: 'sagarimasu', meaning: 'Turun / Menurun', category: 'Kata Kerja', mastered: false, onyomi: 'カ (ka)', kunyomi: 'さ.がる (sagaru)', philosophy: 'Bergerak ke posisi lebih rendah.' },
+    { id: '307', kanji: '伝えます', romaji: 'tsutaemasu', meaning: 'Menyampaikan', category: 'Kata Kerja', mastered: false, onyomi: 'デン (den)', kunyomi: 'つた.える (tsutaeru)', philosophy: 'Mengoper pesan ke pihak lain.' },
+    { id: '308', kanji: '泣きます', romaji: 'nakimasu', meaning: 'Menangis', category: 'Kata Kerja', mastered: false, onyomi: 'キュウ (kyuu)', kunyomi: 'な.く (naku)', philosophy: 'Mengeluarkan air mata karena sedih.' },
+    { id: '309', kanji: '笑います', romaji: 'waraimasu', meaning: 'Tertawa', category: 'Kata Kerja', mastered: false, onyomi: 'ショウ (shou)', kunyomi: 'わら.う (warau)', philosophy: 'Ekspresi gembira wajah.' },
+    { id: '310', kanji: '眠ります', romaji: 'nemurimasu', meaning: 'Tertidur', category: 'Kata Kerja', mastered: false, onyomi: 'ミン (min)', kunyomi: 'ねむ.る (nemuru)', philosophy: 'Berada dalam fase tidur.' },
+    { id: '311', kanji: '乾きます', romaji: 'kawakimasu', meaning: 'Kering', category: 'Kata Kerja', mastered: false, onyomi: 'カン (kan)', kunyomi: 'かわ.く (kawaku)', philosophy: 'Kehilangan kandungan air.' },
+    { id: '312', kanji: 'ぬれます', romaji: 'nuremasu', meaning: 'Basah', category: 'Kata Kerja', mastered: false, onyomi: '-', kunyomi: 'ぬ.れる (nureru)', philosophy: 'Terkena cairan air.' },
+    { id: '313', kanji: '滑ります', romaji: 'suberimasu', meaning: 'Tergelincir', category: 'Kata Kerja', mastered: false, onyomi: 'カツ (katsu)', kunyomi: 'すべ.る (suberu)', philosophy: 'Hilang keseimbangan di permukaan licin.' },
+    { id: '314', kanji: '謝ります', romaji: 'ayamarimasu', meaning: 'Meminta maaf', category: 'Kata Kerja', mastered: false, onyomi: 'シャ (sha)', kunyomi: 'あやど.る (ayamaru)', philosophy: 'Mengakui kesalahan dan minta maaf.' },
+    { id: '315', kanji: '信じます', romaji: 'shinjimasu', meaning: 'Percaya', category: 'Kata Kerja', mastered: false, onyomi: 'シン (shin)', kunyomi: 'しん.じる (shinjiru)', philosophy: 'Menaruh keyakinan penuh.' },
+    { id: '316', kanji: '祈ります', romaji: 'inorimasu', meaning: 'Berdoa', category: 'Kata Kerja', mastered: false, onyomi: 'キ (ki)', kunyomi: 'いの.る (inoru)', philosophy: 'Memohon kepada Yang Kuasa.' },
+    { id: '317', kanji: '用意します', romaji: 'youi shimasu', meaning: 'Menyediakan', category: 'Kata Kerja', mastered: false, onyomi: '用 (you), 意 (i)', kunyomi: 'ようい (youi)', philosophy: 'Mempersiapkan segala keperluan.' },
+    { id: '318', kanji: '沸かします', romaji: 'wakashimasu', meaning: 'Mendidihkan (Air)', category: 'Kata Kerja', mastered: false, onyomi: 'フツ (futsu)', kunyomi: 'わ.かす (wakasu)', philosophy: 'Memanaskan air hingga mendidih.' },
+    { id: '319', kanji: '咲きます', romaji: 'sakimasu', meaning: 'Mekar (Bunga)', category: 'Kata Kerja', mastered: false, onyomi: 'ショウ (shou)', kunyomi: 'さ.く (saku)', philosophy: 'Bunga membuka kelopaknya.' },
+    { id: '320', kanji: '組み立てます', romaji: 'kumitatemasu', meaning: 'Merakit', category: 'Kata Kerja', mastered: false, onyomi: '組 (so), 立 (ritsu)', kunyomi: 'くみたてる (kumitateru)', philosophy: 'Menyusun bagian-bagian komponen.' },
+    { id: '321', kanji: '暮らします', romaji: 'kurashimasu', meaning: 'Hidup / Menjalani kehidupan', category: 'Kata Kerja', mastered: false, onyomi: 'ボ (bo)', kunyomi: 'く.らす (kurasu)', philosophy: 'Menjalani hari-hari kehidupan.' },
+    { id: '322', kanji: '届けます', romaji: 'todokemasu', meaning: 'Mengantarkan (Barang/Laporan)', category: 'Kata Kerja', mastered: false, onyomi: 'トク (toku)', kunyomi: 'とど.ける (todokeru)', philosophy: 'Mengirimkan barang ke alamat tujuan.' },
+    { id: '323', kanji: '慣れます', romaji: 'naremasu', meaning: 'Terbiasa', category: 'Kata Kerja', mastered: false, onyomi: 'カン (kan)', kunyomi: 'な.れる (nareru)', philosophy: 'Sudah beradaptasi dengan keadaan.' },
+    { id: '324', kanji: '包みます', romaji: 'tsutsumimasu', meaning: 'Membungkus', category: 'Kata Kerja', mastered: false, onyomi: 'ホウ (hou)', kunyomi: 'つつ.む (tsutsumu)', philosophy: 'Menutup rapat barang dengan pembungkus.' },
+    { id: '325', kanji: 'いらっしゃいます', romaji: 'irasshaimasu', meaning: 'Pergi / Datang / Ada (Hormat)', category: 'Kata Kerja', mastered: false, onyomi: '-', kunyomi: '-', philosophy: '-' },
+    { id: '326', kanji: '召し上がります', romaji: 'meshiagarimasu', meaning: 'Makan / Minum (Hormat)', category: 'Kata Kerja', mastered: false, onyomi: '召 (shou), 上 (jou)', kunyomi: 'めしあがる (meshiagaru)', philosophy: 'Bentuk hormat untuk makan/minum.' },
+    { id: '327', kanji: 'おっしゃいます', romaji: 'osshaimasu', meaning: 'Berkata (Hormat)', category: 'Kata Kerja', mastered: false, onyomi: '-', kunyomi: '-', philosophy: '-' },
+    { id: '328', kanji: 'なさいます', romaji: 'nasaimasu', meaning: 'Melakukan (Hormat)', category: 'Kata Kerja', mastered: false, onyomi: '-', kunyomi: '-', philosophy: '-' },
+    { id: '329', kanji: 'ご覧になります', romaji: 'goran ni narimasu', meaning: 'Melihat (Hormat)', category: 'Kata Kerja', mastered: false, onyomi: '覧 (ran)', kunyomi: 'ごらんになる (goran ni naru)', philosophy: 'Bentuk hormat untuk melihat.' },
+    { id: '330', kanji: 'ご存じです', romaji: 'gozonji desu', meaning: 'Mengetahui (Hormat)', category: 'Kata Kerja', mastered: false, onyomi: '存 (zon)', kunyomi: 'ごぞんじ (gozonji)', philosophy: 'Bentuk hormat untuk tahu.' },
+    { id: '331', kanji: '参ります', romaji: 'mairimasu', meaning: 'Pergi / Datang (Merendahkan diri)', category: 'Kata Kerja', mastered: false, onyomi: 'サン (san)', kunyomi: 'まい.る (mairu)', philosophy: 'Bentuk sopan rendah diri untuk pergi/datang.' },
+    { id: '332', kanji: 'おります', romaji: 'orimasu', meaning: 'Ada (Merendahkan diri)', category: 'Kata Kerja', mastered: false, onyomi: '-', kunyomi: 'お.る (oru)', philosophy: 'Bentuk sopan rendah diri untuk keberadaan.' },
+    { id: '333', kanji: 'いただきます', romaji: 'itadakimasu', meaning: 'Menerima / Makan / Minum (Merendahkan diri)', category: 'Kata Kerja', mastered: false, onyomi: '-', kunyomi: '-', philosophy: '-' },
+    { id: '334', kanji: '申します', romaji: 'moushimasu', meaning: 'Bernama / Berkata (Merendahkan diri)', category: 'Kata Kerja', mastered: false, onyomi: '申 (shin)', kunyomi: 'もう.す (mousu)', philosophy: 'Bentuk sopan rendah diri untuk bernama/berkata.' },
+    { id: '335', kanji: 'いたします', romaji: 'itashimasu', meaning: 'Melakukan (Merendahkan diri)', category: 'Kata Kerja', mastered: false, onyomi: '-', kunyomi: '-', philosophy: '-' },
+    { id: '336', kanji: '拝見します', romaji: 'haiken shimasu', meaning: 'Melihat (Merendahkan diri)', category: 'Kata Kerja', mastered: false, onyomi: '拝 (hai), 見 (ken)', kunyomi: 'はいけんする (haiken suru)', philosophy: 'Bentuk sopan rendah diri untuk melihat.' },
+    { id: '337', kanji: '存じます', romaji: 'zonjimasu', meaning: 'Mengetahui (Merendahkan diri)', category: 'Kata Kerja', mastered: false, onyomi: '存 (zon)', kunyomi: 'ぞん.じる (zonjiru)', philosophy: 'Bentuk sopan rendah diri untuk mengetahui.' },
+    { id: '338', kanji: '伺います', romaji: 'ukagaimasu', meaning: 'Bertanya / Berkunjung (Merendahkan diri)', category: 'Kata Kerja', mastered: false, onyomi: '伺 (shi)', kunyomi: 'うかが.う (ukagau)', philosophy: 'Bentuk sopan rendah diri untuk berkunjung/bertanya.' },
+            
             // ==========================================
             // KATEGORI: PERATURAN & TANDA
             // ==========================================
@@ -733,38 +1001,6 @@
             { id: '2021', kanji: '罰金', romaji: 'bakkin', meaning: 'Denda', category: 'Peraturan', mastered: false, onyomi: 'バツ (batsu), キン (kin)', kunyomi: 'かね (kane)', philosophy: 'Uang (金) yang dibayar sebagai hukuman (罰).' },
             { id: '2022', kanji: '安全', romaji: 'anzen', meaning: 'Aman / Keselamatan', category: 'Peraturan', mastered: false, onyomi: 'アン (an), ゼン (zen)', kunyomi: 'やす.い (yasu.i), まった.く (matta.ku)', philosophy: 'Wanita di bawah atap (Aman) dengan kesempurnaan (全).' },
 
-            // ==========================================
-            // KATEGORI: KATA KERJA (BAGIAN 1)
-            // ==========================================
-            { id: '16', kanji: '折ります', romaji: 'orimasu', meaning: 'Melipat / Mematahkan', category: 'Kata Kerja', mastered: false, onyomi: 'セツ (setsu)', kunyomi: 'お.る (o.ru)', philosophy: 'Tangan (扌) mematahkan kapak/ranting (斤).' },
-            { id: '17', kanji: '気がつきます', romaji: 'ki ga tsukimasu', meaning: 'Menyadari', category: 'Kata Kerja', mastered: false, onyomi: 'キ (ki)', kunyomi: 'き (ki), つ.く (tsu.ku)', philosophy: 'Perasaan/Udara (気) yang melekat/menyala (付) pada diri.' },
-            { id: '18', kanji: '見つけます', romaji: 'mitsukemasu', meaning: 'Menemukan', category: 'Kata Kerja', mastered: false, onyomi: 'ケン (ken)', kunyomi: 'み.つける (mi.tsukeru)', philosophy: 'Melihat (見) dan menetapkan/melekatkan pandangan.' },
-            { id: '19', kanji: '見つかります', romaji: 'mitsukarimasu', meaning: 'Ditemukan', category: 'Kata Kerja', mastered: false, onyomi: 'ケン (ken)', kunyomi: 'み.つかる (mi.tsukaru)', philosophy: 'Bentuk intransitif dari menemukan.' },
-            { id: '20', kanji: '質問します', romaji: 'shitsumon shimasu', meaning: 'Bertanya', category: 'Kata Kerja', mastered: false, onyomi: 'シツ (shitsu), モン (mon)', kunyomi: 'と.う (to.u)', philosophy: 'Mengajukan pertanyaan (問) tentang inti/kualitas (質) sesuatu.' },
-            { id: '22', kanji: '開けます', romaji: 'akemasu', meaning: 'Membuka', category: 'Kata Kerja', mastered: false, onyomi: 'カイ (kai)', kunyomi: 'あ.ける (a.keru)', philosophy: 'Membuka gerbang (門) dengan dua tangan/palang (廾).' },
-            { id: '24', kanji: '閉めます', romaji: 'shimemasu', meaning: 'Menutup (pintu, jendela)', category: 'Kata Kerja', mastered: false, onyomi: 'ヘイ (hei)', kunyomi: 'し.める (shi.meru)', philosophy: 'Palang (才) menutupi gerbang (門).' },
-            { id: '25', kanji: '閉じます', romaji: 'tojimasu', meaning: 'Menutup (mata, buku)', category: 'Kata Kerja', mastered: false, onyomi: 'ヘイ (hei)', kunyomi: 'と.じる (to.jiru)', philosophy: 'Sama dengan shimeru, namun untuk benda bersendi/lipat.' },
-            { id: '26', kanji: '変わります', romaji: 'kawarimasu', meaning: 'Berubah', category: 'Kata Kerja', mastered: false, onyomi: 'ヘン (hen)', kunyomi: 'か.わる (ka.waru)', philosophy: 'Benang kusut yang diurai tangan perlahan (berubah wujud).' },
-            { id: '27', kanji: '困ります', romaji: 'komarimasu', meaning: 'Kesulitan / Bingung', category: 'Kata Kerja', mastered: false, onyomi: 'コン (kon)', kunyomi: 'こま.る (koma.ru)', philosophy: 'Pohon (木) yang terjebak di dalam kotak pembatas (囗).' },
-            { id: '28', kanji: '拾います', romaji: 'hiroimasu', meaning: 'Memungut', category: 'Kata Kerja', mastered: false, onyomi: 'シュウ (shuu)', kunyomi: 'ひろ.う (hiro.u)', philosophy: 'Tangan (扌) yang menyatukan (合) barang berserakan.' },
-            { id: '31', kanji: '飾ります', romaji: 'kazarimasu', meaning: 'Menghias', category: 'Kata Kerja', mastered: false, onyomi: 'ショク (shoku)', kunyomi: 'かざ.る (kaza.ru)', philosophy: 'Makanan/berhias dengan perhiasan/Kain dan manusia.' },
-            { id: '34', kanji: '過ごします', romaji: 'sugoshimasu', meaning: 'Menghabiskan waktu', category: 'Kata Kerja', mastered: false, onyomi: 'カ (ka)', kunyomi: 'す.ごす (su.gosu)', philosophy: 'Berjalan melewati batas.' },
-            { id: '35', kanji: '運動します', romaji: 'undou shimasu', meaning: 'Berolahraga', category: 'Kata Kerja', mastered: false, onyomi: 'ウン (un), ドウ (dou)', kunyomi: 'はこ.ぶ (hako.bu), うご.く (ugo.ku)', philosophy: 'Bergerak (動) dan membawa/mengangkut (運) beban badan.' },
-            { id: '36', kanji: '相談します', romaji: 'soudan shimasu', meaning: 'Berkonsultasi', category: 'Kata Kerja', mastered: false, onyomi: 'ソウ (sou), ダン (dan)', kunyomi: 'あい (ai)', philosophy: 'Berbicara (談) bertatap muka saling berhadapan (相).' },
-            { id: '38', kanji: '休憩します', romaji: 'kyuukei shimasu', meaning: 'Istirahat sejenak', category: 'Kata Kerja', mastered: false, onyomi: 'キュウ (kyuu), ケイ (kei)', kunyomi: 'やす.む (yasu.mu)', philosophy: 'Seseorang (人) beristirahat di pohon (木) untuk memulihkan napas (憩).' },
-            { id: '41', kanji: '始まります', romaji: 'hajimarimasu', meaning: 'Dimulai', category: 'Kata Kerja', mastered: false, onyomi: 'シ (shi)', kunyomi: 'はじ.まる (haji.maru)', philosophy: 'Seorang wanita (女) melahirkan awal baru (台).' },
-            { id: '42', kanji: '失敗します', romaji: 'shippai shimasu', meaning: 'Gagal', category: 'Kata Kerja', mastered: false, onyomi: 'シツ (shitsu), パイ (pai)', kunyomi: 'うしな.う (ushina.u), やぶ.れる (yabu.reru)', philosophy: 'Kehilangan (失) dan kalah/hancur (敗).' },
-            { id: '43', kanji: '成功します', romaji: 'seikou shimasu', meaning: 'Sukses', category: 'Kata Kerja', mastered: false, onyomi: 'セイ (sei), コウ (kou)', kunyomi: 'な.る (na.ru)', philosophy: 'Pekerjaan (功) yang akhirnya menjadi kenyataan (成).' },
-            { id: '44', kanji: '合格します', romaji: 'goukaku shimasu', meaning: 'Lulus ujian', category: 'Kata Kerja', mastered: false, onyomi: 'ゴウ (gou), カク (kaku)', kunyomi: 'あ.う (a.u)', philosophy: 'Cocok/sesuai (合) dengan standar status/peringkat (格).' },
-            { id: '45', kanji: '続けます', romaji: 'tsuzukemasu', meaning: 'Melanjutkan', category: 'Kata Kerja', mastered: false, onyomi: 'ゾク (zoku)', kunyomi: 'つづ.ける (tsuzu.keru)', philosophy: 'Benang (糸) yang terus terjual/menyambung (売).' },
-            { id: '46', kanji: '吹きます', romaji: 'fukimasu', meaning: 'Meniup', category: 'Kata Kerja', mastered: false, onyomi: 'スイ (sui)', kunyomi: 'ふ.く (fu.ku)', philosophy: 'Mulut (口) yang menghembuskan udara perlahan (欠).' },
-            { id: '47', kanji: '降ります', romaji: 'furimasu', meaning: 'Turun (hujan, salju)', category: 'Kata Kerja', mastered: false, onyomi: 'コウ (kou)', kunyomi: 'ふ.る (fu.ru)', philosophy: 'Sesuatu jatuh dari bukit (阝) dengan kaki melangkah (降).' },
-            { id: '48', kanji: '投げます', romaji: 'nagemasu', meaning: 'Melempar', category: 'Kata Kerja', mastered: false, onyomi: 'トウ (tou)', kunyomi: 'な.げる (na.geru)', philosophy: 'Tangan (扌) yang melempar tombak/senjata (殳).' },
-            { id: '49', kanji: '捕まえます', romaji: 'tsukamaemasu', meaning: 'Menangkap', category: 'Kata Kerja', mastered: false, onyomi: 'ホ (ho)', kunyomi: 'つか.まえる (tsuka.maeru)', philosophy: 'Tangan (扌) menangkap hewan (甫).' },
-            { id: '50', kanji: '蹴ります', romaji: 'kerimasu', meaning: 'Menendang', category: 'Kata Kerja', mastered: false, onyomi: 'シュウ (shuu)', kunyomi: 'け.る (ke.ru)', philosophy: 'Kaki (足) yang diayunkan kuat.' },
-            { id: '51', kanji: '打ちます', romaji: 'uchimasu', meaning: 'Memukul', category: 'Kata Kerja', mastered: false, onyomi: 'ダ (da)', kunyomi: 'う.つ (u.tsu)', philosophy: 'Tangan (扌) yang menghantam kuat (丁).' },
-            { id: '52', kanji: '注意します', romaji: 'chuui shimasu', meaning: 'Berhati-hati', category: 'Kata Kerja', mastered: false, onyomi: 'チュウ (chuu), イ (i)', kunyomi: 'そそ.ぐ (soso.gu)', philosophy: 'Menuangkan pikiran, persis dengan yang ada di tanda aturan.' },
-            
             // ==========================================
             // KATEGORI: TEMPAT & BENDA
             // ==========================================
@@ -953,34 +1189,6 @@
             { id: '1053', kanji: '同じ', romaji: 'onaji', meaning: 'Sama', category: 'Sifat & Kondisi', mastered: false, onyomi: 'ドウ (dou)', kunyomi: 'おな.じ (ona.ji)', philosophy: 'Satu (一) mulut (口) di bawah penutup (冂), semua berbicara hal yang sama.' },
             
             // ==========================================
-            // KATEGORI: KATA KERJA (BAGIAN 2)
-            // ==========================================
-            { id: '101', kanji: '起きます', romaji: 'okimasu', meaning: 'Bangun', category: 'Kata Kerja', mastered: false, onyomi: 'キ (ki)', kunyomi: 'お.きる (o.kiru)', philosophy: 'Seseorang berjalan (走) dan bangkit dari dirinya sendiri (己).' },
-            { id: '102', kanji: '寝ます', romaji: 'nemasu', meaning: 'Tidur', category: 'Kata Kerja', mastered: false, onyomi: 'シン (shin)', kunyomi: 'ね.る (ne.ru)', philosophy: 'Seseorang berbaring di dalam rumah (宀) di atas tempat tidur/papan (爿).' },
-            { id: '103', kanji: '働きます', romaji: 'hatarakimasu', meaning: 'Bekerja', category: 'Kata Kerja', mastered: false, onyomi: 'ドウ (dou)', kunyomi: 'はたら.く (hatara.ku)', philosophy: 'Orang (亻) yang bergerak (動) menggunakan tenaga untuk bekerja.' },
-            { id: '104', kanji: '休みます', romaji: 'yasumimasu', meaning: 'Istirahat / Libur', category: 'Kata Kerja', mastered: false, onyomi: 'キュウ (kyuu)', kunyomi: 'やす.む (yasu.mu)', philosophy: 'Seseorang (亻) bersandar di pohon (木) untuk beristirahat.' },
-            { id: '105', kanji: '勉強します', romaji: 'benkyou shimasu', meaning: 'Belajar', category: 'Kata Kerja', mastered: false, onyomi: 'ベン (ben), キョウ (kyou)', kunyomi: 'つと.める (tsuto.meru), つよ.い (tsuyo.i)', philosophy: 'Berusaha keras (勉) dengan kemauan yang kuat (強) meski terpaksa.' },
-            { id: '106', kanji: '終わります', romaji: 'owarimasu', meaning: 'Selesai', category: 'Kata Kerja', mastered: false, onyomi: 'シュウ (shuu)', kunyomi: 'お.わる (o.waru)', philosophy: 'Benang (糸) musim dingin (冬) yang menandakan akhir/selesai.' },
-            { id: '107', kanji: '行きます', romaji: 'ikimasu', meaning: 'Pergi', category: 'Kata Kerja', mastered: false, onyomi: 'コウ (kou), ギョウ (gyou)', kunyomi: 'い.く (i.ku)', philosophy: 'Piktograf persimpangan jalan, melambangkan perjalanan/pergi.' },
-            { id: '108', kanji: '来ます', romaji: 'kimasu', meaning: 'Datang', category: 'Kata Kerja', mastered: false, onyomi: 'ライ (rai)', kunyomi: 'く.る (ku.ru)', philosophy: 'Gandum/padi yang turun dari surga/datang ke bumi.' },
-            { id: '109', kanji: '帰ります', romaji: 'kaerimasu', meaning: 'Pulang', category: 'Kata Kerja', mastered: false, onyomi: 'キ (ki)', kunyomi: 'かえ.る (kae.ru)', philosophy: 'Istri yang kembali dengan sapu, atau panji yang dibawa pulang pasukan.' },
-            { id: '110', kanji: '食べます', romaji: 'tabemasu', meaning: 'Makan', category: 'Kata Kerja', mastered: false, onyomi: 'ショク (shoku)', kunyomi: 'た.べる (ta.beru)', philosophy: 'Seseorang (人) mengumpulkan sesuatu yang baik (良) ke dalam perut.' },
-            { id: '111', kanji: '飲みます', romaji: 'nomimasu', meaning: 'Minum', category: 'Kata Kerja', mastered: false, onyomi: 'イン (in)', kunyomi: 'の.む (no.mu)', philosophy: 'Membuka mulut karena kekurangan (欠) makanan/air (食).' },
-            { id: '113', kanji: '見ます', romaji: 'mimasu', meaning: 'Melihat / Menonton', category: 'Kata Kerja', mastered: false, onyomi: 'ケン (ken)', kunyomi: 'み.る (mi.ru)', philosophy: 'Mata besar (目) di atas kaki berjalan (儿).' },
-            { id: '114', kanji: '聞きます', romaji: 'kikimasu', meaning: 'Mendengar / Bertanya', category: 'Kata Kerja', mastered: false, onyomi: 'ブン (bun), モン (mon)', kunyomi: 'き.く (ki.ku)', philosophy: 'Telinga (耳) di dekat pintu/gerbang (門) untuk menguping.' },
-            { id: '115', kanji: '読みます', romaji: 'yomimasu', meaning: 'Membaca', category: 'Kata Kerja', mastered: false, onyomi: 'ドク (doku)', kunyomi: 'よ.む (yo.mu)', philosophy: 'Kata-kata (言) yang dijual (売) ke publik melalui bacaan.' },
-            { id: '116', kanji: '書きます', romaji: 'kakimasu', meaning: 'Menulis / Menggambar', category: 'Kata Kerja', mastered: false, onyomi: 'ショ (sho)', kunyomi: 'か.く (ka.ku)', philosophy: 'Tangan memegang kuas (聿) dan mencoret hari/kertas (曰).' },
-            { id: '117', kanji: '買います', romaji: 'kaimasu', meaning: 'Membeli', category: 'Kata Kerja', mastered: false, onyomi: 'バイ (bai)', kunyomi: 'か.う (ka.u)', philosophy: 'Menggunakan uang logam/kerang (貝) dalam jaring (罒) untuk transaksi.' },
-            { id: '126', kanji: '教えます', romaji: 'oshiemasu', meaning: 'Mengajar / Memberitahu', category: 'Kata Kerja', mastered: false, onyomi: 'キョウ (kyou)', kunyomi: 'おし.える (oshi.eru)', philosophy: 'Menyuruh anak (子) yang sudah tua (孝) dengan cambuk (攵) untuk belajar.' },
-            { id: '131', kanji: '遊びます', romaji: 'asobimasu', meaning: 'Bermain', category: 'Kata Kerja', mastered: false, onyomi: 'ユウ (yuu)', kunyomi: 'あそ.ぶ (aso.bu)', philosophy: 'Bergerak kesana-kemari (辶) dengan arah (方) seperti anak panah yang melayang bebas.' },
-            { id: '139', kanji: '覚えます', romaji: 'oboemasu', meaning: 'Mengingat / Menghafal', category: 'Kata Kerja', mastered: false, onyomi: 'カク (kaku)', kunyomi: 'おぼ.える (obo.eru)', philosophy: 'Belajar melihat (見) hingga menembus penutup akal/mengingatnya di kepala.' },
-            { id: '140', kanji: '忘れます', romaji: 'wasuremasu', meaning: 'Lupa', category: 'Kata Kerja', mastered: false, onyomi: 'ボウ (bou)', kunyomi: 'わす.れる (wasure.ru)', philosophy: 'Hati (心) yang melarikan diri / hilang arah (亡).' },
-            { id: '142', kanji: '払います', romaji: 'haraimasu', meaning: 'Membayar', category: 'Kata Kerja', mastered: false, onyomi: 'フツ (futsu)', kunyomi: 'はら.う (hara.u)', philosophy: 'Tangan (扌) yang menghilangkan atau melepaskan kepemilikan uang (厶).' },
-            { id: '176', kanji: '歩きます', romaji: 'arukimasu', meaning: 'Berjalan kaki', category: 'Kata Kerja', mastered: false, onyomi: 'ホ (ho)', kunyomi: 'ある.く (aru.ku)', philosophy: 'Berhenti (止) perlahan dan melangkah (少), yaitu berjalan.' },
-            { id: '178', kanji: '待ちます', romaji: 'machimasu', meaning: 'Menunggu', category: 'Kata Kerja', mastered: false, onyomi: 'タイ (tai)', kunyomi: 'ま.つ (ma.tsu)', philosophy: 'Melangkah (彳) ke kuil (寺) lalu diam/menunggu.' },
-            { id: '183', kanji: '話します', romaji: 'hanashimasu', meaning: 'Berbicara', category: 'Kata Kerja', mastered: false, onyomi: 'ワ (wa)', kunyomi: 'はな.す (hana.su)', philosophy: 'Kata-kata (言) yang keluar dari lidah (舌).' },
-
-            // ==========================================
             // KATEGORI: PARTIKEL & KETERANGAN
             // (Sebagian besar ditulis hiragana, kanjinya jarang dipakai tapi tetap ada sejarahnya)
             // ==========================================
@@ -993,17 +1201,37 @@
             { id: '4029', kanji: 'もし', romaji: 'moshi', meaning: 'Jika / Seandainya', category: 'Partikel & Keterangan', mastered: false, onyomi: 'ジャク (jaku)', kunyomi: 'もし (moshi)', philosophy: 'Dari kata 若し (moshikuwa), merujuk pada kemungkinan hipotetis.' },
 
             // ==========================================
-            // KATEGORI: BENCANA & DARURAT
+            // KATEGORI: ALAM & BENCANA ALAM
             // ==========================================
-            { id: '3001', kanji: '地震', romaji: 'jishin', meaning: 'Gempa bumi', category: 'Bencana & Darurat', mastered: false, onyomi: 'ジ (ji), シン (shin)', kunyomi: 'つち (tsuchi), ふる.える (furu.eru)', philosophy: 'Tanah/bumi (地) yang bergetar keras (震).' },
-            { id: '3002', kanji: '津波', romaji: 'tsunami', meaning: 'Tsunami / Gelombang pasang', category: 'Bencana & Darurat', mastered: false, onyomi: 'シン (shin), ハ (ha)', kunyomi: 'つ (tsu), なみ (nami)', philosophy: 'Gelombang air (波) besar yang menerjang pelabuhan (津).' },
-            { id: '3003', kanji: '台風', romaji: 'taifuu', meaning: 'Topan / Badai', category: 'Bencana & Darurat', mastered: false, onyomi: 'タイ (tai), フウ (fuu)', kunyomi: 'かぜ (kaze)', philosophy: 'Angin (風) besar yang memutar bagai mesin/platform (台).' },
-            { id: '3004', kanji: '火事', romaji: 'kaji', meaning: 'Kebakaran', category: 'Bencana & Darurat', mastered: false, onyomi: 'カ (ka), ジ (ji)', kunyomi: 'ひ (hi), こと (koto)', philosophy: 'Sebuah kejadian/peristiwa (事) besar terkait Api (火).' },
-            { id: '3005', kanji: '洪水', romaji: 'kouzui', meaning: 'Banjir', category: 'Bencana & Darurat', mastered: false, onyomi: 'コウ (kou), スイ (sui)', kunyomi: 'みず (mizu)', philosophy: 'Air (水) yang meluap secara massal (洪).' },
-            { id: '3011', kanji: '避難', romaji: 'hinan', meaning: 'Evakuasi', category: 'Bencana & Darurat', mastered: false, onyomi: 'ヒ (hi), ナン (nan)', kunyomi: 'さ.ける (sa.keru), かた.い (kata.i)', philosophy: 'Menghindari (避) bahaya/kesulitan (難).' },
-            { id: '3014', kanji: '救急車', romaji: 'kyuukyuusha', meaning: 'Mobil ambulan', category: 'Bencana & Darurat', mastered: false, onyomi: 'キュウ (kyuu), キュウ (kyuu), シャ (sha)', kunyomi: 'すく.う (suku.u), いそ.ぐ (iso.gu)', philosophy: 'Mobil (車) untuk keadaan mendesak (急) demi menyelamatkan nyawa (救).' },
-            { id: '3015', kanji: '消防車', romaji: 'shoubousha', meaning: 'Pemadam kebakaran', category: 'Bencana & Darurat', mastered: false, onyomi: 'ショウ (shou), ボウ (bou), シャ (sha)', kunyomi: 'け.す (ke.su), ふせ.ぐ (fuse.gu)', philosophy: 'Mobil (車) yang mencegah (防) dan memadamkan (消) api.' },
-            { id: '3016', kanji: '警察', romaji: 'keisatsu', meaning: 'Polisi', category: 'Bencana & Darurat', mastered: false, onyomi: 'ケイ (kei), サツ (satsu)', kunyomi: '-', philosophy: 'Memperingatkan (警) dan menyelidiki/memeriksa (察).' }
+            { id: '3001', kanji: '地震', romaji: 'jishin', meaning: 'Gempa bumi', category: 'Alam & Bencana Alam', mastered: false, onyomi: 'ジ (ji), シン (shin)', kunyomi: 'つち (tsuchi), ふる.える (furu.eru)', philosophy: 'Tanah/bumi (地) yang bergetar keras (震).' },
+            { id: '3002', kanji: '津波', romaji: 'tsunami', meaning: 'Tsunami / Gelombang pasang', category: 'Alam & Bencana Alam', mastered: false, onyomi: 'シン (shin), ハ (ha)', kunyomi: 'つ (tsu), なみ (nami)', philosophy: 'Gelombang air (波) besar yang menerjang pelabuhan (津).' },
+            { id: '3003', kanji: '台風', romaji: 'taifuu', meaning: 'Topan / Badai', category: 'Alam & Bencana Alam', mastered: false, onyomi: 'タイ (tai), フウ (fuu)', kunyomi: 'かぜ (kaze)', philosophy: 'Angin (風) besar yang memutar bagai mesin/platform (台).' },
+            { id: '3004', kanji: '火事', romaji: 'kaji', meaning: 'Kebakaran', category: 'Alam & Bencana Alam', mastered: false, onyomi: 'カ (ka), ジ (ji)', kunyomi: 'ひ (hi), こと (koto)', philosophy: 'Sebuah kejadian/peristiwa (事) besar terkait Api (火).' },
+            { id: '3005', kanji: '洪水', romaji: 'kouzui', meaning: 'Banjir', category: 'Alam & Bencana Alam', mastered: false, onyomi: 'コウ (kou), スイ (sui)', kunyomi: 'みず (mizu)', philosophy: 'Air (水) yang meluap secara massal (洪).' },
+            { id: '3011', kanji: '避難', romaji: 'hinan', meaning: 'Evakuasi', category: 'Alam & Bencana Alam', mastered: false, onyomi: 'ヒ (hi), ナン (nan)', kunyomi: 'さ.ける (sa.keru), かた.い (kata.i)', philosophy: 'Menghindari (避) bahaya/kesulitan (難).' },
+            { id: '3014', kanji: '救急車', romaji: 'kyuukyuusha', meaning: 'Mobil ambulan', category: 'Alam & Bencana Alam', mastered: false, onyomi: 'キュウ (kyuu), キュウ (kyuu), シャ (sha)', kunyomi: 'すく.う (suku.u), いそ.ぐ (iso.gu)', philosophy: 'Mobil (車) untuk keadaan mendesak (急) demi menyelamatkan nyawa (救).' },
+            { id: '3015', kanji: '消防車', romaji: 'shoubousha', meaning: 'Pemadam kebakaran', category: 'Alam & Bencana Alam', mastered: false, onyomi: 'ショウ (shou), ボウ (bou), シャ (sha)', kunyomi: 'け.す (ke.su), ふせ.ぐ (fuse.gu)', philosophy: 'Mobil (車) yang mencegah (防) dan memadamkan (消) api.' },
+            { id: '3016', kanji: '警察', romaji: 'keisatsu', meaning: 'Polisi', category: 'Alam & Bencana Alam', mastered: false, onyomi: 'ケイ (kei), サツ (satsu)', kunyomi: '-', philosophy: 'Memperingatkan (警) dan menyelidiki/memeriksa (察).' },
+            { id: '3501', kanji: '水', romaji: 'mizu', meaning: 'Air', category: 'Alam & Bencana Alam', mastered: false, onyomi: 'スイ (sui)', kunyomi: 'みず (mizu)', philosophy: 'Aliran zat cair yang mengalir jernih memberi kehidupan.' },
+            { id: '3502', kanji: '火', romaji: 'hi', meaning: 'Api', category: 'Alam & Bencana Alam', mastered: false, onyomi: 'カ (ka)', kunyomi: 'ひ (hi), ほ (ho)', philosophy: 'Kobaran panas yang menyala dan membakar.' },
+            { id: '3503', kanji: '空', romaji: 'sora', meaning: 'Langit / Udara', category: 'Alam & Bencana Alam', mastered: false, onyomi: 'クウ (kuu)', kunyomi: 'そら (sora), から (kara)', philosophy: 'Ruang luas terbuka tanpa batas di atas.' },
+            { id: '3504', kanji: '雲', romaji: 'kumo', meaning: 'Awan', category: 'Alam & Bencana Alam', mastered: false, onyomi: 'ウン (un)', kunyomi: 'くも (kumo)', philosophy: 'Gumpalan uap air yang berarak di langit.' },
+            { id: '3505', kanji: '虹', romaji: 'niji', meaning: 'Pelangi', category: 'Alam & Bencana Alam', mastered: false, onyomi: 'コウ (kou)', kunyomi: 'にじ (niji)', philosophy: 'Lengkungan spektrum warna indah di langit sehabis hujan.' },
+            { id: '3506', kanji: '風', romaji: 'kaze', meaning: 'Angin', category: 'Alam & Bencana Alam', mastered: false, onyomi: 'フウ (fuu), フ (fu)', kunyomi: 'かぜ (kaze)', philosophy: 'Udara yang bergerak menghasilkan hembusan.' },
+            { id: '3507', kanji: '星', romaji: 'hoshi', meaning: 'Bintang', category: 'Alam & Bencana Alam', mastered: false, onyomi: 'セイ (sei), ショウ (shou)', kunyomi: 'ほし (hoshi)', philosophy: 'Titik cahaya berkilau di malam hari.' },
+            { id: '3508', kanji: '月', romaji: 'tsuki', meaning: 'Bulan', category: 'Alam & Bencana Alam', mastered: false, onyomi: 'ゲツ (getsu), ガツ (gatsu)', kunyomi: 'つき (tsuki)', philosophy: 'Satelit alami yang bersinar malam hari.' },
+            { id: '3509', kanji: '太陽', romaji: 'taiyou', meaning: 'Matahari', category: 'Alam & Bencana Alam', mastered: false, onyomi: 'タイ (tai), ヨウ (you)', kunyomi: '-', philosophy: 'Pusat tata surya sumber cahaya dan panas.' },
+            { id: '3510', kanji: '土', romaji: 'tsuchi', meaning: 'Tanah / Bumi', category: 'Alam & Bencana Alam', mastered: false, onyomi: 'ド (do), ト (to)', kunyomi: 'つち (tsuchi)', philosophy: 'Pijakan tempat tumbuhnya vegetasi.' },
+            { id: '3511', kanji: '森', romaji: 'mori', meaning: 'Hutan lebat', category: 'Alam & Bencana Alam', mastered: false, onyomi: 'シン (shin)', kunyomi: 'もり (mori)', philosophy: 'Kumpulan pohon besar yang tumbuh rapat.' },
+            { id: '3512', kanji: '林', romaji: 'hayashi', meaning: 'Hutan / Kebun pohon', category: 'Alam & Bencana Alam', mastered: false, onyomi: 'リン (rin)', kunyomi: 'はやし (hayashi)', philosophy: 'Area kumpulan pohon yang lebih kecil dari hutan.' },
+            { id: '3001', kanji: '地震', romaji: 'jishin', meaning: 'Gempa bumi', category: 'Alam & Bencana Alam', mastered: false, onyomi: 'ジ (ji), シン (shin)', kunyomi: 'じしん (jishin)', philosophy: 'Getaran kuat pada tanah (地 - 震).' },
+            { id: '3002', kanji: '津波', romaji: 'tsunami', meaning: 'Tsunami', category: 'Alam & Bencana Alam', mastered: false, onyomi: 'シン (shin)', kunyomi: 'つなみ (tsunami)', philosophy: 'Gelombang air laut besar pelabuhan.' },
+            { id: '3003', kanji: '台風', romaji: 'taifuu', meaning: 'Topan / Badai', category: 'Alam & Bencana Alam', mastered: false, onyomi: 'タイ (tai), フウ (fuu)', kunyomi: 'たいふう (taifuu)', philosophy: 'Angin badai besar yang berputar.' },
+            { id: '3004', kanji: '火事', romaji: 'kaji', meaning: 'Kebakaran', category: 'Alam & Bencana Alam', mastered: false, onyomi: 'カ (ka), ジ (ji)', kunyomi: 'かじ (kaji)', philosophy: 'Bencana amukan api (火 - 事).' },
+            { id: '3005', kanji: '洪水', romaji: 'kouzui', meaning: 'Banjir', category: 'Alam & Bencana Alam', mastered: false, onyomi: 'コウ (kou), スイ (sui)', kunyomi: 'こうずい (kouzui)', philosophy: 'Limpahan air (水) besar yang merendam.' },
+            { id: '3006', kanji: '噴火', romaji: 'funka', meaning: 'Letusan gunung berapi', category: 'Alam & Bencana Alam', mastered: false, onyomi: 'フン (fun), カ (ka)', kunyomi: 'ふんか (funka)', philosophy: 'Muntahan lahar dan abu dari dalam bumi.' },
+            { id: '3007', kanji: '土砂崩れ', romaji: 'doshakuzure', meaning: 'Tanah longsor', category: 'Alam & Bencana Alam', mastered: false, onyomi: '土 (do), 砂 (sa)', kunyomi: 'どしゃくずれ (doshakuzure)', philosophy: 'Runtuhnya tumpukan tanah dan pasir.' },
+            { id: '3008', kanji: '雷', romaji: 'kaminari', meaning: 'Petir / Kilat', category: 'Alam & Bencana Alam', mastered: false, onyomi: 'ライ (rai)', kunyomi: 'かみなり (kaminari)', philosophy: 'Kilatan listrik alam di angkasa.' }
         ]; // <-- Penutup Array INITIAL_VOCAB_DATA
 
 
@@ -1164,7 +1392,7 @@
             document.getElementById('mastery-bar').style.width = `${percent}%`;
 
             // Render Category Grid
-            const categories = ['Waktu', 'Peraturan', 'Kata Kerja', 'Tempat & Benda', 'Acara & Upacara', 'Sifat & Kondisi', 'Bencana & Darurat', 'Partikel & Keterangan'];
+            const categories = ['Waktu', 'Peraturan', 'Kata Kerja', 'Tempat & Benda', 'Acara & Upacara', 'Sifat & Kondisi', 'Alam & Bencana Alam', 'Partikel & Keterangan'];
             const catGrid = document.getElementById('category-cards-grid');
             catGrid.innerHTML = '';
 
